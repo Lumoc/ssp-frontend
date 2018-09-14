@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div>
         <div class="hero is-light">
             <div class="hero-body">
@@ -70,7 +70,7 @@
                     if (result) {
                         this.loading = true;
                         // @TODO switch to WZU backend
-                        this.$http.post(this.$store.state.backendURL + '/api/bitbucketrepo', {
+                        this.$http.post(this.$store.state.wzuURL + '/api/bitbucketrepo', {
                             templateyesno: this.templateyesno,
                             bitreponame: this.bitreponame,
                             bitprojectkey: this.bitprojectkey,

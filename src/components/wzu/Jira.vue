@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div>
         <div class="hero is-light">
             <div class="hero-body">

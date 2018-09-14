@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div>
         <div class="hero is-light">
             <div class="hero-body">
@@ -68,7 +68,7 @@
                     if (result) {
                         this.loading = true;
                         // @TODO switch to WZU backend
-                        this.$http.post(this.$store.state.backendURL + '/api/confluence', {
+                        this.$http.post(this.$store.state.wzuURL + '/api/confluence', {
                             spacename: this.spacename,
                             spacekey: this.spacekey,
                             spacedescription: '' + this.spacedescription,
