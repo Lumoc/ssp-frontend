@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Jira Projekt</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Jira Space erstellen</h2>
+                    Hier kannst du ein Jira Projekt erstellen</h2>
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendJira">
