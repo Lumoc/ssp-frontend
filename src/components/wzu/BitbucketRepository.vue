@@ -23,7 +23,7 @@
                      :message="errors.first('Repository Name')">
                 <b-input v-model.trim="bitreponame"
                          name="Repository Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\s]+$/} }">
+                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9-\s]+$/} }">
                 </b-input>
             </b-field>
 
