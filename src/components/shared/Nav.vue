@@ -87,6 +87,7 @@
                         <router-link to="/wzu/bitbucketrepo" class="navbar-item">Bitbucket Repository</router-link>
                         <router-link to="/wzu/artifactory" class="navbar-item">Artifactory</router-link>
                         <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
+                        <router-link to="/wzu/alm" class="navbar-item">ALM User</router-link>
                     </div>
                 </div>
             </div>
