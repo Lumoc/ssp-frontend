@@ -83,6 +83,9 @@ const routes = [
     },
     {
         path: '/wzu/alm', component: LocalComponents.WZUALM
+    },
+    {
+        path: '/wzu/tasksuser', component: LocalComponents.TasksUser
     }
 ];
 
