@@ -34,19 +34,17 @@
                 Service-Account Name darf nur Kleinbuchstaben, Zahlen und - enthalten
             </b-message>
 
-            <b-field label="Soll der Service-Account auf dem Jenkins hinterlegt werden (für Deployment Pipeline)?">
-                <b-checkbox v-model="createJenkinsCredential"
-                            true-value="Ja"
-                            false-value="Nein">
-                    {{ createJenkinsCredential }}
+            <b-field>
+                <b-checkbox v-model="createJenkinsCredential">
+                    {{ 'Soll der Service-Account auf dem Jenkins hinterlegt werden (für Deployment Pipeline)?'}}
                 </b-checkbox>
             </b-field>
-            <b-field v-if="createJenkinsCredential === 'Ja'"
+            <b-field v-if="createJenkinsCredential"
                     label="Jenkins Organization-Key"
                      :type="errors.has('Jenkins Organization-Key') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Organization-Key')">
                 <b-input v-model.trim="organizationKey"
-                         name="Jenkins Organization-Key">
+                         name="Jenkins Organization-Key" required>
                 </b-input>
             </b-field>
 
@@ -65,7 +63,7 @@
                 serviceAccount: '',
                 project: '',
                 loading: false,
-                createJenkinsCredential: 'Nein',
+                createJenkinsCredential: false,
                 organizationKey: ''
             };
         },
@@ -77,7 +75,7 @@
 
                         this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
                             project: this.project,
-                            organizationKey: this.createJenkinsCredential === 'Ja' ? this.organizationKey : '',
+                            organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
                             serviceAccount: this.serviceAccount
                         }).then(() => {
                             this.loading = false;
