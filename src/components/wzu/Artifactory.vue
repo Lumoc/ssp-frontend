@@ -17,7 +17,7 @@
                 <b-input v-model.trim="repository"
                          name="Repository Name"
                          ref="autofocus"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]+$/} }">
+                         v-validate="{ rules: { required: true, regex: /^[a-z0-9-]+$/} }">
                 </b-input>
             </b-field>
             <label class="label">Repository Typ</label>
@@ -48,14 +48,6 @@
                     <span>ios</span>
                 </b-radio-button>
             </b-field>
-            <b-field label="Bestellung für anderen User"
-                     :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
-                     :message="errors.first('Bestellung für anderen User')">
-                <b-input v-model.trim="owner"
-                         name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
-                </b-input>
-            </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Repository erstellen
@@ -70,7 +62,6 @@
             return {
                 repository: '',
                 type: '',
-                owner: '',
                 loading: false
             };
         },
@@ -82,8 +73,7 @@
 
                         this.$http.post(this.$store.state.wzuURL + '/api/artifactory/createRepository', {
                             repositoryKey: this.repository,
-                            repositoryType: this.type,
-                            owner: this.owner
+                            repositoryType: this.type
                         }).then(() => {
                             this.loading = false;
                         }, () => {
