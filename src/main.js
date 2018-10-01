@@ -7,7 +7,7 @@ import VeeValidateGerman from 'vee-validate/dist/locale/de';
 import Moment from 'moment';
 import 'moment-timezone';
 // Styles
-import 'buefy/lib/buefy.css';
+import 'buefy/dist/buefy.css';
 import './theme.css';
 // Store
 import store from './store';
