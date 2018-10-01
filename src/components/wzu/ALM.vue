@@ -81,7 +81,7 @@
 
             <button v-on:click="addToBackendALM" :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Projekt erstellen
+                    class="button is-primary">berechtigen
             </button>
         </form>
     </div>

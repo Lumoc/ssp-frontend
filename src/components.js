@@ -36,6 +36,7 @@ import WZUBitbucketRepo from './components/wzu/BitbucketRepository.vue';
 import WZUArtifactory from './components/wzu/Artifactory.vue';
 import WZUJenkinsCredentials from './components/wzu/JenkinsCredentials.vue';
 import WZUALM from './components/wzu/ALM.vue';
+import TasksUser from './components/wzu/TasksUser.vue';
 
 Vue.component('login', Login);
 Vue.component('navbar', Nav);
@@ -83,5 +84,6 @@ export const LocalComponents = {
     WZUBitbucketRepo,
     WZUArtifactory,
     WZUJenkinsCredentials,
-    WZUALM
+    WZUALM,
+    TasksUser
 };
