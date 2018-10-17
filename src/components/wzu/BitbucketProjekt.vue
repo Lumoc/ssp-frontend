@@ -11,12 +11,12 @@
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="Projekt Name"
+            <b-field label="Projekt Name (nur alphanummerische Zeichen)"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="bitprojectname"
                          name="Projekt Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\s]+$/} }">
+                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
 

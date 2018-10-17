@@ -11,12 +11,12 @@
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendConfluence">
-            <b-field label="Space Name"
+            <b-field label="Space Name (nur alphanummerische Zeichen)"
                      :type="errors.has('Space Name') ? 'is-danger' : ''"
                      :message="errors.first('Space Name')">
                 <b-input v-model.trim="spacename"
                          name="Space Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\s]+$/} }">
+                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
             <b-field label="Space Key"

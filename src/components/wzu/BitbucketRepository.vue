@@ -18,7 +18,7 @@
 
             </b-field>
 
-            <b-field label="Repository Name"
+            <b-field label="Repository Name (nur alphanummerische Zeichen ohne Umlaute)"
                      :type="errors.has('Repository Name') ? 'is-danger' : ''"
                      :message="errors.first('Repository Name')">
                 <b-input v-model.trim="bitreponame"
@@ -47,7 +47,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Projekt erstellen
+                    class="button is-primary">Repo erstellen
             </button>
         </form>
     </div>

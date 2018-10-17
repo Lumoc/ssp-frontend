@@ -10,11 +10,11 @@
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendTasks">
-            <b-field label="Username"
+            <b-field label="Username (U-Nr)"
                      :type="errors.has('Username') ? 'is-danger' : ''"
                      :message="errors.first('Username')">
                 <b-input v-model.trim="username"
-                         name="Bestellung für anderen User"
+                         name="Username"
                          v-validate="{ rules: { required: true, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/} }">
                 </b-input>
             </b-field>
