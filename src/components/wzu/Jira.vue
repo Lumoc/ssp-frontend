@@ -10,6 +10,12 @@
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendJira">
+            <b-field label="Xray aktivieren?"
+                     :type="errors.has('XRay') ? 'is-danger' : ''"
+                     :message="errors.first('XRay')">
+                <b-checkbox v-model="activatexray"></b-checkbox>
+
+            </b-field>
             <b-field label="Projekt Name (nur alphanummerische Zeichen)"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
@@ -54,6 +60,7 @@
     export default {
         data() {
             return {
+                activatexray: false,
                 projectname:  '',
                 projectkey: '',
                 projectdescription: '',
@@ -67,6 +74,7 @@
                     if (result) {
                         this.loading = true;
                         this.$http.post(this.$store.state.wzuURL + '/api/jira', {
+                            activatexray: this.activatexray,
                             projectname: this.projectname,
                             projectkey: this.projectkey,
                             projectdescription:  this.projectdescription,

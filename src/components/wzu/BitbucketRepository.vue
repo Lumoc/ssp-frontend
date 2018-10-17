@@ -12,8 +12,8 @@
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
             <b-field label="GitFlow-Template laden?"
-                     :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
-                     :message="errors.first('Bestellung für anderen User')">
+                     :type="errors.has('GitFlow-Template') ? 'is-danger' : ''"
+                     :message="errors.first('GitFlow-Template')">
                 <b-checkbox v-model="templateyesno"></b-checkbox>
 
             </b-field>
