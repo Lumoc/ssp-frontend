@@ -19,7 +19,7 @@
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Space Key"
+            <b-field label="Space Key (nur Grossbuchstaben max 10 Zeichen)"
                      :type="errors.has('Space Key') ? 'is-danger' : ''"
                      :message="errors.first('Space Key')">
                 <b-input v-model.trim="spacekey"
@@ -27,14 +27,14 @@
                          v-validate="{ rules: { required: true, regex: /^[A-Z]{0,10}$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Space Beschreibung"
+            <b-field label="Space Beschreibung (kein Pflichtfeld)"
                      :type="errors.has('Space Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Space Beschreibung')">
                 <b-input v-model.trim="spacedescription"
                          name="spacedescription">
                 </b-input>
             </b-field>
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="spaceowner"

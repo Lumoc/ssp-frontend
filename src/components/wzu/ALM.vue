@@ -70,12 +70,12 @@
                 </b-radio-button>
             </b-field>
 
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Bestellung für anderen User (u-Nr lowercase, wegen ALM)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="almuser"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/ } }">
+                         v-validate="{ rules: { required: false, regex:/^(u|e)([0-9]{6})$|^(ue)([0-9]{5})$/ } }">
                 </b-input>
             </b-field>
 
