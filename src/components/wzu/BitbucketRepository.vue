@@ -41,7 +41,7 @@
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitrepoowner"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
+                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/ } }">
                 </b-input>
             </b-field>
 
