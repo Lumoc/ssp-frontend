@@ -11,16 +11,16 @@
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="Projekt Name"
+            <b-field label="Projekt Name (nur alphanummerische Zeichen)"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="bitprojectname"
                          name="Projekt Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\s]+$/} }">
+                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Key"
+            <b-field label="Projekt Key (nur Grossbuchstaben beginnend mit Domänen Modell)"
                      :type="errors.has('Projekt Key') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
@@ -29,7 +29,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Beschreibung"
+            <b-field label="Projekt Beschreibung (kein Pflichtfeld)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
@@ -37,7 +37,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitprojectowner"

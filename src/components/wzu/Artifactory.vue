@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newArtifactoryRepository">
-            <b-field label="Repository Name"
+            <b-field label="Repository Name (nur Kleinbuchstaben und Zahlen)"
                      :type="errors.has('Repository Name') ? 'is-danger' : ''"
                      :message="errors.first('Repository Name')">
                 <b-input v-model.trim="repository"

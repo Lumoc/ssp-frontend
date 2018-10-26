@@ -7,6 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     Hier kannst du einen ALM User zu einem Projekt hinzufügen</h2>
+                <a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Doku WZU</a>
             </div>
         </div>
         <br>
@@ -70,12 +71,12 @@
                 </b-radio-button>
             </b-field>
 
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Bestellung für anderen User (u-Nr lowercase, wegen ALM)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="almuser"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/ } }">
+                         v-validate="{ rules: { required: false, regex:/^(u|e|U|E)([0-9]{6})$|^(ue|UE|uE|Ue)([0-9]{5})$/ } }">
                 </b-input>
             </b-field>
 
@@ -108,7 +109,7 @@
                         this.$http.post(this.$store.state.wzuURL + '/api/alm', {
                             projectname: this.projectname,
                             projectfunction: this.projectfunction,
-                            almuser: this.almuser,
+                            almuser: this.almuser.toLowerCase(),
                             domainname: this.domainname
 
                         }).then(() => {

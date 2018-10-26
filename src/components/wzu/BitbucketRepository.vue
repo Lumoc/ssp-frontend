@@ -12,13 +12,13 @@
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
             <b-field label="GitFlow-Template laden?"
-                     :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
-                     :message="errors.first('Bestellung für anderen User')">
+                     :type="errors.has('GitFlow-Template') ? 'is-danger' : ''"
+                     :message="errors.first('GitFlow-Template')">
                 <b-checkbox v-model="templateyesno"></b-checkbox>
 
             </b-field>
 
-            <b-field label="Repository Name"
+            <b-field label="Repository Name (nur alphanummerische Zeichen ohne Umlaute)"
                      :type="errors.has('Repository Name') ? 'is-danger' : ''"
                      :message="errors.first('Repository Name')">
                 <b-input v-model.trim="bitreponame"
@@ -36,18 +36,18 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitrepoowner"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
+                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/ } }">
                 </b-input>
             </b-field>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Projekt erstellen
+                    class="button is-primary">Repo erstellen
             </button>
         </form>
     </div>
