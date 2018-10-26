@@ -52,6 +52,12 @@ const routes = [
         path: '/aws/listec2instances', component: LocalComponents.ListEC2Instances
     },
     {
+        path: '/otc/listecs', component: LocalComponents.ListECS
+    },
+    {
+        path: '/otc/newecs', component: LocalComponents.NewECS
+    },
+    {
         path: '/sematext/newapp', component: LocalComponents.SematextNewApp
     },
     {
@@ -101,12 +107,12 @@ router.beforeEach((to, from, next) => {
         next();
     }
     if (!store.state.user) {
-        console.error('Not yet logged in, navigating to login');
+        console.error('Not yet logged in, navigating to login.');
         next({path: '/login'});
     } else {
         // Check if token is still valid
         if (store.state.user && store.state.user.exp < Date.now() / 1000) {
-            console.error('Token is no longer valid, navigating to login');
+            console.error('Token is no longer valid, navigating to login.');
             store.commit('setUser', {user: null});
 
             next({path: '/login'});

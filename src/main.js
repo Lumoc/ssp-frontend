@@ -47,7 +47,7 @@ Vue.http.interceptors.push(function (request, next) {
             this.$store.commit('setNotification', {
                 notification: {
                     type: 'danger',
-                    message: 'Dein Token ist abgelaufen. Bitte logge dich neu ein'
+                    message: 'Dein Token ist abgelaufen. Bitte logge dich neu ein.'
                 }
             });
         }
