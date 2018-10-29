@@ -25,6 +25,7 @@
                         <router-link to="/ose/adminlist" class="navbar-item">Projekt Admins anzeigen</router-link>
                         <router-link to="/ose/updatebilling" class="navbar-item">Kontierungsnummer anzeigen/ändern
                         </router-link>
+                        <router-link to="/ose/billing" class="navbar-item">Kostenverrechnung</router-link>
                         <router-link to="/ose/newserviceaccount" class="navbar-item">Service-Account anlegen
                         </router-link>
                         <hr v-if="config.gluster || config.nfs" class="navbar-divider">

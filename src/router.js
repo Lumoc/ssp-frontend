@@ -28,6 +28,9 @@ const routes = [
         path: '/ose/updatebilling', component: LocalComponents.UpdateBilling
     },
     {
+        path: '/ose/billing', component: LocalComponents.OpenshiftBilling
+    },
+    {
         path: '/ose/volume/new', component: LocalComponents.NewVolume
     },
     {
