@@ -8,7 +8,6 @@
                 <h2 class="subtitle">
                     Hier kannst du einen ALM User zu einem Projekt hinzufügen.</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU Doku zu gelangen.</a></h3>
-
             </div>
         </div>
         <br>
@@ -77,7 +76,7 @@
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="almuser"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|e)([0-9]{6})$|^(ue)([0-9]{5})$/ } }">
+                         v-validate="{ rules: { required: false, regex:/^(u|e|U|E)([0-9]{6})$|^(ue|UE|uE|Ue)([0-9]{5})$/ } }">
                 </b-input>
             </b-field>
 
@@ -110,7 +109,7 @@
                         this.$http.post(this.$store.state.wzuURL + '/api/alm', {
                             projectname: this.projectname,
                             projectfunction: this.projectfunction,
-                            almuser: this.almuser,
+                            almuser: this.almuser.toLowerCase(),
                             domainname: this.domainname
 
                         }).then(() => {
