@@ -10,13 +10,13 @@
             </div>
         </div>
         <br>
-        <form v-on:submit.prevent="getDDCBilling">
+        <form v-on:submit.prevent="getOpenshiftBilling">
             <b-field :type="errors.has('ProjectContains') ? 'is-danger' : ''" label="Projekt"
                      :message="errors.first('ProjectContains')">
                 <b-input v-model.trim="projectContains" name="ProjectContains"
                          ref="autofocus"
                          required
-                         placeholder="Projekt">
+                         placeholder="projekt-%">
                 </b-input>
             </b-field>
             <b-field :type="errors.has('Start') ? 'is-danger' : ''" label="Von"
@@ -58,7 +58,7 @@
         <a v-if="csvDownload"
            class="button is-primary"
            :href="csvDownload"
-           download="DDC_Verrechnung.csv">Download CSV
+           download="Openshift_Verrechnung.csv">Download CSV
         </a>
         <br>
         <b-table :data="data" narrowed detailed>
@@ -148,7 +148,7 @@
       };
     },
     methods: {
-      getDDCBilling: function() {
+      getOpenshiftBilling: function() {
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/chargeback', {
