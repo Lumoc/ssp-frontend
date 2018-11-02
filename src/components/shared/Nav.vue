@@ -89,6 +89,7 @@
                         <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
                         <router-link to="/wzu/jira" class="navbar-item">JIRA</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
+                        <router-link to="/wzu/devproxy" class="navbar-item">Dev Proxy Eintrag</router-link>
                     </div>
                 </div>
             </div>
