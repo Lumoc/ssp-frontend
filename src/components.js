@@ -11,6 +11,7 @@ import NewProject from './components/ose/NewProject.vue';
 import NewTestProject from './components/ose/NewTestProject.vue';
 import AdminList from './components/ose/AdminList.vue';
 import UpdateBilling from './components/ose/UpdateBilling.vue';
+import OpenshiftBilling from './components/ose/Billing.vue';
 import NewServiceAccount from './components/ose/NewServiceAccount.vue';
 // Gluster-Components
 import FixGluster from './components/volume/FixGluster.vue';
@@ -65,6 +66,7 @@ export const LocalComponents = {
     AdminList,
     NewTestProject,
     UpdateBilling,
+    OpenshiftBilling,
     NewServiceAccount,
     FixGluster,
     NewVolume,
