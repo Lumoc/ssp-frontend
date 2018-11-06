@@ -167,7 +167,10 @@
         });
       },
       getConsolidatedPrice: function(prices) {
-        return Object.values(prices).reduce((a,b) => a+b, 0);
+        var values = Object.keys(prices).map(function(e) {
+            return prices[e]
+        });
+        return values.reduce((a,b) => a+b, 0);
       },
       getStartDate: function() {
         var date = new Date();
