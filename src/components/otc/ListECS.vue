@@ -32,6 +32,13 @@
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
                 </b-table-column>
+                <b-table-column field="ipv4" label="IPs" sortable>
+                    <ul id="ips">
+                        <li v-for="ip in props.row.ipv4" v-bind:key="ip">
+                            {{ ip }}
+                        </li>
+                    </ul>                    
+                </b-table-column>
                 <b-table-column field="vcpus" label="VCPUs" sortable>
                     {{ props.row.vcpus }}
                 </b-table-column>
@@ -79,6 +86,7 @@
             listECServers: function() {
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
+                    console.log(res.body)
                     this.data = res.body.ecServers
                     this.checkedRows = []
                     this.loading = false;
