@@ -41,7 +41,7 @@
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"
                          v-model.number="billing"
-                         v-validate="'required'"
+                         v-validate="{ rules: { required: true, max: 128, regex: /^[a-zA-Z0-9+\-=._:/]+$/} }"
                          name="Kontierungsnummer">
                 </b-input>
             </b-field>
