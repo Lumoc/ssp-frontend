@@ -41,6 +41,22 @@
                 </b-select>
             </b-field>
 
+            <b-field label="Image"
+                    :type="errors.has('Image') ? 'is-danger' : ''"
+                    :message="errors.first('Image')">
+
+                <b-select :loading="loading"
+                        v-model="image"
+                        required>
+                    <option
+                            v-for="image in images"
+                            :value="image"
+                            :key="image.name">
+                        {{ image.name }}
+                    </option>
+                </b-select>
+            </b-field>
+
             <b-field label="Flavor"
                      :type="errors.has('Flavor') ? 'is-danger' : ''"
                      :message="errors.first('Flavor')">
@@ -56,6 +72,10 @@
                     </option>
                 </b-select>
             </b-field>
+
+            <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
+                Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
+            </b-message>
             
             <b-field grouped>
   
@@ -79,29 +99,17 @@
                         :type="errors.has('System Disk GB') ? 'is-danger' : ''"
                         :message="errors.first('System Disk GB')">
                     <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
                             name="System Disk GB"
                             v-model.number="systemDiskSize">
                     </b-input>
                 </b-field>
-                
-                <b-field label="Image"
-                     :type="errors.has('Image') ? 'is-danger' : ''"
-                     :message="errors.first('Image')">
-
-                    <b-select :loading="loading"
-                            v-model="image"
-                            required>
-                        <option
-                                v-for="image in images"
-                                :value="image"
-                                :key="image.name">
-                            {{ image.name }}
-                        </option>
-                    </b-select>
-                </b-field>
 
             </b-field>
+
+            <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > systemDiskSize">
+                Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse System Disk.
+            </b-message>
 
             <b-field label="Zusätzliche Daten Disks">
                 <button type="button" class="button is-dark" @click="addDataDisk()" :disabled="dataDisks.length>=5">Hinzufügen</button>
@@ -147,6 +155,16 @@
                 </b-input>
             </b-field>
 
+            <b-field label="Mega ID"
+                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
+                     :message="errors.first('Mega ID')">
+                <b-input type="text"
+                         v-model="megaId"
+                         v-validate="'required'"
+                         name="Mega ID">
+                </b-input>
+            </b-field>
+
             <b-field label="Kontierungsnummer"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
@@ -181,6 +199,7 @@
                 billing: '',
                 availabilityZone: '',
                 publicKey: '',
+                megaId: '', 
                 loading: false
             };
         },
@@ -201,7 +220,7 @@
             getAvailabilityZones: function () {
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
-                    let result = res.body.availabilityZones;                    
+                    let result = res.body.availabilityZones;
                     this.availabilityZones = result.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0));
 
                     this.availabilityZone = this.availabilityZones[0];
@@ -257,6 +276,14 @@
                 });
             },
             newECS: function() {
+                if (this.flavor.ram < this.image.minRAMMegabytes) {
+                    return;
+                }
+
+                if (this.systemDiskSize < this.image.minDiskGigabytes) {
+                    return;
+                }
+
                 this.$validator.validateAll().then((result) => {
                     if (result) {
                         this.loading = true;
@@ -270,7 +297,8 @@
                             publicKey: this.publicKey,
                             dataDisks: this.dataDisks,
                             systemVolumeTypeId: this.systemVolumeType.id,
-                            systemDiskSize: this.systemDiskSize
+                            systemDiskSize: this.systemDiskSize,
+                            megaId: this.megaId
                         }).then(() => {
                             this.loading = false;
                         }, () => {

@@ -54,6 +54,9 @@
                 <b-table-column field="owner" label="Besitzer" sortable>
                     {{ props.row.owner }}
                 </b-table-column>
+                <b-table-column field="megaId" label="Mega ID" sortable>
+                    {{ props.row.megaId }}
+                </b-table-column>
                 <b-table-column field="billing" label="Kontierungsnummer" sortable>
                     {{ props.row.billing }}
                 </b-table-column>
