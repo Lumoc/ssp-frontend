@@ -22,18 +22,36 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Grösse"
-                     :type="errors.has('Grösse') ? 'is-danger' : ''"
-                     :message="errors.first('Grösse')">
-                <b-input v-model.trim="size"
-                         placeholder="500M"
-                         name="Grösse"
-                         v-validate="{ rules: { required: true, regex: /^[0-9]+[GM]$/}}">
-                </b-input>
-            </b-field>
-            <b-message type="is-info">
-                Mindestgrösse ist 500MB (1G für NFS). Grösse angeben mit Einheit (M/G) z.B. 500M oder 5G. Ab 1024M muss G verwendet werden
-            </b-message>
+            <template v-if="technology == 'nfs'">
+                <b-field label="Grösse"
+                        :type="errors.has('Grösse') ? 'is-danger' : ''"
+                        :message="errors.first('Grösse')">
+                    <b-input v-model.trim="size"
+                            placeholder="1G"
+                            name="Grösse"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+[G]$/}}">
+                    </b-input>
+                </b-field>
+                <b-message type="is-info">
+                    Mindestgrösse ist 1G. Grösse angeben mit Einheit (G) z.B. 5G
+                </b-message>
+            </template>
+            <template v-else>
+                <b-field label="Grösse"
+                        :type="errors.has('Grösse') ? 'is-danger' : ''"
+                        :message="errors.first('Grösse')">
+                    <b-input v-model.trim="size"
+                            placeholder="500M"
+                            name="Grösse"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+[GM]$/}}">
+                    </b-input>
+                </b-field>
+
+                <b-message type="is-info">
+                    Mindestgrösse ist 500M. Grösse angeben mit Einheit (M/G) z.B. 500M oder 5G. Ab 1024M muss G verwendet werden
+                </b-message>
+
+            </template>
 
             <b-field label="Name des Persistent Volume Claims"
                      :type="errors.has('PVC-Name') ? 'is-danger' : ''"
