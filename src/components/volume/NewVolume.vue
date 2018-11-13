@@ -77,7 +77,7 @@
                     class="button is-primary">Persistent Volume erstellen
             </button>
             <div v-if="progress">
-            Das Volume wird erstellt. Dies kann einige Minuten dauern.
+            Das Volume wird erstellt. Dies kann einige Minuten dauern. Sie dürfen diese Seite schliessen, der Vorgang wird im Hintergrund fertiggestellt.
             <progress :value="progress" max="100"></progress>
             </div>
         </form>
