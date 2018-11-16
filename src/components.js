@@ -38,6 +38,7 @@ import WZUArtifactory from './components/wzu/Artifactory.vue';
 import WZUJenkinsCredentials from './components/wzu/JenkinsCredentials.vue';
 import WZUALM from './components/wzu/ALM.vue';
 import TasksUser from './components/wzu/TasksUser.vue';
+import WZUDevProxy from './components/wzu/DevProxy.vue';
 
 Vue.component('login', Login);
 Vue.component('navbar', Nav);
@@ -87,5 +88,6 @@ export const LocalComponents = {
     WZUArtifactory,
     WZUJenkinsCredentials,
     WZUALM,
-    TasksUser
+    TasksUser,
+    WZUDevProxy
 };

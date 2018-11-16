@@ -89,6 +89,9 @@ const routes = [
     },
     {
         path: '/wzu/tasksuser', component: LocalComponents.TasksUser
+    },
+    {
+        path: '/wzu/devproxy', component: LocalComponents.WZUDevProxy
     }
 ];
 
