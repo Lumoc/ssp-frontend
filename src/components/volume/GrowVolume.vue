@@ -15,16 +15,18 @@
         </b-message>
 
         <form v-on:submit.prevent="growVolume">
-            <b-field label="Projekt-Name"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
-                <b-input v-model.trim="project"
-                         placeholder="projekt-dev"
-                         name="Projekt-Name"
-                         ref="autofocus"
+            <b-field label="Name des Persistent Volumes"
+                     :type="errors.has('PV-Name') ? 'is-danger' : ''"
+                     :message="errors.first('PV-Name')">
+                <b-input v-model.trim="pvName"
+                         name="PV-Name"
                          v-validate="'required'">
                 </b-input>
             </b-field>
+            <b-message type="is-info">
+                Nicht der Name des PVC, sondern das was in OpenShift unter "Storage" > Spalte "Status" > <strong>fett</strong>
+                geschrieben ist
+            </b-message>
 
             <b-field label="Neue Grösse"
                      :type="errors.has('Grösse') ? 'is-danger' : ''"
@@ -37,20 +39,6 @@
             </b-field>
             <b-message type="is-info">
                 Das Volume wird auf die angegebene Grösse vergrösert. Verkleinern ist nicht möglich. z.B. 100M oder 5G
-            </b-message>
-
-            <p><em></em></p>
-            <b-field label="Name des Persistent Volumes"
-                     :type="errors.has('PV-Name') ? 'is-danger' : ''"
-                     :message="errors.first('PV-Name')">
-                <b-input v-model.trim="pvName"
-                         name="PV-Name"
-                         v-validate="'required'">
-                </b-input>
-            </b-field>
-            <b-message type="is-info">
-                Nicht der Name des PVC, sondern das was in OpenShift unter "Storage" > Spalte "Status" > <strong>fett</strong>
-                geschrieben ist
             </b-message>
 
             <button :disabled="errors.any()"
