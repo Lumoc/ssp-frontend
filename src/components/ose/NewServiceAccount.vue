@@ -11,9 +11,9 @@
         </div>
         <br>
         <form v-on:submit.prevent="createServiceAccount">
-            <b-field label="Projekt-Name"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
+            <b-field label="Openshift Projekt"
+                     :type="errors.has('Openshift Projekt') ? 'is-danger' : ''"
+                     :message="errors.first('Openshift Projekt')">
                 <b-input v-model.trim="project"
                          placeholder="projekt-dev"
                          name="Projekt-Name"
@@ -40,9 +40,9 @@
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
-                    label="Jenkins Organization-Key"
-                     :type="errors.has('Jenkins Organization-Key') ? 'is-danger' : ''"
-                     :message="errors.first('Jenkins Organization-Key')">
+                    label="Jenkins Bitbucket/Team Job Name"
+                     :type="errors.has('Jenkins Bitbucket/Team Job Name') ? 'is-danger' : ''"
+                     :message="errors.first('Jenkins Bitbucket/Team Job Name')">
                 <b-input v-model.trim="organizationKey"
                          name="Jenkins Organization-Key" required>
                 </b-input>
