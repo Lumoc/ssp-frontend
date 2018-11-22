@@ -12,7 +12,7 @@
         <br>
         <form v-on:submit.prevent="getOpenshiftBilling">
             <b-message type="is-info">
-                Alle Zahlen ohne Gewähr! Bitte verlassen sie sich auf die monatliche Verrechnung
+                Alle Zahlen ohne Gewähr! Bitte verlassen sie sich auf die monatliche Abrechnung
             </b-message>
             <b-field :type="errors.has('ProjectContains') ? 'is-danger' : ''" label="Projekt"
                      :message="errors.first('ProjectContains')">
