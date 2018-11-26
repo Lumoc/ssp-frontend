@@ -86,6 +86,15 @@ const routes = [
     },
     {
         path: '/wzu/tasksuser', component: LocalComponents.TasksUser
+    },
+    {
+        path: '/ActiveDirectory/ADGroup', component: LocalComponents.ADGroup
+    },
+    {
+        path: '/ActiveDirectory/Adminaddordelete', component: LocalComponents.ADGroupAdmin
+    },
+    {
+        path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
     }
 ];
 

@@ -40,7 +40,7 @@
 
             <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
-                     :message="errors.first('Bestellung für anderen User')">
+                     :message="errors.first('Der Regex validiert nicht')">
                 <b-input v-model.trim="bitprojectowner"
                          name="Bestellung für anderen User"
                          v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
@@ -78,8 +78,6 @@
                             bitprojectdescription:  this.bitprojectdescription,
                             bitprojectowner: this.bitprojectowner
                         }).then(() => {
-                            this.loading = false;
-                        }, () => {
                             this.loading = false;
                         });
                     }
