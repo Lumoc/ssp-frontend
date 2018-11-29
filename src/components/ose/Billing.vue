@@ -11,6 +11,9 @@
         </div>
         <br>
         <form v-on:submit.prevent="getOpenshiftBilling">
+            <b-message type="is-info">
+                Alle Zahlen ohne Gewähr! Bitte verlassen sie sich auf die monatliche Abrechnung
+            </b-message>
             <b-field :type="errors.has('ProjectContains') ? 'is-danger' : ''" label="Projekt"
                      :message="errors.first('ProjectContains')">
                 <b-input v-model.trim="projectContains" name="ProjectContains"
@@ -19,21 +22,21 @@
                          placeholder="projekt-%">
                 </b-input>
             </b-field>
-            <b-field :type="errors.has('Start') ? 'is-danger' : ''" label="Von"
-                     :message="errors.first('Start')">
-                <b-datepicker v-model.trim="start" name="Start"
-                         icon="calendar-today"
-                         :max-date="today"
-                         placeholder="Von">
-                </b-datepicker>
-            </b-field>
-            <b-field :type="errors.has('End') ? 'is-danger' : ''" label="Bis"
-                     :message="errors.first('End')">
-                <b-datepicker v-model.trim="end" name="End"
-                         icon="calendar-today"
-                         :max-date="today"
-                         placeholder="Bis">
-                </b-datepicker>
+
+            <b-field label="Monat"
+                     :type="errors.has('Monat') ? 'is-danger' : ''"
+                     :message="errors.first('Monat')">
+
+                <b-select placeholder="Wähle den Monat aus"
+                          v-model="month"
+                          required>
+                    <option
+                            v-for="month in months"
+                            :value="month.value"
+                            :key="month.key">
+                        {{ month.key }}
+                    </option>
+                </b-select>
             </b-field>
 
             <label class="label">Cluster</label>
@@ -61,22 +64,22 @@
            download="Openshift_Verrechnung.csv">Download CSV
         </a>
         <br>
-        <b-table :data="data" narrowed detailed>
+        <b-table :data="data" narrowed detailed default-sort="Project">
 
             <template slot-scope="props">
-                <b-table-column field="receptionAssignment" label="EmpfStelle" width="40">
+                <b-table-column field="ReceptionAssignment" label="EmpfStelle" width="40" sortable>
                     {{ props.row.ReceptionAssignment }}
                 </b-table-column>
-                <b-table-column field="orderReception" label="EmpfAuftrag" width="40">
+                <b-table-column field="OrderReception" label="EmpfAuftrag" width="40" sortable>
                     {{ props.row.OrderReception }}
                 </b-table-column>
-                <b-table-column field="pspElement" label="Empfaenger-PSP-Element" width="40">
+                <b-table-column field="PspElement" label="Empfaenger-PSP-Element" width="40" sortable>
                     {{ props.row.PspElement }}
                 </b-table-column>
-                <b-table-column field="project" label="Projekt" width="40">
+                <b-table-column field="Project" label="Projekt" width="40" sortable>
                     {{ props.row.Project }}
                 </b-table-column>
-                <b-table-column field="total" label="Total" width="40" numeric>
+                <b-table-column field="Prices" label="Total" width="40" numeric sortable>
                     {{ getConsolidatedPrice(props.row.Prices) }} CHF
                 </b-table-column>
             </template>
@@ -138,6 +141,8 @@
     data() {
       return {
         data: [],
+        months: [],
+        month: 1,
         loading: false,
         csvDownload: '',
         cluster: 'aws',
@@ -147,13 +152,37 @@
         projectContains: ''
       };
     },
+    mounted: function () {
+        this.getMonths(3);
+    },
     methods: {
+      getMonths: function(n) {
+        var monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni",
+            "Juli", "August", "September", "Oktober", "November", "Dezember"
+        ];
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth();
+
+        var i = 0;
+        do {
+            this.months.push({value: i, key: monthNames[month]});
+            if(month == 1) {
+                month = 12;
+                year--;
+            } else {
+                month--;
+            }
+            i++;
+        } while(i < n);
+      },
       getOpenshiftBilling: function() {
         this.loading = true;
-
+        var date = new Date();
+        date.setDate(1);
+        date.setMonth(date.getMonth()-this.month);
         this.$http.post(this.$store.state.backendURL + '/api/ose/chargeback', {
-          start: this.start,
-          end: this.end,
+          date: date,
           cluster: this.cluster,
           projectContains: this.projectContains
         }).then((res) => {
