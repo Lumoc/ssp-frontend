@@ -39,8 +39,7 @@ Vue.http.interceptors.push(function (request, next) {
                 }
             });
         }
-
-        if (res.url !== '/login' && res.status === 401) {
+        if (!res.url.endsWith('/login') && res.status === 401) {
             this.$store.commit('setUser', {
                 user: null
             });
