@@ -20,7 +20,7 @@
                 </b-table-column>
                 <b-table-column field="snapshots" label="Snapshots">
                     <a v-on:click="listEC2Snapshots(props.row)">
-                    {{ props.row.snapshots.length }}
+                    {{ (props.row.snapshots) ? props.row.snapshots.length : 0 }}
                     </a>
                 </b-table-column>
                 <b-table-column field="state" label="State">
@@ -92,15 +92,15 @@
                             narrowed>
                         <template slot-scope="props">
                             <b-table-column field="description" label="Beschreibung" sortable>
-                                {{ props.row.description }}
+                                {{ props.row.Description }}
                             </b-table-column>
                             <b-table-column field="startTime" label="Datum" sortable>
-                                <b-tooltip :label="moment(props.row.startTime).calendar()">
-                                {{ moment(props.row.startTime).fromNow() }}
+                                <b-tooltip :label="moment(props.row.StartTime).calendar()">
+                                {{ moment(props.row.StartTime).fromNow() }}
                                 </b-tooltip>
                             </b-table-column>
                             <b-table-column field="disk" label="Disk" sortable>
-                                {{ props.row.deviceName }}
+                                {{ getTag(props.row, "devicename") }}
                             </b-table-column>
                             <b-table-column field="delete" label="Löschen">
                                 <a @click="deleteSnapshot(props.row)">
@@ -163,6 +163,13 @@
         this.showModal = false
         this.resetSnapshotForm()
       },
+      getTag(row, tag) {
+          tag = row.Tags.find(o => o.Key == tag);
+          if (tag) {
+            return tag.Value;
+          }
+          return "Unknown"
+      },
       createSnapshot: function(row) {
         if (this.snapshotDescription == "" || this.snapshotVolume == "") {
             this.$toast.open({
@@ -193,7 +200,7 @@
             this.snapshotLoading = false;
           });
         }
-        console.log("creating snapshot for instance: "+row.snapshotId)
+        console.log("creating snapshot for instance: "+row.instanceId)
       },
       deleteSnapshot: function(row) {
         if (confirm("Wollen Sie diesen Snapshot wirklich löschen?\n" + row.description + " ("+row.snapshotId+")")) {
