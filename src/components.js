@@ -13,6 +13,7 @@ import AdminList from './components/ose/AdminList.vue';
 import UpdateBilling from './components/ose/UpdateBilling.vue';
 import OpenshiftBilling from './components/ose/Billing.vue';
 import NewServiceAccount from './components/ose/NewServiceAccount.vue';
+import NewPullSecret from './components/ose/NewPullSecret.vue';
 // Gluster-Components
 import FixGluster from './components/volume/FixGluster.vue';
 import NewVolume from './components/volume/NewVolume.vue';
@@ -68,6 +69,7 @@ export const LocalComponents = {
     UpdateBilling,
     OpenshiftBilling,
     NewServiceAccount,
+    NewPullSecret,
     FixGluster,
     NewVolume,
     GrowVolume,
