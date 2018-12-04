@@ -25,6 +25,9 @@ const routes = [
         path: '/ose/newserviceaccount', component: LocalComponents.NewServiceAccount
     },
     {
+        path: '/ose/newpullsecret', component: LocalComponents.NewPullSecret
+    },
+    {
         path: '/ose/updatebilling', component: LocalComponents.UpdateBilling
     },
     {
