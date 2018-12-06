@@ -12,6 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="getAdminList">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field>
                 <label class="label">Projekt-Name</label>
             </b-field>
@@ -48,7 +49,11 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     computed: {
       username() {
         return this.$store.state.user.name;
@@ -56,6 +61,8 @@
     },
     data() {
       return {
+        clusterid: '',
+        projectname: '',
         data: [],
         loading: false
       };
@@ -65,10 +72,13 @@
         this.$validator.validateAll().then((result) => {
           if (result) {
             this.loading = true;
-
-            this.$http.get(this.$store.state.backendURL + '/api/ose/project/' + this.projectname + '/admins').then((res) => {
+            this.$http.get(this.$store.state.backendURL + '/api/ose/project/admins', {
+                params: {
+                  clusterid: this.clusterid,
+                  project: this.projectname
+                }
+            }).then((res) => {
               this.loading = false;
-
               this.data = res.body.admins;
             }, () => {
               this.loading = false;

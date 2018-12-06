@@ -20,6 +20,7 @@
             </div>
         </article>
         <form v-on:submit.prevent="newTestProject">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field>
                 <label class="label">Testprojekt-Name</label>
             </b-field>
@@ -49,7 +50,11 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     computed: {
       username() {
         return this.$store.state.user.name;
@@ -57,6 +62,7 @@
     },
     data() {
       return {
+        clusterid: '',
         testprojectname: '',
         loading: false
       };
@@ -68,6 +74,7 @@
             this.loading = true;
 
             this.$http.post(this.$store.state.backendURL + '/api/ose/testproject', {
+              clusterid: this.clusterid,
               project: this.testprojectname
             }).then(() => {
               this.loading = false;

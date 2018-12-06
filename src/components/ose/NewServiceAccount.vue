@@ -11,6 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="createServiceAccount">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field label="Openshift Projekt"
                      :type="errors.has('Openshift Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Openshift Projekt')">
@@ -57,34 +58,40 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                serviceAccount: '',
-                project: '',
-                loading: false,
-                createJenkinsCredential: false,
-                organizationKey: ''
-            };
-        },
-        methods: {
-            createServiceAccount: function () {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+  import ClusterSelect from './ClusterSelect.vue'
+  export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
+    data() {
+        return {
+            clusterid: '',
+            serviceAccount: '',
+            project: '',
+            loading: false,
+            createJenkinsCredential: false,
+            organizationKey: ''
+        };
+    },
+    methods: {
+        createServiceAccount: function () {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
-                            project: this.project,
-                            organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
-                            serviceAccount: this.serviceAccount
-                        }).then(() => {
-                            this.loading = false;
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
-                });
-            }
+                    this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
+                        clusterid: this.clusterid,
+                        project: this.project,
+                        organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
+                        serviceAccount: this.serviceAccount
+                    }).then(() => {
+                        this.loading = false;
+                    }, () => {
+                        this.loading = false;
+                    });
+                }
+            });
         }
-    };
+    }
+  };
 </script>

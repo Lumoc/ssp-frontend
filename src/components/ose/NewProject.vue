@@ -11,6 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newProject">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field label="Projekt-Name"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
@@ -47,9 +48,14 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     data() {
       return {
+        clusterid: '',
         megaId: '',
         billing: '',
         project: '',
@@ -63,6 +69,7 @@
             this.loading = true;
 
             this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
+              clusterid: this.clusterid,
               project: this.project,
               billing: this.billing,
               megaId: this.megaId

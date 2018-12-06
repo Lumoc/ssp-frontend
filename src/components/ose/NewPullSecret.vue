@@ -11,6 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="createPullSecret">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field label="Openshift Projekt"
                      :type="errors.has('Openshift Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Openshift Projekt')">
@@ -49,35 +50,41 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                project: '',
-                repository: '',
-                username: '',
-                password: '',
-                loading: false,
-            };
-        },
-        methods: {
-            createPullSecret: function () {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+  import ClusterSelect from './ClusterSelect.vue'
+  export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
+    data() {
+        return {
+            clusterid: '',
+            project: '',
+            repository: '',
+            username: '',
+            password: '',
+            loading: false,
+        };
+    },
+    methods: {
+        createPullSecret: function () {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
-                            project: this.project,
-                            repository: this.repository,
-                            username: this.username,
-                            password: this.password
-                        }).then(() => {
-                            this.loading = false;
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
-                });
-            }
+                    this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
+                        clusterid: this.clusterid,
+                        project: this.project,
+                        repository: this.repository,
+                        username: this.username,
+                        password: this.password
+                    }).then(() => {
+                        this.loading = false;
+                    }, () => {
+                        this.loading = false;
+                    });
+                }
+            });
         }
-    };
+    }
+};
 </script>
