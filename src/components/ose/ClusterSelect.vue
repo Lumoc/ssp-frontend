@@ -23,7 +23,8 @@
     },
     watch: {
       clusteridData(val) {
-        this.$emit('input', val)
+        localStorage.clusterid = val;
+        this.$emit('input', val);
       }
     },
     mounted: function () {
@@ -31,16 +32,22 @@
     },
     methods: {
       getClusters: function() {
-        console.log("getClusters")
         this.loading = true;
         this.$http.get(this.$store.state.backendURL + '/api/ose/clusters', null).then((res) => {
-            console.log(res.body)
           this.clusters = res.body;
           this.loading = false;
+          this.setSelect();
         }, () => {
           this.loading = false;
         });
       },
+      setSelect: function() {
+        if (localStorage.clusterid) {
+          this.clusteridData = localStorage.clusterid;
+        } else if (this.clusters.length > 0) {
+          this.clusteridData = this.clusters[0].id
+        }
+      }
     }
   };
 </script>

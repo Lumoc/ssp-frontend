@@ -11,6 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="createVolume">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field label="Projekt-Name"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
@@ -103,9 +104,14 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     data() {
       return {
+        clusterid: '',
         project: '',
         pvcName: '',
         size: '',
@@ -113,21 +119,28 @@
         mode: 'ReadWriteOnce',
         technology: 'nfs',
         loading: false,
-        config: {
+        features: {
             gluster: false,
-            nfs: false,
-            ddc: false,
+            nfs: false
         }
       };
     },
-    created: function() {
-        this.$http.get(this.$store.state.backendURL + '/config').then(res => {
-            this.config = res.body
-            // if nfs is not supported, change to gluster instead of nfs
-            if (!this.config.nfs) {
-                this.technology = 'gluster'
-            }
-        })
+    watch: {
+        clusterid: function(val) {
+            this.$http.get(this.$store.state.backendURL + '/features', {
+                params: {
+                    clusterid: val
+                }
+            }).then(res => {
+                this.features = res.body.openshift
+                // if nfs is not supported, change to gluster instead of nfs
+                if (this.features.nfs) {
+                    this.technology = 'nfs'
+                } else {
+                    this.technology = 'gluster'
+                }
+            })
+        }
     },
     methods: {
       createVolume: function() {
@@ -135,6 +148,7 @@
           if (result) {
             this.loading = true;
             this.$http.post(this.$store.state.backendURL + '/api/ose/volume', {
+              clusterid: this.clusterid,
               project: this.project,
               size: this.size,
               pvcName: this.pvcName,

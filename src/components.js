@@ -15,9 +15,9 @@ import OpenshiftBilling from './components/ose/Billing.vue';
 import NewServiceAccount from './components/ose/NewServiceAccount.vue';
 import NewPullSecret from './components/ose/NewPullSecret.vue';
 // Gluster-Components
-import FixGluster from './components/volume/FixGluster.vue';
-import NewVolume from './components/volume/NewVolume.vue';
-import GrowVolume from './components/volume/GrowVolume.vue';
+import FixGluster from './components/ose/FixGluster.vue';
+import NewVolume from './components/ose/NewVolume.vue';
+import GrowVolume from './components/ose/GrowVolume.vue';
 // DDC-Components
 import DDCBilling from './components/ddc/Billing.vue';
 // AWS Components

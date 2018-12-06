@@ -27,19 +27,19 @@
                         <router-link to="/ose/billing" class="navbar-item">Kostenverrechnung</router-link>
                         <router-link to="/ose/newserviceaccount" class="navbar-item">Service-Account anlegen</router-link>
                         <router-link to="/ose/newpullsecret" class="navbar-item">Docker Pull-Secret anlegen</router-link>
-                        <hr v-if="config.gluster || config.nfs" class="navbar-divider">
-                        <router-link v-if="config.gluster || config.nfs" to="/ose/volume/new" class="navbar-item">
+                        <hr class="navbar-divider">
+                        <router-link to="/ose/volume/new" class="navbar-item">
                             Persistent Volume anlegen
                         </router-link>
-                        <router-link v-if="config.gluster || config.nfs" to="/ose/volume/grow" class="navbar-item">
+                        <router-link to="/ose/volume/grow" class="navbar-item">
                             Persistent Volume vergrössern
                         </router-link>
-                        <router-link v-if="config.gluster" to="/ose/volume/fixgluster" class="navbar-item">
+                        <router-link to="/ose/volume/fixgluster" class="navbar-item">
                             Gluster Objekte neu anlegen lassen
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user && config.ddc" class="navbar-item has-dropdown is-hoverable">
+                <div v-if="user && features.ddc.enabled" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         DDC
                     </a>
@@ -122,15 +122,15 @@
         },
         data: function () {
             return {
-                config: {
-                    ddc: false,
-                    gluster: false,
-                    nfs: false,
+                features: {
+                    ddc: {
+                        enabled: false
+                    }
                 }
             }
         },
         created: function () {
-            this.$http.get(this.$store.state.backendURL + '/config').then(res => this.config = res.body)
+            this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
         },
         methods: {
             logout() {
