@@ -12,21 +12,24 @@
         <br>
         <form v-on:submit.prevent="fixGlusterObjects">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Projekt-Name"
-                :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                :message="errors.first('Projekt-Name')">
-                <b-input v-model.trim="project"
-                         placeholder="projekt-dev"
-                         name="Projekt-Name"
-                         ref="autofocus"
-                         v-validate="'required'">
-                </b-input>
-            </b-field>
+            <div v-if="gluster">
+                <b-field label="Projekt-Name"
+                    :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
+                    :message="errors.first('Projekt-Name')">
+                    <b-input v-model.trim="project"
+                            placeholder="projekt-dev"
+                            name="Projekt-Name"
+                            ref="autofocus"
+                            v-validate="'required'">
+                    </b-input>
+                </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Gluster Objekte erstellen
-            </button>
+                <button :disabled="errors.any()"
+                        v-bind:class="{'is-loading': loading}"
+                        class="button is-primary">Gluster Objekte erstellen
+                </button>
+            </div>
+            <p v-if="!gluster">Dieser Cluster unterstützt aktuell kein Gluster</p>
         </form>
     </div>
 </template>
@@ -41,8 +44,22 @@
       return {
         clusterid: '',
         project: '',
-        loading: false
+        loading: false,
+        gluster: false
       };
+    },
+    watch: {
+        clusterid: function(val) {
+            this.$http.get(this.$store.state.backendURL + '/features', {
+                params: {
+                    clusterid: val
+                }
+            }).then(res => {
+                this.features = res.body.openshift
+                // if gluster is not supported, change to false
+                this.gluster = res.body.openshift.gluster
+            })
+        }
     },
     methods: {
       fixGlusterObjects: function() {
