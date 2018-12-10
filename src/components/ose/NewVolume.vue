@@ -156,7 +156,7 @@
               technology: this.technology
             }).then((res) => {
               if (res.body.data.JobId) {
-                this.pollJob(res.body.data.JobId)
+                this.pollJob(this.clusterid, res.body.data.JobId)
               } else {
                 this.loading = false;
               }
@@ -166,10 +166,15 @@
           }
         });
       },
-      pollJob: function(job) {
+      pollJob: function(clusterid, job) {
         var that = this
         var poll = setInterval(function() {
-            that.$http.get(that.$store.state.backendURL + '/api/ose/volume/jobs/' + job).then((res) => {
+            that.$http.get(that.$store.state.backendURL + '/api/ose/volume/jobs', {
+                params: {
+                    clusterid: clusterid,
+                    job: job
+                }
+            }).then((res) => {
               that.progress = res.body
               if (res.body == "100") {
                 that.progress = ''
