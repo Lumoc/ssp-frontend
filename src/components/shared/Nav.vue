@@ -96,9 +96,9 @@
                         WZU-Gruppenmanagement
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/ActiveDirectory/ADGroup" class="navbar-item">AD Gruppe erstellen</router-link>
+                        <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">AD Gruppe erstellen</router-link>
                         <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD Gruppen Admin</router-link>
-                        <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD Gruppen User</router-link>
+                        <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD Gruppen User</router-link>-->
                         <router-link to="/wzu/alm" class="navbar-item">ALM User Berechtigung</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
                     </div>

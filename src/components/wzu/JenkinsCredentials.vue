@@ -17,15 +17,16 @@
                      :message="errors.first('Jenkins Organization Name')">
                 <b-input v-model.trim="organizationKey"
                          name="Jenkins Organization Name"
-                         v-validate="{ rules: { required: true } }">
+                         ref="autofocus"
+                         v-validate.rules="{ required: true }">
                 </b-input>
             </b-field>
             <b-field label="Beschreibung"
                      :type="errors.has('Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Beschreibung')">
                 <b-input v-model.trim="description"
-                         name="spacekey"
-                         v-validate="{ rules: { required: true } }">
+                         name="Beschreibung"
+                         v-validate.rules="{ required: true }">
                 </b-input>
             </b-field>
             <b-field label="Secret"
@@ -45,6 +46,23 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "Jenkins Organization Name": {
+                required: "Bitte gib einen Jenkins Organization Namen an.",
+            },
+            "Beschreibung": {
+                required: "Bitte gib eine Beschreibung an.",
+            }
+        }
+    };
+
+    // Override and merge the dictionaries
+    Validator.localize('de', dictionary);
+
     export default {
         data() {
             return {

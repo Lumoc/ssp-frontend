@@ -17,7 +17,8 @@
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="bitprojectname"
                          name="Projekt Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
+                         ref="autofocus"
+                         v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/}">
                 </b-input>
             </b-field>
 
@@ -26,7 +27,7 @@
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
                          name="Projekt Key"
-                         v-validate="{ rules: { required: true, regex: /^(((KS|SC|PV|PN|MV|ZF|INV|BP|AM|ERP|KD|KI|MVC|MVG|MVP|OM|PT|PZ|RSW|USER|TEST|TA|FT)_?.*))$/} }">
+                         v-validate.rules="{ required: true, regex: /^(((KS|SC|PV|PN|MV|ZF|INV|BP|AM|ERP|KD|KI|MVC|MVG|MVP|OM|PT|PZ|RSW|USER|TEST|TA|FT)_?.*))$/}">
                 </b-input>
             </b-field>
 
@@ -40,10 +41,10 @@
 
             <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
-                     :message="errors.first('Der Regex validiert nicht')">
+                     :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitprojectowner"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
+                         v-validate.rules="{ required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ }">
                 </b-input>
             </b-field>
 
@@ -56,6 +57,28 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "Projekt Name": {
+                required: "Bitte gib einen Projekt Namen an.",
+                regex: "Der Projekt Name darf sich nur aus alphanumerischen Zeichen zusammensetzen."
+            },
+            "Projekt Key": {
+                required: "Bitte gib einen Projekt Key an.",
+                regex: "Der Projekt Key muss mit dem Kürzel aus dem Domänenmodell und einem _ beginnen."
+            },
+            "Bestellung für anderen User": {
+                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            }
+        }
+    };
+
+    // Override and merge the dictionaries
+    Validator.localize('de', dictionary);
+
     export default {
         data() {
             return {

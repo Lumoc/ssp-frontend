@@ -13,12 +13,13 @@
         <br>
         <form v-on:submit.prevent="newArtifactoryRepository">
             <b-field label="Repository Name (nur Kleinbuchstaben und Zahlen)"
-                     :type="errors.has('Repository Name') ? 'is-danger' : ''"
-                     :message="errors.first('Repository Name')">
+                     :type="errors.has('RepositoryName') ? 'is-danger' : ''"
+                     :message="errors.first('RepositoryName')">
                 <b-input v-model.trim="repository"
-                         name="Repository Name"
+                         name="RepositoryName"
                          ref="autofocus"
-                         v-validate="{ rules: { required: true, regex: /^([0-9a-zA-Z]{1,}|[0-9a-zA-Z]{1,}-[0-9a-zA-Z]{1,})$/} }">
+                         :message="errors.first('RepositoryName')"
+                         v-validate.rules="{ required: true, regex: /^([0-9a-zA-Z]{1,}|[0-9a-zA-Z]{1,}-[0-9a-zA-Z]{1,})$/}">
                 </b-input>
             </b-field>
             <label class="label">Repository Typ</label>
@@ -58,6 +59,21 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "RepositoryName": {
+                required: "Bitte gib ein Repositoryname an.",
+                regex: "Der Repositoryname darf sich nur aus alphanumerischen Zeichen und maximal einem - zusammensetzen."
+            }
+        }
+    };
+
+    // Override and merge the dictionaries
+    Validator.localize('de', dictionary);
+
     export default {
         data() {
             return {
