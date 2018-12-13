@@ -203,9 +203,9 @@
         console.log("creating snapshot for instance: "+row.instanceId)
       },
       deleteSnapshot: function(row) {
-        if (confirm("Wollen Sie diesen Snapshot wirklich löschen?\n" + row.description + " ("+row.snapshotId+")")) {
+        if (confirm("Wollen Sie diesen Snapshot wirklich löschen?\n" + row.Description + " ("+row.SnapshotId+")")) {
             this.snapshotLoading = true;
-            this.$http.delete(this.$store.state.backendURL + '/api/aws/snapshots/' + row.account + '/' + row.snapshotId).then((res) => {
+            this.$http.delete(this.$store.state.backendURL + '/api/aws/snapshots/' + this.modalData.account + '/' + row.SnapshotId).then((res) => {
                 // remove snapshot from list
                 this.modalData.snapshots.splice(this.modalData.snapshots.indexOf(row), 1)
                 this.snapshotLoading = false;
