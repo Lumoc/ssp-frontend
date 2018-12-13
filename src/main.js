@@ -28,6 +28,13 @@ Vue.prototype.moment = Moment
 Validator.localize('de', VeeValidateGerman);
 Vue.use(VeeValidate);
 
+// Support endsWith on old browsers
+if (typeof String.prototype.endsWith !== 'function') {
+    String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };
+}
+
 // Http interceptors: Global response handler
 Vue.http.interceptors.push(function (request, next) {
     next(function (res) {
