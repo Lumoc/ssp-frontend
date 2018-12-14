@@ -17,8 +17,9 @@
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="projectname"
-                         name="Repository Name"
-                         v-validate="{ rules: { required: true} }">
+                         name="Projekt Name"
+                         ref="autofocus"
+                         v-validate.rules="{ required: true}">
                 </b-input>
             </b-field>
 
@@ -71,12 +72,12 @@
                 </b-radio-button>
             </b-field>
 
-            <b-field label="Bestellung für anderen User (u-Nr lowercase, wegen ALM)"
+            <b-field label="Bestellung für anderen User"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="almuser"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|e|U|E)([0-9]{6})$|^(ue|UE|uE|Ue)([0-9]{5})$/ } }">
+                         v-validate.rules="{ required: false, regex:/^(u|e|U|E)([0-9]{6})$|^(ue|UE|uE|Ue)([0-9]{5})$/ }">
                 </b-input>
             </b-field>
 
@@ -89,6 +90,21 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "Projekt Name": {
+                required: "Bitte gib einen Projekt Key an."
+            },
+            "Bestellung für anderen User":{
+                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            }
+        }
+    };
+
+    Validator.localize('de', dictionary);
     export default {
         data() {
             return {

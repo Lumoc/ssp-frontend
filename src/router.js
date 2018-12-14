@@ -92,6 +92,15 @@ const routes = [
     },
     {
         path: '/wzu/devproxy', component: LocalComponents.WZUDevProxy
+    },
+    {
+        path: '/ActiveDirectory/ADGroup', component: LocalComponents.ADGroup
+    },
+    {
+        path: '/ActiveDirectory/Adminaddordelete', component: LocalComponents.ADGroupAdmin
+    },
+    {
+        path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
     }
 ];
 
