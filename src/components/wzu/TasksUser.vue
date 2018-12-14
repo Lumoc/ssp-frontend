@@ -17,7 +17,8 @@
                      ref="autofocus">
                 <b-input v-model.trim="username"
                          name="Username"
-                         v-validate.rules="{ required: true, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/}">
+                         v-validate.rules="{ required: true, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/}"
+                         ref="autofocus">
                 </b-input>
             </b-field>
             <button :disabled="errors.any()"
