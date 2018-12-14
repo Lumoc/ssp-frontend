@@ -86,9 +86,9 @@
                         <router-link to="/wzu/bitbucket" class="navbar-item">Bitbucket Projekt</router-link>
                         <router-link to="/wzu/bitbucketrepo" class="navbar-item">Bitbucket Repository</router-link>
                         <router-link to="/wzu/confluence" class="navbar-item">Confluence</router-link>
+                        <router-link to="/wzu/devproxy" class="navbar-item">DevProxy-Token erstellen</router-link>
                         <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
                         <router-link to="/wzu/jira" class="navbar-item">JIRA</router-link>
-
                     </div>
                 </div>
 
@@ -102,7 +102,6 @@
                         <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD Gruppen User</router-link>-->
                         <router-link to="/wzu/alm" class="navbar-item">ALM User Berechtigung</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
-                        <router-link to="/wzu/devproxy" class="navbar-item">Entwicklerproxy</router-link>
                     </div>
                 </div>
             </div>
