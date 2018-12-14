@@ -11,26 +11,27 @@
             </div>
         </div>
         <br>
+        <!-- die regex error message funktioniert iwie mit type="errors... aber auch ohne, jedoch manchmal geht es dann nicht mehr...
+        notiere es hier, damit ich in zukunft effizienter handeln kann"-->
         <form v-on:submit.prevent="addToBackendConfluence">
             <b-field label="Space Name (nur alphanummerische Zeichen)"
                      :type="errors.has('Space Name') ? 'is-danger' : ''"
                      :message="errors.first('Space Name')">
                 <b-input v-model.trim="spacename"
                          name="Space Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
+                         ref="autofocus"
+                         v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/}">
                 </b-input>
             </b-field>
             <b-field label="Space Key (nur Grossbuchstaben max 10 Zeichen)"
-                     :type="errors.has('Space Key') ? 'is-danger' : ''"
-                     :message="errors.first('Space Key')">
+                     :message="errors.first('SpaceKey')"
+                     :type="errors.has('SpaceKey') ? 'is-danger' : ''">
                 <b-input v-model.trim="spacekey"
-                         name="spacekey"
-                         v-validate="{ rules: { required: true, regex: /^[A-Z]{0,10}$/} }">
+                         name="SpaceKey"
+                         v-validate.rules="{ required: true, regex: /^[A-Z]{0,10}$/}">
                 </b-input>
             </b-field>
-            <b-field label="Space Beschreibung (kein Pflichtfeld)"
-                     :type="errors.has('Space Beschreibung') ? 'is-danger' : ''"
-                     :message="errors.first('Space Beschreibung')">
+            <b-field label="Space Beschreibung (kein Pflichtfeld)">
                 <b-input v-model.trim="spacedescription"
                          name="spacedescription">
                 </b-input>
@@ -38,9 +39,9 @@
             <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
-                <b-input v-model.trim="spaceowner"
+                <b-input v-validate.rules="{ required: false, regex:/^(u|U)[0-9]{6}|(e|E)[0-9]{6}|(ue|Ue|UE)[0-9]{5}$/ }"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)[0-9]{6}|(e|E)[0-9]{6}|(ue|Ue|UE)[0-9]{5}$/} }">
+                         v-model.trim="spaceowner">
                 </b-input>
             </b-field>
 
@@ -53,6 +54,29 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "SpaceKey": {
+                required: "Bitte gib einen Space Key an.",
+                regex: "Der Space Key darf nur aus Grossbuchstaben und aus maximal 10 Zeichen bestehen."
+            },
+            "Space Name": {
+                required: "Bitte gib einen Space Namen an.",
+                regex: "Der Space Name darf nur aus alphanummerischen Zeichen bestehen"
+            },
+            "Bestellung für anderen User":{
+                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            }
+        }
+    };
+
+    // Override and merge the dictionaries
+    Validator.localize('de', dictionary);
+
+
     export default {
         data() {
             return {
@@ -63,8 +87,8 @@
                 loading: false
             };
         },
-        methods: {
-            addToBackendConfluence: function() {
+
+    addToBackendConfluence: function() {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
                         this.loading = true;
@@ -82,7 +106,6 @@
                     }
                 });
             }
-        }
 
     };
 </script>

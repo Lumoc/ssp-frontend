@@ -78,16 +78,28 @@
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        WZU
+                        WZU-Dienste
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/wzu/alm" class="navbar-item">ALM User Berechtigung</router-link>
                         <router-link to="/wzu/artifactory" class="navbar-item">Artifactory</router-link>
                         <router-link to="/wzu/bitbucket" class="navbar-item">Bitbucket Projekt</router-link>
                         <router-link to="/wzu/bitbucketrepo" class="navbar-item">Bitbucket Repository</router-link>
                         <router-link to="/wzu/confluence" class="navbar-item">Confluence</router-link>
+                        <router-link to="/wzu/devproxy" class="navbar-item">DevProxy-Token erstellen</router-link>
                         <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
                         <router-link to="/wzu/jira" class="navbar-item">JIRA</router-link>
+                    </div>
+                </div>
+
+                <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        WZU-Gruppenmanagement
+                    </a>
+                    <div class="navbar-dropdown">
+                        <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">AD Gruppe erstellen</router-link>
+                        <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD Gruppen Admin</router-link>
+                        <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD Gruppen User</router-link>-->
+                        <router-link to="/wzu/alm" class="navbar-item">ALM User Berechtigung</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
                     </div>
                 </div>

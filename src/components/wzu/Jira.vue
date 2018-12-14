@@ -18,20 +18,21 @@
 
             </b-field>
             <b-field label="Projekt Name (nur alphanummerische Zeichen)"
-                     :type="errors.has('Projekt Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt Name')">
+                     :type="errors.has('ProjectName') ? 'is-danger' : ''"
+                     :message="errors.first('ProjectName')">
                 <b-input v-model.trim="projectname"
-                         name="Projekt Name"
+                         name="ProjectName"
                          ref="autofocus"
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
             <b-field label="Projekt Key (nur Grossbuchstaben max 10 Zeichen)"
-                     :type="errors.has('Projekt Key') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt Key')">
+                     :type="errors.has('ProjectKey') ? 'is-danger': ''"
+                     :message="errors.first('ProjectKey')">
                 <b-input v-model.trim="projectkey"
-                         name="Projekt Key"
-                         v-validate="{ rules: { required: true, regex: /^[A-Z]{0,10}$/} }">
+                         name="ProjectKey"
+                         v-validate.rules="{ required: true, regex: /^[A-Z]{0,10}$/}"
+                         :message="errors.first('ProjectKey')">
                 </b-input>
             </b-field>
             <b-field label="Projekt Beschreibung (kein Pflichtfeld)"
@@ -46,7 +47,7 @@
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="projectowner"
                          name="Bestellung für anderen User"
-                         v-validate="{ rules: { required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ } }">
+                         v-validate.rules="{ required: false, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$/ }">
                 </b-input>
             </b-field>
             <button :disabled="errors.any()"
@@ -58,6 +59,27 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "ProjectKey": {
+                required: "Bitte gib einen Projekt Key an.",
+                regex: "Der Projekt Key darf nur aus Grossbuchstaben und aus maximal 10 Zeichen bestehen."
+            },
+            "ProjectName": {
+                required: "Bitte gib einen Projekt Namen an.",
+                regex: "Der Projekt Name darf nur aus alphanummerischen Zeichen bestehen"
+            },
+            "Bestellung für anderen User":{
+                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            }
+        }
+    };
+
+    Validator.localize('de', dictionary);
+
     export default {
         data() {
             return {

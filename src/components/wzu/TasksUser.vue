@@ -13,10 +13,12 @@
         <form v-on:submit.prevent="addToBackendTasks">
             <b-field label="Username (U/E/UE-Nr)"
                      :type="errors.has('Username') ? 'is-danger' : ''"
-                     :message="errors.first('Username')">
+                     :message="errors.first('Username')"
+                     ref="autofocus">
                 <b-input v-model.trim="username"
                          name="Username"
-                         v-validate="{ rules: { required: true, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/} }">
+                         v-validate.rules="{ required: true, regex:/^(u|U)([0-9]{6})$|^(ue|UE|Ue)([0-9]{5})$|^(e|E)([0-9]{6})$/}"
+                         ref="autofocus">
                 </b-input>
             </b-field>
             <button :disabled="errors.any()"
@@ -28,6 +30,21 @@
 </template>
 
 <script>
+    import { Validator } from 'vee-validate';
+
+    const dictionary = {
+        custom: {
+
+            "Username": {
+                required: "Bitte gib einen Usernamen an.",
+                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            }
+        }
+    };
+
+    // Override and merge the dictionaries
+    Validator.localize('de', dictionary);
+
     export default {
         data() {
             return {

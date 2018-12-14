@@ -39,6 +39,12 @@ import WZUArtifactory from './components/wzu/Artifactory.vue';
 import WZUJenkinsCredentials from './components/wzu/JenkinsCredentials.vue';
 import WZUALM from './components/wzu/ALM.vue';
 import TasksUser from './components/wzu/TasksUser.vue';
+import WZUDevProxy from './components/wzu/DevProxy.vue';
+
+// AD Components
+import ADGroup from './components/ActiveDirectory/ADGroup.vue';
+import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
+import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
 Vue.component('login', Login);
 Vue.component('navbar', Nav);
@@ -89,5 +95,9 @@ export const LocalComponents = {
     WZUArtifactory,
     WZUJenkinsCredentials,
     WZUALM,
-    TasksUser
+    TasksUser,
+    WZUDevProxy,
+    ADGroup,
+    ADGroupAdmin,
+    ADGroupUser
 };
