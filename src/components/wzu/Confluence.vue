@@ -87,8 +87,8 @@
                 loading: false
             };
         },
-
-    addToBackendConfluence: function() {
+        methods: {
+            addToBackendConfluence: function () {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
                         this.loading = true;
@@ -106,7 +106,7 @@
                     }
                 });
             }
-
+        }
     };
 </script>
 
