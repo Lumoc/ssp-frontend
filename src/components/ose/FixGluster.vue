@@ -1,0 +1,83 @@
+<template>
+    <div>
+        <div class="hero is-light">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Gluster Konfiguration erzeugen</h1>
+                </div>
+                <h2 class="subtitle">
+                    Diese Funktion erstellt die Gluster Objekte (Service & Endpoints) in deinem Projekt</h2>
+            </div>
+        </div>
+        <br>
+        <form v-on:submit.prevent="fixGlusterObjects">
+            <cluster-select v-model="clusterid"></cluster-select>
+            <div v-if="gluster">
+                <b-field label="Projekt-Name"
+                    :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
+                    :message="errors.first('Projekt-Name')">
+                    <b-input v-model.trim="project"
+                            placeholder="projekt-dev"
+                            name="Projekt-Name"
+                            ref="autofocus"
+                            v-validate="'required'">
+                    </b-input>
+                </b-field>
+
+                <button :disabled="errors.any()"
+                        v-bind:class="{'is-loading': loading}"
+                        class="button is-primary">Gluster Objekte erstellen
+                </button>
+            </div>
+            <p v-if="!gluster">Dieser Cluster unterstützt aktuell kein Gluster</p>
+        </form>
+    </div>
+</template>
+
+<script>
+  import ClusterSelect from './ClusterSelect.vue'
+  export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
+    data() {
+      return {
+        clusterid: '',
+        project: '',
+        loading: false,
+        gluster: false
+      };
+    },
+    watch: {
+        clusterid: function(val) {
+            this.$http.get(this.$store.state.backendURL + '/features', {
+                params: {
+                    clusterid: val
+                }
+            }).then(res => {
+                this.features = res.body.openshift
+                // if gluster is not supported, change to false
+                this.gluster = res.body.openshift.gluster
+            })
+        }
+    },
+    methods: {
+      fixGlusterObjects: function() {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            this.loading = true;
+
+            this.$http.post(this.$store.state.backendURL + '/api/ose/volume/gluster/fix', {
+              clusterid: this.clusterid,
+              project: this.project
+            }).then(() => {
+              this.loading = false;
+            }, () => {
+              this.loading = false;
+            });
+          }
+        });
+      }
+    }
+  };
+</script>

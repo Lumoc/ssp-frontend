@@ -12,6 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateBilling">
+            <cluster-select v-model="clusterid"></cluster-select>
             <label class="label">Projekt-Name</label>
             <b-field grouped
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
@@ -47,9 +48,14 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     data() {
       return {
+        clusterid: '',
         billing: '',
         project: '',
         loading: false
@@ -62,6 +68,7 @@
             this.loading = true;
 
             this.$http.post(this.$store.state.backendURL + '/api/ose/billing', {
+              clusterid: this.clusterid,
               project: this.project,
               billing: this.billing
             }).then(() => {
@@ -73,7 +80,12 @@
         });
       },
       getExistingBillingData: function() {
-        this.$http.get(this.$store.state.backendURL + '/api/ose/billing/' + this.project).then(() => {
+        this.$http.get(this.$store.state.backendURL + '/api/ose/billing', {
+            params: {
+                clusterid: this.clusterid,
+                project: this.project
+            }
+        }).then(() => {
           this.loading = false;
         }, () => {
           this.loading = false;

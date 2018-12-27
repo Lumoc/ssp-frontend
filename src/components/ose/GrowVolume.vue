@@ -15,6 +15,7 @@
         </b-message>
 
         <form v-on:submit.prevent="growVolume">
+            <cluster-select v-model="clusterid"></cluster-select>
             <b-field label="Name des Persistent Volumes"
                      :type="errors.has('PV-Name') ? 'is-danger' : ''"
                      :message="errors.first('PV-Name')">
@@ -50,9 +51,14 @@
 </template>
 
 <script>
+  import ClusterSelect from './ClusterSelect.vue'
   export default {
+    components: {
+      'cluster-select': ClusterSelect
+    },
     data() {
       return {
+        clusterid: '',
         project: '',
         pvName: '',
         newSize: '',
@@ -66,6 +72,7 @@
             this.loading = true;
 
             this.$http.post(this.$store.state.backendURL + '/api/ose/volume/grow', {
+              clusterid: this.clusterid,
               project: this.project,
               newSize: this.newSize,
               pvName: this.pvName
