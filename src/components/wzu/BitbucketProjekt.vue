@@ -13,29 +13,29 @@
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
             <b-field label="Projekt Name (nur alphanummerische Zeichen)"
-                     :type="errors.has('Projekt Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt Name')">
+                     :type="errors.has('ProjektName') ? 'is-danger' : ''"
+                     :message="errors.first('ProjektName')">
                 <b-input v-model.trim="bitprojectname"
-                         name="Projekt Name"
+                         name="ProjektName"
                          ref="autofocus"
                          v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/}">
                 </b-input>
             </b-field>
 
             <b-field label="Projekt Key (nur Grossbuchstaben beginnend mit Domänen Modell)"
-                     :type="errors.has('Projekt Key') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt Key')">
+                     :type="errors.has('ProjektKey') ? 'is-danger' : ''"
+                     :message="errors.first('ProjektKey')">
                 <b-input v-model.trim="bitprojectkey"
-                         name="Projekt Key"
+                         name="ProjektKey"
                          v-validate.rules="{ required: true, regex: /^(((KS|SC|PV|PN|MV|ZF|INV|BP|AM|ERP|KD|KI|MVC|MVG|MVP|OM|PT|PZ|RSW|USER|TEST|TA|FT)_?.*))$/}">
                 </b-input>
             </b-field>
 
             <b-field label="Projekt Beschreibung (kein Pflichtfeld)"
-                     :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt Beschreibung')">
+                     :type="errors.has('ProjektBeschreibung') ? 'is-danger' : ''"
+                     :message="errors.first('ProjektBeschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
-                         name="Projekt Beschreibung">
+                         name="ProjektBeschreibung">
                 </b-input>
             </b-field>
 
@@ -62,11 +62,11 @@
     const dictionary = {
         custom: {
 
-            "Projekt Name": {
+            "ProjektName": {
                 required: "Bitte gib einen Projekt Namen an.",
                 regex: "Der Projekt Name darf sich nur aus alphanumerischen Zeichen zusammensetzen."
             },
-            "Projekt Key": {
+            "ProjektKey": {
                 required: "Bitte gib einen Projekt Key an.",
                 regex: "Der Projekt Key muss mit dem Kürzel aus dem Domänenmodell und einem _ beginnen."
             },
