@@ -167,8 +167,8 @@
         var i = 0;
         do {
             this.months.push({value: i, key: monthNames[month]});
-            if(month == 1) {
-                month = 12;
+            if(month == 0) {
+                month = 11;
                 year--;
             } else {
                 month--;
