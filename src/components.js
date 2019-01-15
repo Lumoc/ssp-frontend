@@ -25,6 +25,9 @@ import ListS3Buckets from './components/aws/ListS3Buckets.vue';
 import NewS3Bucket from './components/aws/NewS3Bucket.vue';
 import NewS3User from './components/aws/NewS3User.vue';
 import ListEC2Instances from './components/aws/ListEC2Instances.vue';
+// OTC Components
+import ListECS from './components/otc/ListECS.vue';
+import NewECS from './components/otc/NewECS.vue';
 // Sematext Components
 import SematextAppList from './components/sematext/AppList.vue';
 import SematextNewApp from './components/sematext/NewApp.vue';
@@ -84,6 +87,8 @@ export const LocalComponents = {
     ListEC2Instances,
     NewS3Bucket,
     NewS3User,
+    NewECS,
+    ListECS,
     SematextAppList,
     SematextNewApp,
     SematextChangeBilling,

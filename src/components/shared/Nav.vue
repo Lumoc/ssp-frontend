@@ -2,7 +2,7 @@
     <nav class="navbar ">
         <div class="navbar-brand">
             <router-link to="/" class="navbar-item">
-                <b-icon icon="opacity"></b-icon>
+                <b-icon icon="opacity"></b-icon>&nbsp;
                 Cloud SSP
             </router-link>
             <div class="navbar-burger burger" data-target="navMain">
@@ -58,6 +58,15 @@
                         </router-link>
                         <router-link to="/aws/listec2instances" class="navbar-item">AWS EC2 Instanzen anzeigen
                         </router-link>
+                    </div>
+                </div>
+                <div v-if="user && features.ddc.enabled" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        OTC
+                    </a>
+                    <div class="navbar-dropdown">
+                        <router-link to="/otc/listecs" class="navbar-item">Elastic Cloud Server anzeigen</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Elastic Cloud Server erstellen</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">

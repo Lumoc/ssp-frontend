@@ -58,6 +58,12 @@ const routes = [
         path: '/aws/listec2instances', component: LocalComponents.ListEC2Instances
     },
     {
+        path: '/otc/listecs', component: LocalComponents.ListECS
+    },
+    {
+        path: '/otc/newecs', component: LocalComponents.NewECS
+    },
+    {
         path: '/sematext/newapp', component: LocalComponents.SematextNewApp
     },
     {
