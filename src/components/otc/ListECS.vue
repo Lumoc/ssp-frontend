@@ -27,49 +27,69 @@
         </button>
         
         <br><br>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="true" checkable default-sort="name" :paginated="true" :per-page="20">
+        <b-table :data="data" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="true" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id" 
+            :opened-detailed="getFirstId()">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="ipv4" label="IPs" sortable>
-                    <ul id="ips">
-                        <li v-for="ip in props.row.ipv4" v-bind:key="ip">
-                            {{ ip }}
-                        </li>
-                    </ul>                    
-                </b-table-column>
-                <b-table-column field="vcpus" label="VCPUs" sortable>
-                    {{ props.row.vcpus }}
-                </b-table-column>
-                <b-table-column field="ram" label="RAM" sortable>
-                    {{ props.row.ram/1024 }}GB
+                <b-table-column field="owner" label="Besitzer" sortable>
+                    {{ props.row.owner }}
                 </b-table-column>
                 <b-table-column field="status" label="Status" sortable>
                     {{ props.row.status }}
                 </b-table-column>
-                <b-table-column field="imageName" label="Image" sortable>
-                    {{ props.row.imageName }}
-                </b-table-column>
-                <b-table-column field="owner" label="Besitzer" sortable>
-                    {{ props.row.owner }}
-                </b-table-column>
-                <b-table-column field="megaId" label="Mega ID" sortable>
-                    {{ props.row.megaId }}
-                </b-table-column>
-                <b-table-column field="billing" label="Kontierungsnummer" sortable>
-                    {{ props.row.billing }}
-                </b-table-column>
-                <b-table-column field="created" label="Erstellt" sortable>
-                    {{ new Date(props.row.created).toLocaleString("de-CH") }}
-                </b-table-column>
             </template>
-
-            
+            <template slot="detail" slot-scope="props">
+                <div class="columns">
+                    <div class="column">
+                        <table>
+                            <tr><td>
+                                RAM:
+                            </td><td>
+                                {{ props.row.ram/1024 }}GB
+                            </td></tr>
+                            <tr><td>
+                                vCPUs:
+                            </td><td>
+                                {{ props.row.vcpus }}
+                            </td></tr>
+                            <tr><td>
+                                Image:
+                            </td><td>
+                                {{ props.row.imageName }}
+                            </td></tr>                            
+                            <tr><td>
+                                IP Adressen:
+                            </td><td>
+                                <ul id="ips">
+                                    <li v-for="ip in props.row.ipv4" v-bind:key="ip">
+                                        {{ ip }}
+                                    </li>
+                                </ul>
+                            </td></tr>
+                            <tr><td>
+                                Erstellt:
+                            </td><td>
+                                {{ new Date(props.row.created).toLocaleString("de-CH") }}
+                            </td></tr>
+                            <tr><td>
+                                Mega ID:
+                            </td><td>
+                                {{ props.row.megaId }}
+                            </td></tr>
+                            <tr><td>
+                                Kontierungsnummer:
+                            </td><td>
+                                {{ props.row.billing }}
+                            </td></tr>
+                        </table>
+                    </div>
+                </div>
+            </template>
             <div slot="empty" class="has-text-centered">
                 Solltest du ECS Instanzen besitzen, werden diese hier angezeigt.
             </div>
-
         </b-table>
     </div>
 </template>
@@ -86,11 +106,28 @@
             this.listECServers();
         },
         methods: {
+            getFirstId: function() {
+                if (this.data.length > 0) {
+                    return [this.data[0].id];
+                } else {
+                    return [];
+                }
+            },
+            getDeviceName: function(volume, serverId) {
+                var device = '';
+                volume.attachments.forEach(function(attachment) {
+                    if (attachment.server_id === serverId) {
+                        device = attachment.device;
+                        return;
+                    }
+                });
+                return device;
+            },
             listECServers: function() {
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
-                    console.log(res.body)
                     this.data = res.body.ecServers
+                    console.log(this.data)
                     this.checkedRows = []
                     this.loading = false;
                 }, () => {
