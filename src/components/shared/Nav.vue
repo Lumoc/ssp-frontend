@@ -60,7 +60,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user && features.ddc.enabled" class="navbar-item has-dropdown is-hoverable">
+                <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         OTC
                     </a>
