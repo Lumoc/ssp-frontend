@@ -146,6 +146,9 @@
                 features: {
                     ddc: {
                         enabled: false
+                    },
+                    otc: {
+                        enabled: false
                     }
                 }
             }
