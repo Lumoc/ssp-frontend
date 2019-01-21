@@ -12,14 +12,14 @@
         <br>
         <form v-on:submit.prevent="newProject">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Projekt-Name"
+            <b-field label="OpenShift Projekt"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
                 <b-input v-model.trim="project"
                          name="Projekt-Name"
                          v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
                          ref="autofocus"
-                         placeholder="projekt-dev">
+                         placeholder="projekt-name">
                 </b-input>
             </b-field>
             <b-message type="is-info">

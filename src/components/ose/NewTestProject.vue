@@ -22,7 +22,7 @@
         <form v-on:submit.prevent="newTestProject">
             <cluster-select v-model="clusterid"></cluster-select>
             <b-field>
-                <label class="label">Testprojekt-Name</label>
+                <label class="label">Testprojekt Name</label>
             </b-field>
             <b-field class="has-addons" :type="errors.has('Testprojekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Testprojekt-Name')">

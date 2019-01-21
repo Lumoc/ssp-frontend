@@ -12,15 +12,7 @@
         <br>
         <form v-on:submit.prevent="editQuotas">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Projekt-Name"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
-                <b-input v-model.trim="project"
-                         name="Projekt-Name"
-                         ref="autofocus"
-                         v-validate="'required'">
-                </b-input>
-            </b-field>
+            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <b-field label="Neue CPU Quotas [Cores]"
                      :type="errors.has('CPU') ? 'is-danger' : ''"
@@ -54,9 +46,11 @@
 
 <script>
   import ClusterSelect from './ClusterSelect.vue'
+  import ProjectSelect from './ProjectSelect.vue'
   export default {
     components: {
-      'cluster-select': ClusterSelect
+      'cluster-select': ClusterSelect,
+      'project-select': ProjectSelect
     },
     data() {
       return {

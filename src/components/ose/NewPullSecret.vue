@@ -12,16 +12,7 @@
         <br>
         <form v-on:submit.prevent="createPullSecret">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Openshift Projekt"
-                     :type="errors.has('Openshift Projekt') ? 'is-danger' : ''"
-                     :message="errors.first('Openshift Projekt')">
-                <b-input v-model.trim="project"
-                         placeholder="projekt-dev"
-                         name="Projekt-Name"
-                         ref="autofocus"
-                         v-validate="'required'">
-                </b-input>
-            </b-field>
+            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <b-field label="Docker Repository"
                      :type="errors.has('Docker Repository') ? 'is-danger' : ''"
@@ -51,9 +42,11 @@
 
 <script>
   import ClusterSelect from './ClusterSelect.vue'
+  import ProjectSelect from './ProjectSelect.vue'
   export default {
     components: {
-      'cluster-select': ClusterSelect
+      'cluster-select': ClusterSelect,
+      'project-select': ProjectSelect
     },
     data() {
         return {
