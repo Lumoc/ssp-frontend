@@ -13,21 +13,12 @@
         <br>
         <form v-on:submit.prevent="updateBilling">
             <cluster-select v-model="clusterid"></cluster-select>
-            <label class="label">Projekt-Name</label>
             <b-field grouped
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
-                <b-input v-model.trim="project"
-                         placeholder="projekt-dev"
-                         name="Projekt-Name"
-                         v-validate="'required'"
-                         ref="autofocus"
-                         expanded>
-                </b-input>
-                <p class="control">
-                    <span class="button is-info"
+                <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+                    <span class="control button is-info"
                           v-on:click="getExistingBillingData">Aktuelle Daten anzeigen</span>
-                </p>
             </b-field>
 
             <b-field label="Neue Kontierungsnummer"
@@ -49,9 +40,11 @@
 
 <script>
   import ClusterSelect from './ClusterSelect.vue'
+  import ProjectSelect from './ProjectSelect.vue'
   export default {
     components: {
-      'cluster-select': ClusterSelect
+      'cluster-select': ClusterSelect,
+      'project-select': ProjectSelect
     },
     data() {
       return {

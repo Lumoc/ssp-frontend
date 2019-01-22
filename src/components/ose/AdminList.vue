@@ -13,17 +13,7 @@
         <br>
         <form v-on:submit.prevent="getAdminList">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field>
-                <label class="label">Projekt-Name</label>
-            </b-field>
-            <b-field :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
-                <b-input v-model.trim="projectname" name="Projekt-Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
-                         ref="autofocus"
-                         placeholder="projekt">
-                </b-input>
-            </b-field>
+            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <button :disabled="errors.any()" v-bind:class="{'is-loading': loading}" class="button is-primary">
                 Admin-Liste anzeigen
@@ -48,11 +38,14 @@
     </div>
 </template>
 
+
 <script>
   import ClusterSelect from './ClusterSelect.vue'
+  import ProjectSelect from './ProjectSelect.vue'
   export default {
     components: {
-      'cluster-select': ClusterSelect
+      'cluster-select': ClusterSelect,
+      'project-select': ProjectSelect
     },
     computed: {
       username() {
@@ -62,20 +55,21 @@
     data() {
       return {
         clusterid: '',
-        projectname: '',
+        project: '',
         data: [],
         loading: false
       };
     },
     methods: {
       getAdminList: function() {
+            console.log(this.project)
         this.$validator.validateAll().then((result) => {
           if (result) {
             this.loading = true;
             this.$http.get(this.$store.state.backendURL + '/api/ose/project/admins', {
                 params: {
                   clusterid: this.clusterid,
-                  project: this.projectname
+                  project: this.project
                 }
             }).then((res) => {
               this.loading = false;
