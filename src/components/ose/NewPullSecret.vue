@@ -14,12 +14,6 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="Docker Repository"
-                     :type="errors.has('Docker Repository') ? 'is-danger' : ''"
-                     :message="errors.first('Docker Repository')">
-                <b-input v-model.trim="repository" name="repository"></b-input>
-            </b-field>
-
             <b-field label="Benutzername"
                      :type="errors.has('Benutzername') ? 'is-danger' : ''"
                      :message="errors.first('Benutzername')">
@@ -29,8 +23,11 @@
             <b-field label="Passwort"
                      :type="errors.has('Passwort') ? 'is-danger' : ''"
                      :message="errors.first('Passwort')">
-                <b-input v-model.trim="password" name="password"></b-input>
+                <b-input v-model.trim="password" name="password" type="password" password-reveal></b-input>
             </b-field>
+            <b-message type="is-info">
+                Benutzername und Passwort aus dem Mail. Der Repository-Name muss nicht eingetragen werden. <a target="_blank" href="https://confluence.sbb.ch/x/QAVfNw#MigrationaufArtifactory-Pipeline-Pull-Secretf%C3%BCrArtifactoryDocker-Repoanlegen">Mehr Infos</a>
+            </b-message>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
@@ -52,7 +49,6 @@
         return {
             clusterid: '',
             project: '',
-            repository: '',
             username: '',
             password: '',
             loading: false,
@@ -67,7 +63,6 @@
                     this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
                         clusterid: this.clusterid,
                         project: this.project,
-                        repository: this.repository,
                         username: this.username,
                         password: this.password
                     }).then(() => {
