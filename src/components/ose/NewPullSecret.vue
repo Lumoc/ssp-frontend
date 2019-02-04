@@ -23,7 +23,7 @@
             <b-field label="Passwort"
                      :type="errors.has('Passwort') ? 'is-danger' : ''"
                      :message="errors.first('Passwort')">
-                <b-input v-model.trim="password" name="password"></b-input>
+                <b-input v-model.trim="password" name="password" type="password" password-reveal></b-input>
             </b-field>
             <b-message type="is-info">
                 Benutzername und Passwort aus dem Mail. Der Repository-Name muss nicht eingetragen werden. <a target="_blank" href="https://confluence.sbb.ch/x/QAVfNw#MigrationaufArtifactory-Pipeline-Pull-Secretf%C3%BCrArtifactoryDocker-Repoanlegen">Mehr Infos</a>
@@ -49,7 +49,6 @@
         return {
             clusterid: '',
             project: '',
-            repository: '',
             username: '',
             password: '',
             loading: false,
@@ -64,7 +63,6 @@
                     this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
                         clusterid: this.clusterid,
                         project: this.project,
-                        repository: this.repository,
                         username: this.username,
                         password: this.password
                     }).then(() => {
