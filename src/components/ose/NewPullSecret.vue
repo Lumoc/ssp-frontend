@@ -14,19 +14,19 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="Benutzername"
-                     :type="errors.has('Benutzername') ? 'is-danger' : ''"
-                     :message="errors.first('Benutzername')">
+            <b-field label="Username"
+                     :type="errors.has('Username') ? 'is-danger' : ''"
+                     :message="errors.first('Username')">
                 <b-input v-model.trim="username" name="username"></b-input>
             </b-field>
 
-            <b-field label="Passwort"
-                     :type="errors.has('Passwort') ? 'is-danger' : ''"
-                     :message="errors.first('Passwort')">
+            <b-field label="Password"
+                     :type="errors.has('Password') ? 'is-danger' : ''"
+                     :message="errors.first('Password')">
                 <b-input v-model.trim="password" name="password" type="password" password-reveal></b-input>
             </b-field>
             <b-message type="is-info">
-                Benutzername und Passwort aus dem Mail. Der Repository-Name muss nicht eingetragen werden. <a target="_blank" href="https://confluence.sbb.ch/x/QAVfNw#MigrationaufArtifactory-Pipeline-Pull-Secretf%C3%BCrArtifactoryDocker-Repoanlegen">Mehr Infos</a>
+                "Username" und "Password" aus dem Email, welches bei der Docker Repo Bestellung von Artifactory verschickt wurde. <a target="_blank" href="https://confluence.sbb.ch/x/jwf5Q">Mehr Infos</a>
             </b-message>
 
             <button :disabled="errors.any()"
