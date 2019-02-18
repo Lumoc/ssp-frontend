@@ -76,25 +76,59 @@
             <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
                 Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
-            
+
             <b-field grouped>
-  
-                <b-field label="System Disk"
-                        :type="errors.has('System Disk') ? 'is-danger' : ''"
-                        :message="errors.first('System Disk')">
+
+                <b-field label="Root Disk"
+                        :type="errors.has('Root Disk') ? 'is-danger' : ''"
+                        :message="errors.first('Root Disk')">
 
                     <b-select :loading="loading"
-                            v-model="systemVolumeType"
+                            v-model="rootVolumeTypeId"
                             required>
                         <option
                                 v-for="volumeType in volumeTypes"
-                                :value="volumeType"
+                                :value="volumeType.id"
                                 :key="volumeType.name">
                             {{ volumeType.name }}
                         </option>
                     </b-select>
                 </b-field>
-            
+
+                <b-field label="GB"
+                        :type="errors.has('Root Disk GB') ? 'is-danger' : ''"
+                        :message="errors.first('Root Disk GB')">
+                    <b-input type="text"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
+                            name="Root Disk GB"
+                            v-model.number="rootDiskSize">
+                    </b-input>
+                </b-field>
+
+            </b-field>
+
+            <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
+                Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
+            </b-message>
+
+            <b-field grouped>
+
+                <b-field label="System Disk"
+                        :type="errors.has('System Disk') ? 'is-danger' : ''"
+                        :message="errors.first('System Disk')">
+
+                    <b-select :loading="loading"
+                            v-model="systemVolumeTypeId"
+                            required>
+                        <option
+                                v-for="volumeType in volumeTypes"
+                                :value="volumeType.id"
+                                :key="volumeType.name">
+                            {{ volumeType.name }}
+                        </option>
+                    </b-select>
+                </b-field>
+
                 <b-field label="GB"
                         :type="errors.has('System Disk GB') ? 'is-danger' : ''"
                         :message="errors.first('System Disk GB')">
@@ -107,18 +141,14 @@
 
             </b-field>
 
-            <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > systemDiskSize">
-                Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse System Disk.
-            </b-message>
+            <b-field grouped>
 
-            <b-field label="Zusätzliche Daten Disks">
-                <button type="button" class="button is-dark" @click="addDataDisk()" :disabled="dataDisks.length>=5">Hinzufügen</button>
-            </b-field>
+                <b-field label="Daten Disk"
+                        :type="errors.has('Data Disk') ? 'is-danger' : ''"
+                        :message="errors.first('Data Disk')">
 
-            <b-field grouped v-for="(dataDisk, key) in dataDisks" :key="key">
-                <b-field label="Daten Disk">
                     <b-select :loading="loading"
-                            v-model="dataDisks[key].volumeTypeId"
+                            v-model="dataVolumeTypeId"
                             required>
                         <option
                                 v-for="volumeType in volumeTypes"
@@ -130,19 +160,15 @@
                 </b-field>
 
                 <b-field label="GB"
-                        :type="errors.has('Daten Disk GB' + key) ? 'is-danger' : ''"
-                        :message="errors.first('Daten Disk GB' + key)">
+                        :type="errors.has('Data Disk GB') ? 'is-danger' : ''"
+                        :message="errors.first('Data Disk GB')">
                     <b-input type="text"
                             v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
-                            name="Daten Disk GB {key}"
-                            v-model.number="dataDisks[key].diskSize">
+                            name="Data Disk GB"
+                            v-model.number="dataDiskSize">
                     </b-input>
-                    
                 </b-field>
 
-                <b-field label="Löschen">
-                    <button type="button" class="button is-dark" @click="deleteDataDisk(key)">X</button>
-                </b-field>
             </b-field>
 
             <b-field label="SSH Public Key"
@@ -192,14 +218,17 @@
                 images: [],
                 volumeTypes: [],
                 availabilityZones: [],
-                dataDisks: [],
                 image: '',
-                systemVolumeType: '',
-                systemDiskSize: 1,
+                rootVolumeTypeId: '',
+                rootDiskSize: 10,
+                systemVolumeTypeId: '',
+                systemDiskSize: 10,
+                dataVolumeTypeId: '',
+                dataDiskSize: 20,
                 billing: '',
                 availabilityZone: '',
                 publicKey: '',
-                megaId: '', 
+                megaId: '',
                 loading: false
             };
         },
@@ -210,13 +239,6 @@
             this.getAvailabilityZones();
         },
         methods: {
-            addDataDisk: function() {
-                this.dataDisks.push({ volumeTypeId: '', diskSize: 1});
-                this.dataDisks[this.dataDisks.length-1].volumeTypeId = this.volumeTypes[0].id;
-            },
-            deleteDataDisk: function(key) {
-                this.dataDisks.splice(key, 1);
-            },
             getAvailabilityZones: function () {
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
@@ -255,7 +277,9 @@
                     let result = res.body.volumeTypes;
                     this.volumeTypes = result.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
-                    this.systemVolumeType = this.volumeTypes[0];
+                    this.systemVolumeTypeId = this.volumeTypes[0].id;
+                    this.rootVolumeTypeId = this.volumeTypes[0].id;
+                    this.dataVolumeTypeId = this.volumeTypes[0].id;
 
                     this.loading = false;
                 }, () => {
@@ -280,7 +304,7 @@
                     return;
                 }
 
-                if (this.systemDiskSize < this.image.minDiskGigabytes) {
+                if (this.rootDiskSize < this.image.minDiskGigabytes) {
                     return;
                 }
 
@@ -295,9 +319,12 @@
                             imageId: this.image.id,
                             billing: '' + this.billing,
                             publicKey: this.publicKey,
-                            dataDisks: this.dataDisks,
-                            systemVolumeTypeId: this.systemVolumeType.id,
-                            systemDiskSize: this.systemDiskSize,
+                            rootVolumeTypeId: this.rootVolumeTypeId,
+                            rootDiskSize: this.rootDiskSize,
+                            systemVolumeTypeId: this.systemVolumeTypeId,
+                            systemDiskSize: this.systemDiskSizeId,
+                            dataVolumeTypeId: this.dataVolumeTypeId,
+                            dataDiskSize: this.dataDiskSize,
                             megaId: this.megaId
                         }).then(() => {
                             this.loading = false;
