@@ -77,39 +77,40 @@
                 Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
-            <b-field grouped>
+            <template v-if="advanced">
+                <b-field grouped>
+                    <b-field label="Root Disk"
+                            :type="errors.has('Root Disk') ? 'is-danger' : ''"
+                            :message="errors.first('Root Disk')">
 
-                <b-field label="Root Disk"
-                        :type="errors.has('Root Disk') ? 'is-danger' : ''"
-                        :message="errors.first('Root Disk')">
+                        <b-select :loading="loading"
+                                v-model="rootVolumeTypeId"
+                                required>
+                            <option
+                                    v-for="volumeType in volumeTypes"
+                                    :value="volumeType.id"
+                                    :key="volumeType.name">
+                                {{ volumeType.name }}
+                            </option>
+                        </b-select>
+                    </b-field>
 
-                    <b-select :loading="loading"
-                            v-model="rootVolumeTypeId"
-                            required>
-                        <option
-                                v-for="volumeType in volumeTypes"
-                                :value="volumeType.id"
-                                :key="volumeType.name">
-                            {{ volumeType.name }}
-                        </option>
-                    </b-select>
+                    <b-field label="GB"
+                            :type="errors.has('Root Disk GB') ? 'is-danger' : ''"
+                            :message="errors.first('Root Disk GB')">
+                        <b-input type="text"
+                                v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
+                                name="Root Disk GB"
+                                v-model.number="rootDiskSize">
+                        </b-input>
+                    </b-field>
+
                 </b-field>
 
-                <b-field label="GB"
-                        :type="errors.has('Root Disk GB') ? 'is-danger' : ''"
-                        :message="errors.first('Root Disk GB')">
-                    <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                            name="Root Disk GB"
-                            v-model.number="rootDiskSize">
-                    </b-input>
-                </b-field>
-
-            </b-field>
-
-            <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
-                Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
-            </b-message>
+                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
+                    Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
+                </b-message>
+            </template>
 
             <b-field grouped>
 
@@ -129,7 +130,7 @@
                     </b-select>
                 </b-field>
 
-                <b-field label="GB"
+                <b-field label="GB" v-if="advanced"
                         :type="errors.has('System Disk GB') ? 'is-danger' : ''"
                         :message="errors.first('System Disk GB')">
                     <b-input type="text"
@@ -141,8 +142,8 @@
 
             </b-field>
 
-            <b-field grouped>
 
+            <b-field grouped>
                 <b-field label="Daten Disk"
                         :type="errors.has('Data Disk') ? 'is-danger' : ''"
                         :message="errors.first('Data Disk')">
@@ -170,6 +171,15 @@
                 </b-field>
 
             </b-field>
+
+            <b-field>
+                <b-checkbox v-model="advanced">
+                    Fortgeschrittene Einstellungen
+                </b-checkbox>
+            </b-field>
+            <b-message type="is-info">
+                Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
+            </b-message>
 
             <b-field label="SSH Public Key"
                      :type="errors.has('SSH Public Key') ? 'is-danger' : ''"
@@ -229,7 +239,8 @@
                 availabilityZone: '',
                 publicKey: '',
                 megaId: '',
-                loading: false
+                loading: false,
+                advanced: false,
             };
         },
         mounted: function () {
@@ -322,7 +333,7 @@
                             rootVolumeTypeId: this.rootVolumeTypeId,
                             rootDiskSize: this.rootDiskSize,
                             systemVolumeTypeId: this.systemVolumeTypeId,
-                            systemDiskSize: this.systemDiskSizeId,
+                            systemDiskSize: this.systemDiskSize,
                             dataVolumeTypeId: this.dataVolumeTypeId,
                             dataDiskSize: this.dataDiskSize,
                             megaId: this.megaId
