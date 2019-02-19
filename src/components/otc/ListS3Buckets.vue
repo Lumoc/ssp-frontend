@@ -3,14 +3,14 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i> AWS S3 Bucket anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">list</i> OTC Objectstorage Bucket anzeigen</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier werden alle deine AWS S3 Buckets angezeigt.</h2>
+                    Hier werden alle deine OTC Objectstorage Buckets angezeigt.</h2>
             </div>
         </div>
         <br>
-        <list-s3-buckets url="/api/aws/s3"></list-s3-buckets>
+        <list-s3-buckets url="/api/otc/objectstorage"></list-s3-buckets>
     </div>
 </template>
 

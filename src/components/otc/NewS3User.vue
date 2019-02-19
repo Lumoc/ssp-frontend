@@ -3,15 +3,15 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">perm_identity</i> AWS S3 Bucket-Benutzer erstellen</h1>
+                    <h1 class="title"><i class="material-icons">perm_identity</i> OTC Objectstorage Bucket-Benutzer erstellen</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen Benutzer zu einem AWS S3 Bucket erstellen. Alle Bestellungen werden geloggt &
+                    Hier kannst du einen Benutzer zu einem OTC Objectstorage Bucket erstellen. Alle Bestellungen werden geloggt &
                     verrechnet.</h2>
             </div>
         </div>
         <br>
-        <new-s3-user url="/api/aws/s3"></new-s3-user>
+        <new-s3-user url="/api/otc/objectstorage"></new-s3-user>
     </div>
 </template>
 

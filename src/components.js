@@ -21,13 +21,16 @@ import GrowVolume from './components/ose/GrowVolume.vue';
 // DDC-Components
 import DDCBilling from './components/ddc/Billing.vue';
 // AWS Components
-import ListS3Buckets from './components/aws/ListS3Buckets.vue';
-import NewS3Bucket from './components/aws/NewS3Bucket.vue';
-import NewS3User from './components/aws/NewS3User.vue';
+import AWSListS3Buckets from './components/aws/ListS3Buckets.vue';
+import AWSNewS3Bucket from './components/aws/NewS3Bucket.vue';
+import AWSNewS3User from './components/aws/NewS3User.vue';
 import ListEC2Instances from './components/aws/ListEC2Instances.vue';
 // OTC Components
 import ListECS from './components/otc/ListECS.vue';
 import NewECS from './components/otc/NewECS.vue';
+import OTCListS3Buckets from './components/otc/ListS3Buckets.vue';
+import OTCNewS3Bucket from './components/otc/NewS3Bucket.vue';
+import OTCNewS3User from './components/otc/NewS3User.vue';
 // Sematext Components
 import SematextAppList from './components/sematext/AppList.vue';
 import SematextNewApp from './components/sematext/NewApp.vue';
@@ -83,10 +86,13 @@ export const LocalComponents = {
     NewVolume,
     GrowVolume,
     DDCBilling,
-    ListS3Buckets,
+    AWSListS3Buckets,
+    OTCListS3Buckets,
     ListEC2Instances,
-    NewS3Bucket,
-    NewS3User,
+    AWSNewS3Bucket,
+    AWSNewS3User,
+    OTCNewS3Bucket,
+    OTCNewS3User,
     NewECS,
     ListECS,
     SematextAppList,

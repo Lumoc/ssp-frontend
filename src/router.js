@@ -46,16 +46,25 @@ const routes = [
         path: '/ddc/billing', component: LocalComponents.DDCBilling
     },
     {
-        path: '/aws/lists3buckets', component: LocalComponents.ListS3Buckets
+        path: '/aws/lists3buckets', component: LocalComponents.AWSListS3Buckets
     },
     {
-        path: '/aws/news3bucket', component: LocalComponents.NewS3Bucket
+        path: '/aws/news3bucket', component: LocalComponents.AWSNewS3Bucket
     },
     {
-        path: '/aws/news3user', component: LocalComponents.NewS3User
+        path: '/aws/news3user', component: LocalComponents.AWSNewS3User
     },
     {
         path: '/aws/listec2instances', component: LocalComponents.ListEC2Instances
+    },
+    {
+        path: '/otc/lists3buckets', component: LocalComponents.OTCListS3Buckets
+    },
+    {
+        path: '/otc/news3bucket', component: LocalComponents.OTCNewS3Bucket
+    },
+    {
+        path: '/otc/news3user', component: LocalComponents.OTCNewS3User
     },
     {
         path: '/otc/listecs', component: LocalComponents.ListECS

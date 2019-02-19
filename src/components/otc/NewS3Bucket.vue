@@ -3,14 +3,14 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i> AWS S3 Bucket erstellen</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> OTC Objectstorage Bucket erstellen</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen AWS S3 Bucket erstellen. Alle Bestellungen werden geloggt & verrechnet.</h2>
+                    Hier kannst du einen OTC Objectstorage Bucket erstellen. Alle Bestellungen werden geloggt & verrechnet.</h2>
             </div>
         </div>
         <br>
-        <new-s3-bucket url="/api/aws/s3"></new-s3-bucket>
+        <new-s3-bucket url="/api/otc/objectstorage"></new-s3-bucket>
     </div>
 </template>
 

@@ -54,10 +54,8 @@
                     <div class="navbar-dropdown">
                         <router-link to="/aws/lists3buckets" class="navbar-item">AWS S3 Buckets anzeigen</router-link>
                         <router-link to="/aws/news3bucket" class="navbar-item">AWS S3 Bucket erstellen</router-link>
-                        <router-link to="/aws/news3user" class="navbar-item">AWS S3 Bucket Benutzer erstellen
-                        </router-link>
-                        <router-link to="/aws/listec2instances" class="navbar-item">AWS EC2 Instanzen anzeigen
-                        </router-link>
+                        <router-link to="/aws/news3user" class="navbar-item">AWS S3 Bucket Benutzer erstellen</router-link>
+                        <router-link to="/aws/listec2instances" class="navbar-item">AWS EC2 Instanzen anzeigen</router-link>
                     </div>
                 </div>
                 <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
@@ -67,6 +65,9 @@
                     <div class="navbar-dropdown">
                         <router-link to="/otc/listecs" class="navbar-item">Elastic Cloud Server anzeigen</router-link>
                         <router-link to="/otc/newecs" class="navbar-item">Elastic Cloud Server erstellen</router-link>
+                        <router-link to="/otc/lists3buckets" class="navbar-item">Object-Storage Buckets anzeigen</router-link>
+                        <router-link to="/otc/news3bucket" class="navbar-item">Object-Storage Bucket erstellen</router-link>
+                        <router-link to="/otc/news3user" class="navbar-item">Object-Storage Benutzer erstellen</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
