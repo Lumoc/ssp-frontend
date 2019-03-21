@@ -11,21 +11,28 @@
             </div>
         </div>
         <br>
-        <form v-on:submit.prevent="updateBilling">
+        <form v-on:submit.prevent="updateInformation">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field grouped
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
-                <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
-                    <span class="control button is-info"
-                          v-on:click="getExistingBillingData">Aktuelle Daten anzeigen</span>
-            </b-field>
+            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation" v-validate="'required'"></project-select>
 
-            <b-field label="Neue Kontierungsnummer"
+            <b-message type="is-info">
+                Alle unteren Felder werden mit aktuellen Infos geladen, sobald ein Projekt ausgewählt wird.
+            </b-message>
+
+            <b-field label="Kontierungsnummer"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
                          name="Kontierungsnummer"
+                         v-validate="'required'">
+                </b-input>
+            </b-field>
+
+            <b-field label="Mega ID"
+                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
+                     :message="errors.first('Mega ID')">
+                <b-input v-model.trim="megaid"
+                         name="Mega ID"
                          v-validate="'required'">
                 </b-input>
             </b-field>
@@ -50,20 +57,22 @@
       return {
         clusterid: '',
         billing: '',
+        megaid: '',
         project: '',
         loading: false
       };
     },
     methods: {
-      updateBilling: function() {
+      updateInformation: function() {
         this.$validator.validateAll().then((result) => {
           if (result) {
             this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/billing', {
+            this.$http.post(this.$store.state.backendURL + '/api/ose/project/info', {
               clusterid: this.clusterid,
               project: this.project,
-              billing: this.billing
+              billing: this.billing,
+              megaid: this.megaid,
             }).then(() => {
               this.loading = false;
             }, () => {
@@ -72,14 +81,16 @@
           }
         });
       },
-      getExistingBillingData: function() {
-        this.$http.get(this.$store.state.backendURL + '/api/ose/billing', {
+      getExistingInformation: function(project) {
+        this.$http.get(this.$store.state.backendURL + '/api/ose/project/info', {
             params: {
                 clusterid: this.clusterid,
-                project: this.project
+                project: project
             }
-        }).then(() => {
+        }).then((res) => {
           this.loading = false;
+          this.billing = res.body.kontierungsnummer;
+          this.megaid = res.body.megaid;
         }, () => {
           this.loading = false;
         });

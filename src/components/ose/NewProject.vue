@@ -35,8 +35,13 @@
                 </b-input>
             </b-field>
 
-            <b-field label="MEGA-ID">
-                <b-input v-model.trim="megaId"></b-input>
+            <b-field label="Mega ID"
+                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
+                     :message="errors.first('Mega ID')">
+                <b-input v-model.trim="megaId"
+                         name="Mega ID"
+                         v-validate="'required'">
+                </b-input>
             </b-field>
 
             <button :disabled="errors.any()"

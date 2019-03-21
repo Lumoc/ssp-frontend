@@ -28,7 +28,7 @@ const routes = [
         path: '/ose/newpullsecret', component: LocalComponents.NewPullSecret
     },
     {
-        path: '/ose/updatebilling', component: LocalComponents.UpdateBilling
+        path: '/ose/project', component: LocalComponents.ProjectInformation
     },
     {
         path: '/ose/billing', component: LocalComponents.OpenshiftBilling
