@@ -40,7 +40,7 @@
                      :message="errors.first('Mega ID')">
                 <b-input v-model.trim="megaId"
                          name="Mega ID"
-                         v-validate="'required'">
+                         v-validate.rules="{ required: true, regex: /^[A-Z0-9]{16}$/}">
                 </b-input>
             </b-field>
 
