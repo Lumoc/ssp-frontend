@@ -10,7 +10,7 @@
             </div>
         </div>
         <br>
-        <list-s3-buckets url="/api/otc/objectstorage"></list-s3-buckets>
+        <list-s3-buckets url="/api/otc/s3"></list-s3-buckets>
     </div>
 </template>
 

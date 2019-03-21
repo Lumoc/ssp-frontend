@@ -10,7 +10,7 @@
             </div>
         </div>
         <br>
-        <new-s3-bucket url="/api/otc/objectstorage"></new-s3-bucket>
+        <new-s3-bucket url="/api/otc/s3"></new-s3-bucket>
     </div>
 </template>
 
