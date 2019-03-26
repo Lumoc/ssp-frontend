@@ -6,7 +6,7 @@
         v-model="projectData"
         :data="filteredDataArray"
         :loading="loading"
-        @select="option => projectData = option"
+        @input="inputChanged"
         name="Projekt-Name"
         ref="autofocus"
         placeholder="project-name"
@@ -41,6 +41,11 @@
         this.getProjects();
     },
     methods: {
+      inputChanged: function(val) {
+        if (this.projects.indexOf(val) > -1) {
+            this.$emit('selected', val)
+        }
+      },
       getProjects: function() {
         if (!this.clusterid) return
         this.loading = true;

@@ -10,7 +10,7 @@ import EditQuota from './components/ose/EditQuota.vue';
 import NewProject from './components/ose/NewProject.vue';
 import NewTestProject from './components/ose/NewTestProject.vue';
 import AdminList from './components/ose/AdminList.vue';
-import UpdateBilling from './components/ose/UpdateBilling.vue';
+import ProjectInformation from './components/ose/ProjectInformation.vue';
 import OpenshiftBilling from './components/ose/Billing.vue';
 import NewServiceAccount from './components/ose/NewServiceAccount.vue';
 import NewPullSecret from './components/ose/NewPullSecret.vue';
@@ -75,7 +75,7 @@ export const LocalComponents = {
     NewProject,
     AdminList,
     NewTestProject,
-    UpdateBilling,
+    ProjectInformation,
     OpenshiftBilling,
     NewServiceAccount,
     NewPullSecret,
