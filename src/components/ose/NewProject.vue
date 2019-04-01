@@ -43,6 +43,9 @@
                          v-validate.rules="{ required: true, regex: /^[A-Z0-9]{16}$/}">
                 </b-input>
             </b-field>
+            <b-message type="is-info">
+                Nützliche Links zu Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">Alle Anwendungen</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Übersicht (zB Erfassungsformular Anwendung)</a>
+            </b-message>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
