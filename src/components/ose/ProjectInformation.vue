@@ -13,7 +13,7 @@
         <br>
         <form v-on:submit.prevent="updateInformation">
             <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation" v-validate="'required'"></project-select>
+            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation"></project-select>
 
             <b-message type="is-info">
                 Alle unteren Felder werden mit aktuellen Infos geladen, sobald ein Projekt ausgewählt wird.
