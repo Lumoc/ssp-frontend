@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Kontierungsnummer anzeigen/anpassen
+                    <h1 class="title"><i class="material-icons">attach_money</i> Projekt-Informationen anzeigen/ändern
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du die Kontierungsnummer deines OpenShift Projekts anzeigen/anpassen</h2>
+                    Hier kannst du die Informationen deines OpenShift Projekts anzeigen und anpassen</h2>
             </div>
         </div>
         <br>
