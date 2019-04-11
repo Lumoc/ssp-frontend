@@ -25,8 +25,8 @@
             <b-message type="is-info">
                 Projekt-Name darf nur Kleinbuchstaben, Zahlen und - enthalten</br>
                 Produktive Projekte:</br>
-                  <li>Bitte folgende Hinweise beachten <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></li>
-                  <li>Keine produktiven Projekte auf Test04</li>
+                - Bitte folgende Hinweise beachten: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
+                - Keine produktiven Projekte auf Test04</br>
             </b-message>
 
             <b-field label="Kontierungsnummer"
