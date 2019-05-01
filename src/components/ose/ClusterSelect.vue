@@ -32,8 +32,13 @@
     },
     methods: {
       getClusters: function() {
+        var sArg = "";
+        var sPage = window.location.hash.split("/").pop();
+        if(sPage=="newtestproject") {
+          sArg = "?feature=testprojects";
+        }
         this.loading = true;
-        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters', null).then((res) => {
+        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters' + sArg, null).then((res) => {
           this.clusters = res.body;
           this.loading = false;
           this.setSelect();
