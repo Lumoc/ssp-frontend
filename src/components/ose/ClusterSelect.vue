@@ -13,7 +13,7 @@
 <script>
   export default {
     name: 'cluster-select',
-    props: ["clusterid"],
+    props: ["clusterid","feature"],
     data() {
       return {
         clusteridData: this.clusterid,
@@ -32,8 +32,12 @@
     },
     methods: {
       getClusters: function() {
+        var sArg = "";
+        if( typeof this._props.feature !== 'undefined' ) {
+          sArg = "?feature="+this._props.feature;
+        }
         this.loading = true;
-        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters', null).then((res) => {
+        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters' + sArg, null).then((res) => {
           this.clusters = res.body;
           this.loading = false;
           this.setSelect();

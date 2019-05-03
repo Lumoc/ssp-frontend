@@ -20,7 +20,7 @@
             </div>
         </article>
         <form v-on:submit.prevent="newTestProject">
-            <cluster-select v-model="clusterid"></cluster-select>
+            <cluster-select v-model="clusterid" feature="testprojects"></cluster-select>
             <b-field>
                 <label class="label">Testprojekt Name</label>
             </b-field>
