@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newProject">
-            <cluster-select v-model="clusterid"></cluster-select>
+            <cluster-select v-model="clusterid" feature="newprojects"></cluster-select>
             <b-field label="OpenShift Projekt"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
