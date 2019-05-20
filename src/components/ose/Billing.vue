@@ -47,9 +47,14 @@
                     <span>AWS</span>
                 </b-radio-button>
                 <b-radio-button v-model="cluster"
-                                native-value="vis"
+                                native-value="vias"
                                 type="is-info">
                     <span>VIAS</span>
+                </b-radio-button>
+                <b-radio-button v-model="cluster"
+                                native-value="test04"
+                                type="is-info">
+                    <span>Test04</span>
                 </b-radio-button>
             </b-field>
             <button v-bind:class="{'is-loading': loading}"
