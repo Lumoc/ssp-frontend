@@ -56,6 +56,11 @@
                                 type="is-info">
                     <span>Test04</span>
                 </b-radio-button>
+                <b-radio-button v-model="cluster"
+                                native-value="obelix"
+                                type="is-info">
+                    <span>Obelix</span>
+                </b-radio-button>
             </b-field>
             <button v-bind:class="{'is-loading': loading}"
                     :disabled="errors.any()"
