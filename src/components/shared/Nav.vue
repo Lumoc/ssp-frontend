@@ -24,7 +24,6 @@
                         <router-link to="/ose/newtestproject" class="navbar-item">Test-Projekt anlegen</router-link>
                         <router-link to="/ose/adminlist" class="navbar-item">Projekt Admins anzeigen</router-link>
                         <router-link to="/ose/project" class="navbar-item">Projekt-Informationen anzeigen/ändern</router-link>
-                        <router-link to="/ose/billing" class="navbar-item">Kostenverrechnung</router-link>
                         <router-link to="/ose/newserviceaccount" class="navbar-item">Service-Account anlegen</router-link>
                         <router-link to="/ose/newpullsecret" class="navbar-item">Docker Pull-Secret anlegen</router-link>
                         <hr class="navbar-divider">
