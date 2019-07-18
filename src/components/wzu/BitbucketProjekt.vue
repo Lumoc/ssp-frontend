@@ -27,7 +27,7 @@
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
                          name="Projekt Key"
-                         v-validate.rules="{ required: true, regex: /^(((KS|SC|PV|PN|MV|ZF|INV|BP|AM|ERP|KD|KI|MVC|MVG|MVP|OM|PT|PZ|RSW|USER|TEST|TA|FT)_?.*))$/}">
+                         v-validate.rules="{ required: true, regex: /^(((AMG|AML|AMN|AMP|ARD|AM|BP|EK|EN|ERP|FCON|FI|FT|HR|LOG|INV|KD|KI|KIP|KIN|KS|MV|MVC|MVG|MVP|MVL|NM|NMD|OM|PN|PPG|PPP|PT|PV|PZ|RSW|SC|TA|TC|TP|TEST|TMS|USER|WP|ZF)_?.*))$/}">
                 </b-input>
             </b-field>
 
