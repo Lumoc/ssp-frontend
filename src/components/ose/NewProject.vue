@@ -37,6 +37,10 @@
                          v-validate="'required'">
                 </b-input>
             </b-field>
+            <b-message type="is-info">
+            Kostenstelle (z.B. 77606105), Innenauftrag (70029490) oder PSP-Element inkl. Phasen-Nummer (1157803.4-10.1)
+            Bitte keine Angaben ohne Gewähr, nur aktuelle Daten angeben und ggf. ändern unter: <a href="#/ose/project" target="_blank">Projekt Informationen ändern</a>
+            </b-message>
 
             <b-field label="Mega ID"
                      :type="errors.has('Mega ID') ? 'is-danger' : ''"
