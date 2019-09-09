@@ -50,9 +50,9 @@
                         required>
                     <option
                             v-for="image in images"
-                            :value="image"
+                            :value="image.name"
                             :key="image.name">
-                        {{ image.name }}
+                        {{ image.trimmedName }}
                     </option>
                 </b-select>
             </b-field>
@@ -84,11 +84,11 @@
                             :message="errors.first('Root Disk')">
 
                         <b-select :loading="loading"
-                                v-model="rootVolumeTypeId"
+                                v-model="rootVolumeType"
                                 required>
                             <option
                                     v-for="volumeType in volumeTypes"
-                                    :value="volumeType.id"
+                                    :value="volumeType.name"
                                     :key="volumeType.name">
                                 {{ volumeType.name }}
                             </option>
@@ -119,11 +119,11 @@
                         :message="errors.first('System Disk')">
 
                     <b-select :loading="loading"
-                            v-model="systemVolumeTypeId"
+                            v-model="systemVolumeType"
                             required>
                         <option
                                 v-for="volumeType in volumeTypes"
-                                :value="volumeType.id"
+                                :value="volumeType.name"
                                 :key="volumeType.name">
                             {{ volumeType.name }}
                         </option>
@@ -149,11 +149,11 @@
                         :message="errors.first('Data Disk')">
 
                     <b-select :loading="loading"
-                            v-model="dataVolumeTypeId"
+                            v-model="dataVolumeType"
                             required>
                         <option
                                 v-for="volumeType in volumeTypes"
-                                :value="volumeType.id"
+                                :value="volumeType.name"
                                 :key="volumeType.name">
                             {{ volumeType.name }}
                         </option>
@@ -188,6 +188,16 @@
                          v-model="publicKey"
                          v-validate="'required'"
                          name="SSH Public Key">
+                </b-input>
+            </b-field>
+
+            <b-field label="LDAP Gruppe"
+                     :type="errors.has('LDAP Gruppe') ? 'is-danger' : ''"
+                     :message="errors.first('LDAP Gruppe')">
+                <b-input type="text"
+                         v-model="ldapGroup"
+                         v-validate="'required'"
+                         name="LDAP Gruppe">
                 </b-input>
             </b-field>
 
@@ -229,15 +239,16 @@
                 volumeTypes: [],
                 availabilityZones: [],
                 image: '',
-                rootVolumeTypeId: '',
+                rootVolumeType: '',
                 rootDiskSize: 10,
-                systemVolumeTypeId: '',
+                systemVolumeType: '',
                 systemDiskSize: 10,
-                dataVolumeTypeId: '',
+                dataVolumeType: '',
                 dataDiskSize: 20,
                 billing: '',
                 availabilityZone: '',
                 publicKey: '',
+                ldapGroup: '',
                 megaId: '',
                 loading: false,
                 advanced: false,
@@ -254,7 +265,7 @@
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
                     let result = res.body.availabilityZones;
-                    this.availabilityZones = result.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0));
+                    this.availabilityZones = result.sort();
 
                     this.availabilityZone = this.availabilityZones[0];
 
@@ -286,11 +297,11 @@
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/volumetypes').then((res) => {
                     let result = res.body.volumeTypes;
-                    this.volumeTypes = result.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+                    this.volumeTypes = result.sort();
 
-                    this.systemVolumeTypeId = this.volumeTypes[0].id;
-                    this.rootVolumeTypeId = this.volumeTypes[0].id;
-                    this.dataVolumeTypeId = this.volumeTypes[0].id;
+                    this.systemVolumeType = this.volumeTypes[0].name;
+                    this.rootVolumeType = this.volumeTypes[0].name;
+                    this.dataVolumeType = this.volumeTypes[0].name;
 
                     this.loading = false;
                 }, () => {
@@ -301,7 +312,7 @@
                 this.loading = true;
                 this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
                     let result = res.body.images;
-                    this.images = result.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+                    this.images = result.sort().reverse();
 
                     this.image = this.images[0];
 
@@ -309,6 +320,16 @@
                 }, () => {
                     this.loading = false;
                 });
+            },
+            getJobStdout: function(job) {
+                var that = this
+                var interval = setInterval(function() {
+                    that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job + '/stdout').then((res) => {
+                        console.log(res.body)
+                    }, () => {
+                        console.log("error")
+                    });
+                }, 2000);
             },
             newECS: function() {
                 if (this.flavor.ram < this.image.minRAMMegabytes) {
@@ -323,21 +344,32 @@
                     if (result) {
                         this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/ecs', {
-                            ecsName: this.ecsname,
-                            availabilityZone: this.availabilityZone,
-                            flavorName: this.flavor.name,
-                            imageId: this.image.id,
-                            billing: '' + this.billing,
-                            publicKey: this.publicKey,
-                            rootVolumeTypeId: this.rootVolumeTypeId,
-                            rootDiskSize: this.rootDiskSize,
-                            systemVolumeTypeId: this.systemVolumeTypeId,
-                            systemDiskSize: this.systemDiskSize,
-                            dataVolumeTypeId: this.dataVolumeTypeId,
-                            dataDiskSize: this.dataDiskSize,
-                            megaId: this.megaId
-                        }).then(() => {
+                        this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/launch', {
+                            extra_vars: {
+                              provision_otc_image: this.image,
+                              provision_otc_accountingnr_tag: '' + this.billing,
+                              data_disk_volume_size: this.dataDiskSize,
+                              provision_otc_megaid_tag: this.megaId,
+                              provision_otc_project_tag: this.ecsname,
+                              provision_otc_instance_type: this.flavor.name,
+                              provision_otc_ssh_key: this.publicKey,
+                              provision_otc_root_size: this.rootDiskSize,
+                              iam_pamd_projectadmingroup: this.ldapGroup,
+
+                              provision_otc_default_volume_type: this.dataVolumeType,
+                              provision_otc_rz_zone: this.availabilityZone.slice(-2),
+                              provision_otc_service_time_tag: "5x12",
+                              provision_otc_sla_tag: "best_effort",
+
+
+                              rootVolumeType: this.rootVolumeType,
+                              systemVolumeType: this.systemVolumeType,
+                              systemDiskSize: this.systemDiskSize,
+                            }
+                        }).then((resp) => {
+                            console.log(resp)
+                            let json = JSON.parse(resp.body)
+                            this.getJobStdout(json.job)
                             this.loading = false;
                         }, () => {
                             this.loading = false;
