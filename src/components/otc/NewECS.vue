@@ -226,157 +226,152 @@
                     class="button is-primary">ECS erstellen
             </button>
         </form>
+        <job-stdout :job="job"></job-stdout>
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                ecsname: '',
-                flavors: [],
-                flavor: '',
-                images: [],
-                volumeTypes: [],
-                availabilityZones: [],
-                image: '',
-                rootVolumeType: '',
-                rootDiskSize: 10,
-                systemVolumeType: '',
-                systemDiskSize: 10,
-                dataVolumeType: '',
-                dataDiskSize: 20,
-                billing: '',
-                availabilityZone: '',
-                publicKey: '',
-                ldapGroup: '',
-                megaId: '',
-                loading: false,
-                advanced: false,
-            };
-        },
-        mounted: function () {
-            this.getFlavors();
-            this.getImages();
-            this.getVolumeTypes();
-            this.getAvailabilityZones();
-        },
-        methods: {
-            getAvailabilityZones: function () {
-                this.loading = true;
-                this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
-                    let result = res.body.availabilityZones;
-                    this.availabilityZones = result.sort();
+  import JobStdout from '../tower/JobStdout.vue'
+  export default {
+      components: {
+          'job-stdout': JobStdout
+      },
+      data() {
+          return {
+              ecsname: '',
+              flavors: [],
+              flavor: '',
+              images: [],
+              volumeTypes: [],
+              availabilityZones: [],
+              image: '',
+              rootVolumeType: '',
+              rootDiskSize: 10,
+              systemVolumeType: '',
+              systemDiskSize: 10,
+              dataVolumeType: '',
+              dataDiskSize: 20,
+              billing: '',
+              availabilityZone: '',
+              publicKey: '',
+              ldapGroup: '',
+              megaId: '',
+              loading: false,
+              advanced: false,
+              job: '',
+          };
+      },
+      mounted: function () {
+          this.getFlavors();
+          this.getImages();
+          this.getVolumeTypes();
+          this.getAvailabilityZones();
+      },
+      methods: {
+          getAvailabilityZones: function () {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
+                  let result = res.body.availabilityZones;
+                  this.availabilityZones = result.sort();
 
-                    this.availabilityZone = this.availabilityZones[0];
+                  this.availabilityZone = this.availabilityZones[0];
 
-                    this.loading = false;
-                }, () => {
-                    this.loading = false;
-                });
-            },
-            getFlavors: function () {
-                this.loading = true;
-                this.$http.get(this.$store.state.backendURL + '/api/otc/flavors').then((res) => {
-                    let result = res.body.flavors;
-                    this.flavors = result.sort((a,b) => {
-                        if (a.vcpus === b.vcpus) {
-                            return (a.ram - b.ram)
-                        } else {
-                            return (a.vcpus - b.vcpus)
-                        }
-                    });
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          getFlavors: function () {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/otc/flavors').then((res) => {
+                  let result = res.body.flavors;
+                  this.flavors = result.sort((a,b) => {
+                      if (a.vcpus === b.vcpus) {
+                          return (a.ram - b.ram)
+                      } else {
+                          return (a.vcpus - b.vcpus)
+                      }
+                  });
 
-                    this.flavor = this.flavors[0];
+                  this.flavor = this.flavors[0];
 
-                    this.loading = false;
-                }, () => {
-                    this.loading = false;
-                });
-            },
-            getVolumeTypes: function () {
-                this.loading = true;
-                this.$http.get(this.$store.state.backendURL + '/api/otc/volumetypes').then((res) => {
-                    let result = res.body.volumeTypes;
-                    this.volumeTypes = result.sort();
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          getVolumeTypes: function () {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/otc/volumetypes').then((res) => {
+                  let result = res.body.volumeTypes;
+                  this.volumeTypes = result.sort();
 
-                    this.systemVolumeType = this.volumeTypes[0].name;
-                    this.rootVolumeType = this.volumeTypes[0].name;
-                    this.dataVolumeType = this.volumeTypes[0].name;
+                  this.systemVolumeType = this.volumeTypes[0].name;
+                  this.rootVolumeType = this.volumeTypes[0].name;
+                  this.dataVolumeType = this.volumeTypes[0].name;
 
-                    this.loading = false;
-                }, () => {
-                    this.loading = false;
-                });
-            },
-            getImages: function () {
-                this.loading = true;
-                this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
-                    let result = res.body.images;
-                    this.images = result.sort().reverse();
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          getImages: function () {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
+                  let result = res.body.images;
+                  this.images = result.sort().reverse();
 
-                    this.image = this.images[0];
+                  this.image = this.images[0];
 
-                    this.loading = false;
-                }, () => {
-                    this.loading = false;
-                });
-            },
-            getJobStdout: function(job) {
-                var that = this
-                var interval = setInterval(function() {
-                    that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job + '/stdout').then((res) => {
-                        console.log(res.body)
-                    }, () => {
-                        console.log("error")
-                    });
-                }, 2000);
-            },
-            newECS: function() {
-                if (this.flavor.ram < this.image.minRAMMegabytes) {
-                    return;
-                }
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          newECS: function() {
+              if (this.flavor.ram < this.image.minRAMMegabytes) {
+                  return;
+              }
 
-                if (this.rootDiskSize < this.image.minDiskGigabytes) {
-                    return;
-                }
+              if (this.rootDiskSize < this.image.minDiskGigabytes) {
+                  return;
+              }
 
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+              this.$validator.validateAll().then((result) => {
+                  if (result) {
+                      this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/launch', {
-                            extra_vars: {
-                              provision_otc_image: this.image,
-                              provision_otc_accountingnr_tag: '' + this.billing,
-                              data_disk_volume_size: this.dataDiskSize,
-                              provision_otc_megaid_tag: this.megaId,
-                              provision_otc_project_tag: this.ecsname,
-                              provision_otc_instance_type: this.flavor.name,
-                              provision_otc_ssh_key: this.publicKey,
-                              provision_otc_root_size: this.rootDiskSize,
-                              iam_pamd_projectadmingroup: this.ldapGroup,
+                      this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/launch', {
+                          extra_vars: {
+                            provision_otc_image: this.image,
+                            provision_otc_accountingnr_tag: '' + this.billing,
+                            data_disk_volume_size: this.dataDiskSize,
+                            provision_otc_megaid_tag: this.megaId,
+                            provision_otc_project_tag: this.ecsname,
+                            provision_otc_instance_type: this.flavor.name,
+                            provision_otc_ssh_key: this.publicKey,
+                            provision_otc_root_size: this.rootDiskSize,
+                            iam_pamd_projectadmingroup: this.ldapGroup,
 
-                              provision_otc_default_volume_type: this.dataVolumeType,
-                              provision_otc_rz_zone: this.availabilityZone.slice(-2),
-                              provision_otc_service_time_tag: "5x12",
-                              provision_otc_sla_tag: "best_effort",
+                            provision_otc_default_volume_type: this.dataVolumeType,
+                            provision_otc_rz_zone: this.availabilityZone.slice(-2),
+                            provision_otc_service_time_tag: "5x12",
+                            provision_otc_sla_tag: "best_effort",
 
 
-                              rootVolumeType: this.rootVolumeType,
-                              systemVolumeType: this.systemVolumeType,
-                              systemDiskSize: this.systemDiskSize,
-                            }
-                        }).then((resp) => {
-                            console.log(resp)
-                            let json = JSON.parse(resp.body)
-                            this.getJobStdout(json.job)
-                            this.loading = false;
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
-                });
-            }
-        }
+                            rootVolumeType: this.rootVolumeType,
+                            systemVolumeType: this.systemVolumeType,
+                            systemDiskSize: this.systemDiskSize,
+                          }
+                      }).then((resp) => {
+                          let json = JSON.parse(resp.body)
+                          this.job = json.job
+                          this.loading = false;
+                      }, () => {
+                          this.loading = false;
+                      });
+                  }
+              });
+          }
+      }
     };
 </script>
