@@ -42,6 +42,9 @@
 <template>
     <div>
       <div class="job_stdout_status">
+          <b-icon
+                :icon="job_data.status == 'pending' ? 'checkbox-blank-circle-outline' : 'checkbox-blank-circle'"
+                :type="job_data.status == 'running' ? 'is-success' : 'is-danger'"></b-icon>
           {{ job_data.status }}
       </div>
       <div class="job_stdout_html ansi_fore ansi_back ansi_dark" v-html="job_stdout_html">
@@ -70,6 +73,11 @@
       }
     },
     methods: {
+      finished: function(interval) {
+          localStorage.removeItem("job_id")
+          clearInterval(interval)
+          this.$emit('finished')
+      },
       getJobStdout: function(job_id) {
         localStorage.job_id = job_id
 
@@ -77,13 +85,9 @@
         var interval = setInterval(function() {
             that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job_id).then((res) => {
                 that.job_data = JSON.parse(res.body)
-                if (that.job_data.finished) {
-                    localStorage.removeItem("job_id")
-                    clearInterval(interval)
-                }
+                if (that.job_data.finished) that.finished(interval)
             }, () => {
-                localStorage.removeItem("job_id")
-                clearInterval(interval)
+                that.finished(interval)
                 console.log("error")
             });
             if (that.job_data.status != "pending") {
@@ -92,8 +96,7 @@
                     el.innerHTML = res.body
                     that.job_stdout_html = el.getElementsByTagName('body')[0].innerHTML
                 }, () => {
-                    localStorage.removeItem("job_id")
-                    clearInterval(interval)
+                    that.finished(interval)
                     console.log("error")
                 });
             }

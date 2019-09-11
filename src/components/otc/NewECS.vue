@@ -16,8 +16,10 @@
                      :message="errors.first('ECS Name')">
                 <b-input type="text"
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\-]+$/} }"
+                         maxlength=6
+                         minlength=2
                          name="ECS Name"
-                         v-model.number="ecsname">
+                         v-model.number="extra_vars.provision_otc_project_tag">
                 </b-input>
             </b-field>
 
@@ -46,7 +48,7 @@
                     :message="errors.first('Image')">
 
                 <b-select :loading="loading"
-                        v-model="image"
+                        v-model="extra_vars.provision_otc_image"
                         required>
                     <option
                             v-for="image in images"
@@ -73,103 +75,34 @@
                 </b-select>
             </b-field>
 
-            <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
-                Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
+            <b-message type="is-danger" v-if="extra_vars.provision_otc_image !== null && extra_vars.provision_otc_image.minRAMMegabytes > flavor.ram">
+                Das gewählte Image benötigt mindestens {{ extra_vars.provision_otc_image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
-            <template v-if="advanced">
-                <b-field grouped>
-                    <b-field label="Root Disk"
-                            :type="errors.has('Root Disk') ? 'is-danger' : ''"
-                            :message="errors.first('Root Disk')">
+            <b-field label="Volume Type"
+                    :type="errors.has('Volume Type') ? 'is-danger' : ''"
+                    :message="errors.first('Volume Type')">
 
-                        <b-select :loading="loading"
-                                v-model="rootVolumeType"
-                                required>
-                            <option
-                                    v-for="volumeType in volumeTypes"
-                                    :value="volumeType.name"
-                                    :key="volumeType.name">
-                                {{ volumeType.name }}
-                            </option>
-                        </b-select>
-                    </b-field>
-
-                    <b-field label="GB"
-                            :type="errors.has('Root Disk GB') ? 'is-danger' : ''"
-                            :message="errors.first('Root Disk GB')">
-                        <b-input type="text"
-                                v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                                name="Root Disk GB"
-                                v-model.number="rootDiskSize">
-                        </b-input>
-                    </b-field>
-
-                </b-field>
-
-                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
-                    Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
-                </b-message>
-            </template>
-
-            <b-field grouped>
-
-                <b-field label="System Disk"
-                        :type="errors.has('System Disk') ? 'is-danger' : ''"
-                        :message="errors.first('System Disk')">
-
-                    <b-select :loading="loading"
-                            v-model="systemVolumeType"
-                            required>
-                        <option
-                                v-for="volumeType in volumeTypes"
-                                :value="volumeType.name"
-                                :key="volumeType.name">
-                            {{ volumeType.name }}
-                        </option>
-                    </b-select>
-                </b-field>
-
-                <b-field label="GB" v-if="advanced"
-                        :type="errors.has('System Disk GB') ? 'is-danger' : ''"
-                        :message="errors.first('System Disk GB')">
-                    <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                            name="System Disk GB"
-                            v-model.number="systemDiskSize">
-                    </b-input>
-                </b-field>
-
+                <b-select :loading="loading"
+                        v-model="extra_vars.provision_otc_default_volume_type"
+                        required>
+                    <option
+                            v-for="volumeType in volumeTypes"
+                            :value="volumeType.name"
+                            :key="volumeType.name">
+                        {{ volumeType.name }}
+                    </option>
+                </b-select>
             </b-field>
 
-
-            <b-field grouped>
-                <b-field label="Daten Disk"
-                        :type="errors.has('Data Disk') ? 'is-danger' : ''"
-                        :message="errors.first('Data Disk')">
-
-                    <b-select :loading="loading"
-                            v-model="dataVolumeType"
-                            required>
-                        <option
-                                v-for="volumeType in volumeTypes"
-                                :value="volumeType.name"
-                                :key="volumeType.name">
-                            {{ volumeType.name }}
-                        </option>
-                    </b-select>
-                </b-field>
-
-                <b-field label="GB"
-                        :type="errors.has('Data Disk GB') ? 'is-danger' : ''"
-                        :message="errors.first('Data Disk GB')">
-                    <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
-                            name="Data Disk GB"
-                            v-model.number="dataDiskSize">
-                    </b-input>
-                </b-field>
-
+            <b-field label="Data-Disk-Grösse"
+                    :type="errors.has('Data-Disk-Grösse') ? 'is-danger' : ''"
+                    :message="errors.first('Data-Disk-Grösse')">
+                <b-input type="text"
+                        v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
+                        name="Data-Disk-Grösse"
+                        v-model.number="extra_vars.data_disk_volume_size">
+                </b-input>
             </b-field>
 
             <b-field>
@@ -177,6 +110,25 @@
                     Fortgeschrittene Einstellungen
                 </b-checkbox>
             </b-field>
+
+            <template v-if="advanced">
+                <b-field label="Root-Disk-Grösse"
+                        :type="errors.has('Root-Disk-Grösse') ? 'is-danger' : ''"
+                        :message="errors.first('Root-Disk-Grösse')">
+                    <b-input type="text"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: extra_vars.provision_otc_image.minDiskGigabytes }"
+                            name="Root Disk GB"
+                            v-model.number="extra_vars.provision_otc_root_size">
+                    </b-input>
+                </b-field>
+
+
+                <b-message type="is-danger" v-if="extra_vars.provision_otc_image !== null && extra_vars.provision_otc_image.minDiskGigabytes > extra_vars.provision_otc_root_size">
+                    Das gewählte Image benötigt eine mindestens {{ extra_vars.provision_otc_image.minDiskGigabytes }}GB grosse Root Disk.
+                </b-message>
+            </template>
+
+
             <b-message type="is-info">
                 Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
             </b-message>
@@ -185,7 +137,7 @@
                      :type="errors.has('SSH Public Key') ? 'is-danger' : ''"
                      :message="errors.first('SSH Public Key')">
                 <b-input type="textarea"
-                         v-model="publicKey"
+                         v-model="extra_vars.provision_otc_ssh_key"
                          v-validate="'required'"
                          name="SSH Public Key">
                 </b-input>
@@ -195,7 +147,7 @@
                      :type="errors.has('LDAP Gruppe') ? 'is-danger' : ''"
                      :message="errors.first('LDAP Gruppe')">
                 <b-input type="text"
-                         v-model="ldapGroup"
+                         v-model="extra_vars.iam_pamd_projectadmingroup"
                          v-validate="'required'"
                          name="LDAP Gruppe">
                 </b-input>
@@ -205,7 +157,7 @@
                      :type="errors.has('Mega ID') ? 'is-danger' : ''"
                      :message="errors.first('Mega ID')">
                 <b-input type="text"
-                         v-model="megaId"
+                         v-model="extra_vars.provision_otc_megaid_tag"
                          v-validate="'required'"
                          name="Mega ID">
                 </b-input>
@@ -215,18 +167,41 @@
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"
-                         v-model.number="billing"
+                         v-model.number="extra_vars.provision_otc_accountingnr_tag"
                          v-validate="'required'"
                          name="Kontierungsnummer">
                 </b-input>
             </b-field>
+
+            <b-field label="SLA"
+                    :type="errors.has('SLA') ? 'is-danger' : ''"
+                    :message="errors.first('SLA')">
+
+                <b-select v-model="extra_vars.provision_otc_sla_tag" required>
+                    <option>best_effort</option>
+                    <option>1b</option>
+                    <option>2a</option>
+                </b-select>
+            </b-field>
+
+            <b-field label="Servicezeit"
+                    :type="errors.has('Servicezeit') ? 'is-danger' : ''"
+                    :message="errors.first('Servicezeit')">
+
+                <b-select v-model="extra_vars.provision_otc_service_time_tag" required>
+                    <option>5x12</option>
+                    <option>7x12</option>
+                    <option>7x24</option>
+                </b-select>
+            </b-field>
+
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
                     class="button is-primary">ECS erstellen
             </button>
         </form>
-        <job-stdout :job="job"></job-stdout>
+        <job-stdout :job="job" v-on:finished="stopLoading"></job-stdout>
     </div>
 </template>
 <script>
@@ -237,27 +212,28 @@
       },
       data() {
           return {
-              ecsname: '',
               flavors: [],
               flavor: '',
               images: [],
               volumeTypes: [],
               availabilityZones: [],
-              image: '',
-              rootVolumeType: '',
-              rootDiskSize: 10,
-              systemVolumeType: '',
-              systemDiskSize: 10,
-              dataVolumeType: '',
-              dataDiskSize: 20,
-              billing: '',
               availabilityZone: '',
-              publicKey: '',
-              ldapGroup: '',
-              megaId: '',
               loading: false,
               advanced: false,
               job: '',
+              extra_vars: {
+                provision_otc_project_tag: '',
+                data_disk_volume_size: 20,
+                provision_otc_root_size: 10,
+                provision_otc_image: '',
+                provision_otc_ssh_key: '',
+                provision_otc_default_volume_type: '',
+                iam_pamd_projectadmingroup: '',
+                provision_otc_megaid_tag: '',
+                provision_otc_accountingnr_tag: '',
+                provision_otc_service_time_tag: '5x12',
+                provision_otc_sla_tag: 'best_effort',
+              },
           };
       },
       mounted: function () {
@@ -305,9 +281,7 @@
                   let result = res.body.volumeTypes;
                   this.volumeTypes = result.sort();
 
-                  this.systemVolumeType = this.volumeTypes[0].name;
-                  this.rootVolumeType = this.volumeTypes[0].name;
-                  this.dataVolumeType = this.volumeTypes[0].name;
+                  this.extra_vars.provision_otc_default_volume_type = this.volumeTypes[0].name;
 
                   this.loading = false;
               }, () => {
@@ -318,21 +292,24 @@
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
                   let result = res.body.images;
-                  this.images = result.sort().reverse();
+                  this.images = result.sort();
 
-                  this.image = this.images[0];
+                  this.extra_vars.provision_otc_image = this.images[0].name;
 
                   this.loading = false;
               }, () => {
                   this.loading = false;
               });
           },
+          stopLoading: function() {
+              this.loading = false;
+          },
           newECS: function() {
-              if (this.flavor.ram < this.image.minRAMMegabytes) {
+              if (this.flavor.ram < this.extra_vars.provision_otc_image.minRAMMegabytes) {
                   return;
               }
 
-              if (this.rootDiskSize < this.image.minDiskGigabytes) {
+              if (this.extra_vars.provision_otc_root_size < this.extra_vars.provision_otc_image.minDiskGigabytes) {
                   return;
               }
 
@@ -342,30 +319,25 @@
 
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/launch', {
                           extra_vars: {
-                            provision_otc_image: this.image,
-                            provision_otc_accountingnr_tag: '' + this.billing,
-                            data_disk_volume_size: this.dataDiskSize,
-                            provision_otc_megaid_tag: this.megaId,
-                            provision_otc_project_tag: this.ecsname,
-                            provision_otc_instance_type: this.flavor.name,
-                            provision_otc_ssh_key: this.publicKey,
-                            provision_otc_root_size: this.rootDiskSize,
-                            iam_pamd_projectadmingroup: this.ldapGroup,
-
-                            provision_otc_default_volume_type: this.dataVolumeType,
                             provision_otc_rz_zone: this.availabilityZone.slice(-2),
-                            provision_otc_service_time_tag: "5x12",
-                            provision_otc_sla_tag: "best_effort",
+                            provision_otc_instance_type: this.flavor.name,
 
 
-                            rootVolumeType: this.rootVolumeType,
-                            systemVolumeType: this.systemVolumeType,
-                            systemDiskSize: this.systemDiskSize,
+                            provision_otc_root_size: this.extra_vars.provision_otc_root_size,
+                            iam_pamd_projectadmingroup: this.extra_vars.iam_pamd_projectadmingroup,
+                            provision_otc_image: this.extra_vars.provision_otc_image,
+                            provision_otc_accountingnr_tag: '' + this.extra_vars.provision_otc_accountingnr_tag,
+                            provision_otc_megaid_tag: this.extra_vars.provision_otc_megaid_tag,
+                            provision_otc_project_tag: this.extra_vars.provision_otc_project_tag,
+                            provision_otc_service_time_tag: this.extra_vars.provision_otc_service_time_tag,
+                            provision_otc_sla_tag: this.extra_vars.provision_otc_sla_tag,
+                            provision_otc_ssh_key: this.extra_vars.provision_otc_ssh_key,
+                            data_disk_volume_size: this.extra_vars.data_disk_volume_size,
+                            provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
                       }).then((resp) => {
                           let json = JSON.parse(resp.body)
                           this.job = json.job
-                          this.loading = false;
                       }, () => {
                           this.loading = false;
                       });
