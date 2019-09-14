@@ -1,13 +1,11 @@
 import {GlobalComponents, LocalComponents} from './components';
 import VueRouter from 'vue-router';
 import store from './store/index';
+import * as Keycloak from 'keycloak-js';
 
 const routes = [
     {
         path: '/', component: LocalComponents.Home
-    },
-    {
-        path: '/login', component: GlobalComponents.Login
     },
     {
         path: '/ose/editquotas', component: LocalComponents.EditQuota
@@ -110,32 +108,55 @@ const routes = [
     }
 ];
 
+let config = {
+    realm: "REALM_NAME",
+    url: "REALM_URL",
+    clientId: "REALM_CLIENT_ID"
+}
+
+let keycloak = Keycloak(config);
+
+// mode history is needed with keycloak js, see https://github.com/dsb-norge/vue-keycloak-js/issues/1
 const router = new VueRouter({routes});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
     store.commit('setNotification', {notification: {}});
-
-    // Auth-Protection
-    if (to.path === '/login') {
-        // Login page is always allowed
-        next();
-    }
     if (!store.state.user) {
-        console.error('Not yet logged in, navigating to login');
-        next({path: '/login'});
+        console.warning('Not yet logged in, authenticating.');
+        authenticate();
     } else {
         // Check if token is still valid
         if (store.state.user && store.state.user.exp < Date.now() / 1000) {
-            console.error('Token is no longer valid, navigating to login');
+            console.warning('Token is no longer valid, authenticating.');
             store.commit('setUser', {user: null});
-
-            next({path: '/login'});
+            authenticate();
         } else {
             // Everything fine, go to page
             next();
         }
     }
 });
+
+function authenticate() {
+    keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
+        if (authenticated) {
+            console.log(keycloak)
+            store.commit('setUser', {
+                user: {
+                  name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
+                  firstname: keycloak.tokenParsed.given_name,
+                  token: keycloak.token,
+                  exp: keycloak.tokenParsed.exp
+                }
+              });
+            next({path: '/'});
+        } else {
+            keycloak.login({ idpHint: 'adfs_sbb_prod' });
+        }
+    }).error(() =>{
+      console.log("SSO authentication error.")
+    });
+}
 
 export default router;

@@ -6,6 +6,7 @@ import VeeValidate, { Validator } from 'vee-validate';
 import VeeValidateGerman from 'vee-validate/dist/locale/de';
 import Moment from 'moment';
 import 'moment-timezone';
+
 // Styles
 import 'buefy/dist/buefy.css';
 import './theme.css';
@@ -46,17 +47,6 @@ Vue.http.interceptors.push(function (request, next) {
                 }
             });
         }
-        if (!res.url.endsWith('/login') && res.status === 401) {
-            this.$store.commit('setUser', {
-                user: null
-            });
-            this.$store.commit('setNotification', {
-                notification: {
-                    type: 'danger',
-                    message: 'Dein Token ist abgelaufen. Bitte logge dich neu ein'
-                }
-            });
-        }
     });
 });
 
@@ -75,3 +65,4 @@ new Vue({
     el: '#app',
     render: h => h(GlobalComponents.App)
 });
+
