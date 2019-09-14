@@ -111,24 +111,24 @@ const routes = [
 let config = {
     realm: "REALM_NAME",
     url: "REALM_URL",
-    clientId: "REALM_CLIENT_ID"
+    clientId: "CLIENT_ID"
 }
 
 let keycloak = Keycloak(config);
 
 // mode history is needed with keycloak js, see https://github.com/dsb-norge/vue-keycloak-js/issues/1
-const router = new VueRouter({routes});
+const router = new VueRouter({routes, mode: 'history'});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
     store.commit('setNotification', {notification: {}});
     if (!store.state.user) {
-        console.warning('Not yet logged in, authenticating.');
+        console.log('Not yet logged in, authenticating.');
         authenticate();
     } else {
         // Check if token is still valid
         if (store.state.user && store.state.user.exp < Date.now() / 1000) {
-            console.warning('Token is no longer valid, authenticating.');
+            console.log('Token is no longer valid, authenticating.');
             store.commit('setUser', {user: null});
             authenticate();
         } else {
@@ -150,7 +150,6 @@ function authenticate() {
                   exp: keycloak.tokenParsed.exp
                 }
               });
-            next({path: '/'});
         } else {
             keycloak.login({ idpHint: 'adfs_sbb_prod' });
         }
