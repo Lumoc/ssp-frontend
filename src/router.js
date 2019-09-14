@@ -124,13 +124,13 @@ router.beforeEach((to, from, next) => {
     store.commit('setNotification', {notification: {}});
     if (!store.state.user) {
         console.log('Not yet logged in, authenticating.');
-        authenticate();
+        authenticate(next);
     } else {
         // Check if token is still valid
         if (store.state.user && store.state.user.exp < Date.now() / 1000) {
             console.log('Token is no longer valid, authenticating.');
             store.commit('setUser', {user: null});
-            authenticate();
+            authenticate(next);
         } else {
             // Everything fine, go to page
             next();
@@ -138,7 +138,7 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-function authenticate() {
+function authenticate(next) {
     keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
         if (authenticated) {
             console.log(keycloak)
@@ -150,6 +150,7 @@ function authenticate() {
                   exp: keycloak.tokenParsed.exp
                 }
               });
+            next();
         } else {
             keycloak.login({ idpHint: 'adfs_sbb_prod' });
         }
