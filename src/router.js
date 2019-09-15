@@ -109,9 +109,9 @@ const routes = [
 ];
 
 let config = {
-    realm: "REALM_NAME",
-    url: "REALM_URL",
-    clientId: "CLIENT_ID"
+    realm: "<REALM>",
+    url: "<REALM_URL>",
+    clientId: "<CLIENT_ID>"
 }
 
 let keycloak = Keycloak(config);
@@ -152,7 +152,7 @@ function authenticate(next) {
               });
             next();
         } else {
-            keycloak.login({ idpHint: 'adfs_sbb_prod' });
+            keycloak.login({ idpHint: '<IDP_HINT>' });
         }
     }).error(() =>{
       console.log("SSO authentication error.")
