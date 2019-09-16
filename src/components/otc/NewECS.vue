@@ -317,7 +317,7 @@
                   if (result) {
                       this.loading = true;
 
-                      this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/launch', {
+                      this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/19296/launch', {
                           extra_vars: {
                             provision_otc_rz_zone: this.availabilityZone.slice(-2),
                             provision_otc_instance_type: this.flavor.name,
