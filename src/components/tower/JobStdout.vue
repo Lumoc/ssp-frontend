@@ -37,15 +37,19 @@
       -moz-border-radius: 3px;
       border-radius: 3px;
     }
+    div.job_stdout_status {
+        padding: 8px 0;
+    }
+    div.job_stdout_status h1 {
+        font-size: 20px;
+    }
 </style>
 
 <template>
     <div>
-      <div class="job_stdout_status">
-          <b-icon
-                :icon="job_data.status == 'pending' ? 'checkbox-blank-circle-outline' : 'checkbox-blank-circle'"
-                :type="job_data.status == 'running' ? 'is-success' : 'is-danger'"></b-icon>
-          {{ job_data.status }}
+      <div v-if="job_data.status" class="job_stdout_status">
+          <h1>{{ job_data.status | capitalize }}</h1>
+          <p>Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.</p>
       </div>
       <div class="job_stdout_html ansi_fore ansi_back ansi_dark" v-html="job_stdout_html">
       </div>
@@ -70,6 +74,13 @@
     watch: {
       job(val) {
         this.getJobStdout(val);
+      }
+    },
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
       }
     },
     methods: {
