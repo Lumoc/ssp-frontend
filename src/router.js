@@ -141,7 +141,6 @@ router.beforeEach((to, from, next) => {
 function authenticate(next) {
     keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
         if (authenticated) {
-            console.log(keycloak)
             store.commit('setUser', {
                 user: {
                   name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
