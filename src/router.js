@@ -109,9 +109,9 @@ const routes = [
 ];
 
 let config = {
-    realm: "<REALM>",
-    url: "<REALM_URL>",
-    clientId: "<CLIENT_ID>"
+    realm: store.state.ssoRealmName,
+    url: store.state.ssoRealmURL,
+    clientId: store.state.ssoClientID
 }
 
 let keycloak = Keycloak(config);
@@ -150,9 +150,11 @@ function authenticate(next) {
                   exp: keycloak.tokenParsed.exp
                 }
               });
+            // Remove hash stuff
+            history.replaceState(null, null, ' ');
             next();
         } else {
-            keycloak.login({ idpHint: '<IDP_HINT>' });
+            keycloak.login({ idpHint: store.state.ssoIdpHint });
         }
     }).error(() =>{
       console.log("SSO authentication error.")
