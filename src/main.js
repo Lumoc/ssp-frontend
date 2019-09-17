@@ -67,6 +67,13 @@ Vue.http.interceptors.push(function (request, next) {
                     message: res.body.message
                 }
             });
+        } else if (!res.ok) {
+            this.$store.commit('setNotification', {
+                notification: {
+                    type: 'danger',
+                    message: "Die Kommunikation mit dem Backend ist fehlgeschlagen. Bitte eröffnen Sie ein Ticket."
+                }
+            });
         }
     });
 });
