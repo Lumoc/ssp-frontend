@@ -1,13 +1,11 @@
 import {GlobalComponents, LocalComponents} from './components';
 import VueRouter from 'vue-router';
 import store from './store/index';
+import * as Keycloak from 'keycloak-js';
 
 const routes = [
     {
         path: '/', component: LocalComponents.Home
-    },
-    {
-        path: '/login', component: GlobalComponents.Login
     },
     {
         path: '/ose/editquotas', component: LocalComponents.EditQuota
@@ -110,32 +108,56 @@ const routes = [
     }
 ];
 
-const router = new VueRouter({routes});
+let config = {
+    realm: store.state.ssoRealmName,
+    url: store.state.ssoRealmURL,
+    clientId: store.state.ssoClientID
+}
+
+let keycloak = Keycloak(config);
+
+// mode history is needed with keycloak js, see https://github.com/dsb-norge/vue-keycloak-js/issues/1
+const router = new VueRouter({routes, mode: 'history'});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
     store.commit('setNotification', {notification: {}});
-
-    // Auth-Protection
-    if (to.path === '/login') {
-        // Login page is always allowed
+    if (!store.state.user) {
+        console.log('Not yet logged in, authenticating.');
+        authenticate(to, from, next);
+    } else if (store.state.user && store.state.user.exp < (Date.now() / 1000) + 300) {
+        console.log('Token is no longer valid, authenticating.');
+        store.commit('setUser', {user: null});
+        authenticate(to, from, next);
+    } else {
+        // Everything fine, go to page
         next();
     }
-    if (!store.state.user) {
-        console.error('Not yet logged in, navigating to login');
-        next({path: '/login'});
-    } else {
-        // Check if token is still valid
-        if (store.state.user && store.state.user.exp < Date.now() / 1000) {
-            console.error('Token is no longer valid, navigating to login');
-            store.commit('setUser', {user: null});
-
-            next({path: '/login'});
-        } else {
-            // Everything fine, go to page
-            next();
-        }
-    }
 });
+
+function authenticate(to, from, next) {
+    keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
+        if (authenticated) {
+            store.commit('setUser', {
+                user: {
+                  name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
+                  firstname: keycloak.tokenParsed.given_name,
+                  token: keycloak.token,
+                  exp: keycloak.tokenParsed.exp
+                }
+              });
+            next();
+            // Remove hash stuff
+            history.replaceState("", document.title, window.location.pathname);
+        } else {
+            keycloak.login({
+                idpHint: store.state.ssoIdpHint,
+                redirectUri: location.origin + to.path
+            })
+        }
+    }).error(() =>{
+      console.log("SSO authentication error.")
+    });
+}
 
 export default router;

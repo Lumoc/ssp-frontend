@@ -114,13 +114,9 @@
             </div>
 
             <div class="navbar-end">
-                <router-link v-if="!user" to="/login" class="navbar-item">
+                <a v-if="user" class="navbar-item">
                     <b-icon icon="face"></b-icon>
-                    &nbsp; Login
-                </router-link>
-                <a v-if="user" class="navbar-item" v-on:click="logout">
-                    <b-icon icon="face"></b-icon>
-                    &nbsp; Hallo {{user.name }} - Logout
+                    &nbsp; Hallo {{ user.firstname }}!
                 </a>
             </div>
         </div>
@@ -154,16 +150,6 @@
         },
         created: function () {
             this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
-        },
-        methods: {
-            logout() {
-                this.$store.commit('setUser', {user: null});
-                this.$toast.open({
-                    type: 'is-success',
-                    message: 'Du wurdest ausgeloggt'
-                });
-                this.$router.push({path: '/login'})
-            }
         }
     }
 
