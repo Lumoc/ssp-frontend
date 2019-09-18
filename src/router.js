@@ -125,7 +125,7 @@ router.beforeEach((to, from, next) => {
     if (!store.state.user) {
         console.log('Not yet logged in, authenticating.');
         authenticate(to, from, next);
-    } else if (store.state.user && store.state.user.exp < (Date.now() / 1000) - 300) {
+    } else if (store.state.user && store.state.user.exp < (Date.now() / 1000) + 300) {
         console.log('Token is no longer valid, authenticating.');
         store.commit('setUser', {user: null});
         authenticate(to, from, next);
