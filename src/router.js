@@ -146,9 +146,9 @@ function authenticate(to, from, next) {
                   exp: keycloak.tokenParsed.exp
                 }
               });
+            next();
             // Remove hash stuff
             history.replaceState("", document.title, window.location.pathname);
-            next();
         } else {
             keycloak.login({
                 idpHint: store.state.ssoIdpHint,
