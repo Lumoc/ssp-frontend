@@ -124,21 +124,18 @@ router.beforeEach((to, from, next) => {
     store.commit('setNotification', {notification: {}});
     if (!store.state.user) {
         console.log('Not yet logged in, authenticating.');
-        authenticate(next);
+        authenticate(to, from, next);
+    } else if (store.state.user && store.state.user.exp < (Date.now() / 1000) - 300) {
+        console.log('Token is no longer valid, authenticating.');
+        store.commit('setUser', {user: null});
+        authenticate(to, from, next);
     } else {
-        // Check if token is still valid
-        if (store.state.user && store.state.user.exp < Date.now() / 1000) {
-            console.log('Token is no longer valid, authenticating.');
-            store.commit('setUser', {user: null});
-            authenticate(next);
-        } else {
-            // Everything fine, go to page
-            next();
-        }
+        // Everything fine, go to page
+        next();
     }
 });
 
-function authenticate(next) {
+function authenticate(to, from, next) {
     keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
         if (authenticated) {
             store.commit('setUser', {
@@ -150,10 +147,13 @@ function authenticate(next) {
                 }
               });
             // Remove hash stuff
-            history.replaceState(null, null, ' ');
+            history.replaceState("", document.title, window.location.pathname);
             next();
         } else {
-            keycloak.login({ idpHint: store.state.ssoIdpHint });
+            keycloak.login({
+                idpHint: store.state.ssoIdpHint,
+                redirectUri: location.origin + to.path
+            })
         }
     }).error(() =>{
       console.log("SSO authentication error.")
