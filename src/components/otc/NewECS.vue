@@ -65,7 +65,7 @@
                             v-for="image in images"
                             :value="image.name"
                             :key="image.name">
-                        {{ image.name }}
+                        {{ image.trimmedName }}
                     </option>
                 </b-select>
             </b-field>
