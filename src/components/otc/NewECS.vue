@@ -27,6 +27,17 @@
                 Hinweis: Die ECS Instanz wird den Namen "sbb-[ECS Name]" tragen.
             </b-message>
 
+            <b-field label="Stage"
+                     :type="errors.has('Stage') ? 'is-danger' : ''"
+                     :message="errors.first('Stage')">
+                <b-select :loading="loading"
+                          v-model="job_template"
+                          required>
+                    <option value="19306">Produktion</option>
+                    <option value="19296">Test</option>
+                </b-select>
+            </b-field>
+
             <b-field label="Availability Zone"
                      :type="errors.has('AZ') ? 'is-danger' : ''"
                      :message="errors.first('AZ')">
@@ -54,7 +65,7 @@
                             v-for="image in images"
                             :value="image.name"
                             :key="image.name">
-                        {{ image.trimmedName }}
+                        {{ image.name }}
                     </option>
                 </b-select>
             </b-field>
@@ -221,6 +232,7 @@
               loading: false,
               advanced: false,
               job: '',
+              job_template: '19296',
               extra_vars: {
                 provision_otc_project_tag: '',
                 data_disk_volume_size: 20,
