@@ -3,7 +3,6 @@ import Vue from 'vue';
 import App from './components/App.vue';
 import Home from './components/shared/Home.vue';
 import Nav from './components/shared/Nav.vue';
-import Login from './components/shared/Login.vue';
 import Notification from './components/shared/Notification.vue';
 // OSE-Components
 import EditQuota from './components/ose/EditQuota.vue';
@@ -48,7 +47,6 @@ import ADGroup from './components/ActiveDirectory/ADGroup.vue';
 import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
-Vue.component('login', Login);
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
 
@@ -64,8 +62,7 @@ Vue.mixin({
 });
 
 export const GlobalComponents = {
-    App,
-    Login
+    App
 };
 
 export const LocalComponents = {

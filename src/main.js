@@ -6,6 +6,7 @@ import VeeValidate, { Validator } from 'vee-validate';
 import VeeValidateGerman from 'vee-validate/dist/locale/de';
 import Moment from 'moment';
 import 'moment-timezone';
+
 // Styles
 import 'buefy/dist/buefy.css';
 import './theme.css';
@@ -29,10 +30,31 @@ Validator.localize('de', VeeValidateGerman);
 Vue.use(VeeValidate);
 
 // Support endsWith on old browsers
-if (typeof String.prototype.endsWith !== 'function') {
-    String.prototype.endsWith = function(suffix) {
-        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+// Polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function(search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
     };
+}
+
+// Support startsWith on old browsers
+// Polyfill from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+if (!String.prototype.startsWith) {
+    Object.defineProperty(String.prototype, 'startsWith', {
+        value: function(search, rawPos) {
+            var pos = rawPos > 0 ? rawPos|0 : 0;
+            return this.substring(pos, pos + search.length) === search;
+        }
+    });
+}
+
+// Redirect old hash based urls to new history routes
+var urlSplit = document.URL.split("#");
+if (urlSplit[1] && urlSplit[1].startsWith("/")) {
+    history.replaceState(null, null, urlSplit[1])
 }
 
 // Http interceptors: Global response handler
@@ -45,15 +67,11 @@ Vue.http.interceptors.push(function (request, next) {
                     message: res.body.message
                 }
             });
-        }
-        if (!res.url.endsWith('/login') && res.status === 401) {
-            this.$store.commit('setUser', {
-                user: null
-            });
+        } else if (!res.ok) {
             this.$store.commit('setNotification', {
                 notification: {
                     type: 'danger',
-                    message: 'Dein Token ist abgelaufen. Bitte logge dich neu ein'
+                    message: "Die Kommunikation mit dem Backend ist fehlgeschlagen. Bitte eröffnen Sie ein Ticket."
                 }
             });
         }
@@ -75,3 +93,4 @@ new Vue({
     el: '#app',
     render: h => h(GlobalComponents.App)
 });
+

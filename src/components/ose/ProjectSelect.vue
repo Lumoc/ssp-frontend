@@ -54,7 +54,6 @@
               clusterid: this.clusterid
             }
         }).then((res) => {
-          console.log(res.body)
           this.projects = res.body;
           this.loading = false;
         }, () => {
