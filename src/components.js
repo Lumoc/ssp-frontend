@@ -48,6 +48,7 @@ import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
 import ListJobs from './components/tower/ListJobs.vue';
+import SingleJob from './components/tower/SingleJob.vue';
 
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
@@ -102,5 +103,6 @@ export const LocalComponents = {
     ADGroup,
     ADGroupAdmin,
     ADGroupUser,
-    ListJobs
+    ListJobs,
+    SingleJob
 };

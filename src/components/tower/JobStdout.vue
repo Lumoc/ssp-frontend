@@ -1,4 +1,8 @@
 <style type="text/css">
+    .job_stdout_root {
+        position: relative;
+        height: 200px;
+    }
     .job_stdout_html pre {
         background-color: inherit;
         color: inherit;
@@ -33,26 +37,44 @@
     }
     div.ansi_back.ansi_dark {
       padding: 0 8px;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+      max-height: 700px;
+      overflow-y: scroll;
     }
     div.job_stdout_status {
         padding: 8px 0;
     }
-    div.job_stdout_status h1 {
+    .card-header-title {
         font-size: 20px;
+        font-weight: 400;
     }
 </style>
 
 <template>
-    <div>
+    <div class="job_stdout_root">
       <div v-if="job_data.status" class="job_stdout_status">
-          <h1>{{ job_data.status | capitalize }}</h1>
-          <p>Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.</p>
+          <p v-if="job_data.status == 'running'">Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.</p>
       </div>
-      <div class="job_stdout_html ansi_fore ansi_back ansi_dark" v-html="job_stdout_html">
-      </div>
+
+      <b-collapse class="card" :open="false">
+            <div
+                slot="trigger"
+                slot-scope="props"
+                class="card-header"
+                role="button"
+                aria-controls="contentIdForA11y3">
+                <p class="card-header-title">
+                   {{ job_data.status | capitalize }}
+                </p>
+                <a class="card-header-icon">
+                    <b-icon
+                        :icon="props.open ? 'menu-down' : 'menu-up'">
+                    </b-icon>
+                </a>
+            </div>
+            <div class="card-content job_stdout_html ansi_fore ansi_back ansi_dark" v-html="job_stdout_html">
+            </div>
+      </b-collapse>
+            <b-loading :is-full-page="false" :active.sync="loading"></b-loading>
     </div>
 </template>
 
@@ -64,12 +86,13 @@
       return {
         job_data: '',
         job_stdout_html: '',
+        loading: true,
       };
     },
     mounted: function() {
-      if (localStorage.job_id) {
-        this.getJobStdout(localStorage.job_id);
-      }
+        if (this.job) {
+          this.getJobStdout(this.job)
+        }
     },
     watch: {
       job(val) {
@@ -85,13 +108,11 @@
     },
     methods: {
       finished: function(interval) {
-          localStorage.removeItem("job_id")
+          this.loading = false
           clearInterval(interval)
           this.$emit('finished')
       },
       getJobStdout: function(job_id) {
-        localStorage.job_id = job_id
-
         var that = this
         var interval = setInterval(function() {
             that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job_id).then((res) => {

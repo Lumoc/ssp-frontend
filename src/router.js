@@ -108,6 +108,9 @@ const routes = [
     },
     {
         path: '/tower/jobs', component: LocalComponents.ListJobs
+    },
+    {
+        path: '/tower/jobs/:jobID', component: LocalComponents.SingleJob, props: true
     }
 ];
 

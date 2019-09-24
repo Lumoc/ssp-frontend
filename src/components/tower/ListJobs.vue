@@ -13,11 +13,21 @@
         <br>
         <b-table :data="data"
                  :narrowed="true"
-                 :loading="loading">
+                 :loading="loading"
+                 default-sort="started"
+                 default-sort-direction="desc">
 
             <template slot-scope="props">
-                <b-table-column field="sender" label="Benutzername">
-                    {{ props.row }}
+                <b-table-column field="started" label="Started" sortable>
+                    <b-tooltip :label="moment(props.row.started).calendar()">
+                    {{ moment(props.row.started).fromNow() }}
+                    </b-tooltip>
+                </b-table-column>
+                <b-table-column field="status" label="Status" sortable>
+                    <a :href="'/tower/jobs/' + props.row.id">{{ props.row.status }}</a>
+                </b-table-column>
+                <b-table-column field="description" label="Description" sortable>
+                    {{ props.row.description }}
                 </b-table-column>
             </template>
 
@@ -46,7 +56,10 @@
             this.loading = true;
             this.$http.get(this.$store.state.backendURL + '/api/tower/jobs').then((res) => {
               this.loading = false;
-              console.log(res.body)
+              let json = JSON.parse(res.body)
+              this.data = json.results
+
+              console.log(json.results)
             }, () => {
               this.loading = false;
             });
