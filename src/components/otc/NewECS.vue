@@ -348,6 +348,7 @@
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
                       }).then((resp) => {
+                          console.log(resp)
                           let json = JSON.parse(resp.body)
                           this.job = json.job
                       }, () => {

@@ -84,6 +84,8 @@
                     </div>
                 </div>
 
+                <router-link to="/tower/jobs" class="navbar-item">Jobs</router-link>
+
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         WZU-Dienste

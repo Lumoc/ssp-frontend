@@ -105,6 +105,9 @@ const routes = [
     },
     {
         path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
+    },
+    {
+        path: '/tower/jobs', component: LocalComponents.ListJobs
     }
 ];
 
