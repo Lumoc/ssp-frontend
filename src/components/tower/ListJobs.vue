@@ -20,11 +20,11 @@
             <template slot-scope="props">
                 <b-table-column field="started" label="Started" sortable>
                     <b-tooltip :label="moment(props.row.started).calendar()">
-                    {{ moment(props.row.started).fromNow() }}
+                    {{ moment(props.row.started).fromNow() | capitalize }}
                     </b-tooltip>
                 </b-table-column>
                 <b-table-column field="status" label="Status" sortable>
-                    <a :href="'/tower/jobs/' + props.row.id">{{ props.row.status }}</a>
+                    <a :href="'/tower/jobs/' + props.row.id">{{ props.row.status | capitalize }}</a>
                 </b-table-column>
                 <b-table-column field="description" label="Description" sortable>
                     {{ props.row.description }}
@@ -52,12 +52,24 @@
         loading: false
       };
     },
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    },
     mounted: function() {
             this.loading = true;
             this.$http.get(this.$store.state.backendURL + '/api/tower/jobs').then((res) => {
               this.loading = false;
               let json = JSON.parse(res.body)
-              this.data = json.results
+              let filtered = json.results.filter(function(job) {
+                let extra_vars = JSON.parse(job.extra_vars)
+                console.log(extra_vars)
+                return job.status != "running" || extra_vars.provision_otc_rz_zone == "02"
+              });
+              this.data = filtered
 
               console.log(json.results)
             }, () => {

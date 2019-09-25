@@ -1,3 +1,8 @@
+<style>
+.bold {
+    font-weight: 800;
+}
+</style>
 <template>
     <div>
         <div class="hero is-light">
@@ -11,6 +16,18 @@
             </div>
         </div>
         <br>
+        <div class="columns">
+            <div class="column is-narrow bold">
+                Description:<br>
+                Name:<br>
+                Start:<br>
+            </div>
+            <div class="column">
+            {{ job.description }}<br>
+            {{ job.name }}<br>
+            {{ moment(job.started).calendar() | capitalize }}<br>
+            </div>
+        </div>
         <job-stdout :job="jobID" v-on:finished="stopLoading"></job-stdout>
     </div>
 </template>
@@ -32,6 +49,13 @@
         job: {},
         loading: true
       };
+    },
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
     },
     mounted: function() {
             this.loading = true;

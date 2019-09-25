@@ -1,7 +1,6 @@
 <style type="text/css">
     .job_stdout_root {
         position: relative;
-        height: 200px;
     }
     .job_stdout_html pre {
         background-color: inherit;
@@ -51,11 +50,11 @@
 
 <template>
     <div class="job_stdout_root">
-      <div v-if="job_data.status" class="job_stdout_status">
-          <p v-if="job_data.status == 'running'">Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.</p>
+      <div v-if="job_data.status == 'running'" class="job_stdout_status">
+          Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.
       </div>
 
-      <b-collapse class="card" :open="false">
+      <b-collapse v-if="job" class="card" :open="false">
             <div
                 slot="trigger"
                 slot-scope="props"
@@ -84,7 +83,9 @@
     props: ["job"],
     data() {
       return {
-        job_data: '',
+        job_data: {
+            status: 'loading...'
+        },
         job_stdout_html: '',
         loading: true,
       };
@@ -127,6 +128,7 @@
                     var el = document.createElement( 'html' );
                     el.innerHTML = res.body
                     that.job_stdout_html = el.getElementsByTagName('body')[0].innerHTML
+                    that.loading = false
                 }, () => {
                     that.finished(interval)
                     console.log("error")
