@@ -24,7 +24,7 @@
             </b-field>
 
             <b-message type="is-info">
-                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}{{ stage }}-&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen schon gibt.
+                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}{{ stage }}-&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen bereits gibt.
             </b-message>
 
             <b-field label="Stage"
