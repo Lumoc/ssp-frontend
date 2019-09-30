@@ -203,17 +203,6 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Servicezeit"
-                    :type="errors.has('Servicezeit') ? 'is-danger' : ''"
-                    :message="errors.first('Servicezeit')">
-
-                <b-select v-model="extra_vars.unifiedos_service_time" required>
-                    <option>5x12</option>
-                    <option>7x12</option>
-                    <option>7x24</option>
-                </b-select>
-            </b-field>
-
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
@@ -246,7 +235,6 @@
                 unifiedos_owner_group: '',
                 unifiedos_owner_email: '',
                 unifiedos_mega_id: '',
-                unifiedos_service_time: '5x12',
                 unifiedos_service_level: 'best_effort',
                 unifiedos_availability_zone: '01',
 
@@ -348,7 +336,6 @@
                             unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
                             unifiedos_owner_email: this.extra_vars.unifiedos_owner_email,
                             unifiedos_image: this.image.name,
-                            unifiedos_service_time: this.extra_vars.unifiedos_service_time,
                             unifiedos_service_level: this.extra_vars.unifiedos_service_level,
                             unifiedos_data_disk_size: this.extra_vars.unifiedos_data_disk_size,
                             unifiedos_mega_id: this.extra_vars.unifiedos_mega_id,
