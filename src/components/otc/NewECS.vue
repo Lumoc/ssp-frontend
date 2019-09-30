@@ -160,6 +160,19 @@
                 </b-input>
             </b-field>
 
+            <b-field label="Email"
+                     :type="errors.has('Email') ? 'is-danger' : ''"
+                     :message="errors.first('Email')">
+                <b-input type="text"
+                         v-model="extra_vars.unifiedos_owner_email"
+                         v-validate="'required'"
+                         name="Email">
+                </b-input>
+            </b-field>
+            <b-message type="is-info">
+                Diese Email wird für die Kommunikation betreffend der VM verwendet. Es werden alle Monitoring-Alerts und andere technische Meldungen an diese Addresse geschickt. Die Inbox muss regelmässig geprüft werden. Wir behalten uns das Recht vor, eine VM herunter zu fahren, falls keine Antwort erfolgt.
+            </b-message>
+
             <b-field label="Mega ID"
                      :type="errors.has('Mega ID') ? 'is-danger' : ''"
                      :message="errors.first('Mega ID')">
@@ -232,6 +245,7 @@
                 unifiedos_project: '',
                 unifiedos_data_disk_size: 20,
                 unifiedos_owner_group: '',
+                unifiedos_owner_email: '',
                 unifiedos_mega_id: '',
                 unifiedos_service_time: '5x12',
                 unifiedos_service_level: 'best_effort',
@@ -324,6 +338,7 @@
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/19296/launch', {
                           extra_vars: {
                             unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
+                            unifiedos_owner_email: this.extra_vars.unifiedos_owner_email,
                             unifiedos_image: this.extra_vars.unifiedos_image,
                             unifiedos_service_time: this.extra_vars.unifiedos_service_time,
                             unifiedos_service_level: this.extra_vars.unifiedos_service_level,
