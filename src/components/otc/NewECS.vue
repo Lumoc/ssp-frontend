@@ -19,7 +19,7 @@
                          maxlength=6
                          minlength=2
                          name="Project"
-                         v-model.number="extra_vars.unifiedos_project">
+                         v-model="extra_vars.unifiedos_project">
                 </b-input>
             </b-field>
 
@@ -55,13 +55,13 @@
                     :message="errors.first('Image')">
 
                 <b-select :loading="loading"
-                        v-model="extra_vars.unifiedos_image"
+                        v-model="image"
                         required>
                     <option
-                            v-for="image in images"
-                            :value="image.name"
-                            :key="image.name">
-                        {{ image.trimmedName }}
+                            v-for="m in images"
+                            :value="m"
+                            :key="m.name">
+                        {{ m.trimmedName }}
                     </option>
                 </b-select>
             </b-field>
@@ -81,9 +81,8 @@
                     </option>
                 </b-select>
             </b-field>
-
-            <b-message type="is-danger" v-if="extra_vars.unifiedos_image !== null && extra_vars.unifiedos_image.minRAMMegabytes > flavor.ram">
-                Das gewählte Image benötigt mindestens {{ extra_vars.unifiedos_image.minRAMMegabytes/1024 }}GB RAM.
+            <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
+                Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
             <b-field label="Volume Type"
@@ -123,15 +122,15 @@
                         :type="errors.has('Root-Disk-Grösse') ? 'is-danger' : ''"
                         :message="errors.first('Root-Disk-Grösse')">
                     <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: extra_vars.unifiedos_image.minDiskGigabytes }"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
                             name="Root Disk GB"
                             v-model.number="extra_vars.provision_otc_root_size">
                     </b-input>
                 </b-field>
 
 
-                <b-message type="is-danger" v-if="extra_vars.unifiedos_image !== null && extra_vars.unifiedos_image.minDiskGigabytes > extra_vars.provision_otc_root_size">
-                    Das gewählte Image benötigt eine mindestens {{ extra_vars.unifiedos_image.minDiskGigabytes }}GB grosse Root Disk.
+                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.provision_otc_root_size">
+                    Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
                 </b-message>
             </template>
 
@@ -240,8 +239,8 @@
               advanced: false,
               job: '',
               stage: 'p',
+              image: '',
               extra_vars: {
-                unifiedos_image: '',
                 unifiedos_project: '',
                 unifiedos_data_disk_size: 20,
                 unifiedos_owner_group: '',
@@ -257,6 +256,15 @@
                 provision_otc_accountingnr_tag: '',
               },
           };
+      },
+      watch: {
+        image: function(image, old_image) {
+           let size = this.extra_vars.provision_otc_root_size
+           // Set the minimum if the user hasn't changed the value or if the value is below minimum
+           if (!old_image || size == old_image.minDiskGigabytes || size < image.minDiskGigabytes) {
+                this.extra_vars.provision_otc_root_size = image.minDiskGigabytes
+           }
+        }
       },
       mounted: function () {
           this.getFlavors();
@@ -312,7 +320,7 @@
                   let result = res.body.images;
                   this.images = result.sort();
 
-                  this.extra_vars.unifiedos_image = this.images[0].name;
+                  this.image = this.images[0];
 
                   this.loading = false;
               }, () => {
@@ -323,11 +331,11 @@
               this.loading = false;
           },
           newECS: function() {
-              if (this.flavor.ram < this.extra_vars.unifiedos_image.minRAMMegabytes) {
+              if (this.flavor.ram < this.image.minRAMMegabytes) {
                   return;
               }
 
-              if (this.extra_vars.provision_otc_root_size < this.extra_vars.unifiedos_image.minDiskGigabytes) {
+              if (this.extra_vars.provision_otc_root_size < this.image.minDiskGigabytes) {
                   return;
               }
 
@@ -339,7 +347,7 @@
                           extra_vars: {
                             unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
                             unifiedos_owner_email: this.extra_vars.unifiedos_owner_email,
-                            unifiedos_image: this.extra_vars.unifiedos_image,
+                            unifiedos_image: this.image.name,
                             unifiedos_service_time: this.extra_vars.unifiedos_service_time,
                             unifiedos_service_level: this.extra_vars.unifiedos_service_level,
                             unifiedos_data_disk_size: this.extra_vars.unifiedos_data_disk_size,
