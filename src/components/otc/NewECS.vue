@@ -162,7 +162,7 @@
             <b-field label="Email"
                      :type="errors.has('Email') ? 'is-danger' : ''"
                      :message="errors.first('Email')">
-                <b-input type="text"
+                <b-input type="email"
                          v-model="extra_vars.unifiedos_owner_email"
                          v-validate="'required'"
                          name="Email">
