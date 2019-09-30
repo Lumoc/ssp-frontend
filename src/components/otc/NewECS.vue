@@ -11,30 +11,30 @@
         </div>
         <br>
         <form v-on:submit.prevent="newECS">
-            <b-field label="ECS Name"
-                     :type="errors.has('ECS Name') ? 'is-danger' : ''"
-                     :message="errors.first('ECS Name')">
+            <b-field label="Project"
+                     :type="errors.has('Project') ? 'is-danger' : ''"
+                     :message="errors.first('Project')">
                 <b-input type="text"
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\-]+$/} }"
                          maxlength=6
                          minlength=2
-                         name="ECS Name"
-                         v-model.number="extra_vars.provision_otc_project_tag">
+                         name="Project"
+                         v-model.number="extra_vars.unifiedos_project">
                 </b-input>
             </b-field>
 
             <b-message type="is-info">
-                Hinweis: Die ECS Instanz wird den Namen "sbb-[ECS Name]" tragen.
+                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}{{ stage }}-&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen schon gibt.
             </b-message>
 
             <b-field label="Stage"
                      :type="errors.has('Stage') ? 'is-danger' : ''"
                      :message="errors.first('Stage')">
                 <b-select :loading="loading"
-                          v-model="job_template"
+                          v-model="stage"
                           required>
-                    <option value="19306">Produktion</option>
-                    <option value="19296">Test</option>
+                    <option value="p">Produktion</option>
+                    <option value="t">Test</option>
                 </b-select>
             </b-field>
 
@@ -43,14 +43,10 @@
                      :message="errors.first('AZ')">
 
                 <b-select :loading="loading"
-                          v-model="availabilityZone"
+                          v-model="extra_vars.unifiedos_availability_zone"
                           required>
-                    <option
-                            v-for="az in availabilityZones"
-                            :value="az"
-                            :key="az">
-                        {{ az }}
-                    </option>
+                    <option>01</option>
+                    <option>02</option>
                 </b-select>
             </b-field>
 
@@ -59,7 +55,7 @@
                     :message="errors.first('Image')">
 
                 <b-select :loading="loading"
-                        v-model="extra_vars.provision_otc_image"
+                        v-model="extra_vars.unifiedos_image"
                         required>
                     <option
                             v-for="image in images"
@@ -86,8 +82,8 @@
                 </b-select>
             </b-field>
 
-            <b-message type="is-danger" v-if="extra_vars.provision_otc_image !== null && extra_vars.provision_otc_image.minRAMMegabytes > flavor.ram">
-                Das gewählte Image benötigt mindestens {{ extra_vars.provision_otc_image.minRAMMegabytes/1024 }}GB RAM.
+            <b-message type="is-danger" v-if="extra_vars.unifiedos_image !== null && extra_vars.unifiedos_image.minRAMMegabytes > flavor.ram">
+                Das gewählte Image benötigt mindestens {{ extra_vars.unifiedos_image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
             <b-field label="Volume Type"
@@ -112,7 +108,7 @@
                 <b-input type="text"
                         v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
                         name="Data-Disk-Grösse"
-                        v-model.number="extra_vars.data_disk_volume_size">
+                        v-model.number="extra_vars.unifiedos_data_disk_size">
                 </b-input>
             </b-field>
 
@@ -127,15 +123,15 @@
                         :type="errors.has('Root-Disk-Grösse') ? 'is-danger' : ''"
                         :message="errors.first('Root-Disk-Grösse')">
                     <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: extra_vars.provision_otc_image.minDiskGigabytes }"
+                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: extra_vars.unifiedos_image.minDiskGigabytes }"
                             name="Root Disk GB"
                             v-model.number="extra_vars.provision_otc_root_size">
                     </b-input>
                 </b-field>
 
 
-                <b-message type="is-danger" v-if="extra_vars.provision_otc_image !== null && extra_vars.provision_otc_image.minDiskGigabytes > extra_vars.provision_otc_root_size">
-                    Das gewählte Image benötigt eine mindestens {{ extra_vars.provision_otc_image.minDiskGigabytes }}GB grosse Root Disk.
+                <b-message type="is-danger" v-if="extra_vars.unifiedos_image !== null && extra_vars.unifiedos_image.minDiskGigabytes > extra_vars.provision_otc_root_size">
+                    Das gewählte Image benötigt eine mindestens {{ extra_vars.unifiedos_image.minDiskGigabytes }}GB grosse Root Disk.
                 </b-message>
             </template>
 
@@ -158,7 +154,7 @@
                      :type="errors.has('LDAP Gruppe') ? 'is-danger' : ''"
                      :message="errors.first('LDAP Gruppe')">
                 <b-input type="text"
-                         v-model="extra_vars.iam_pamd_projectadmingroup"
+                         v-model="extra_vars.unifiedos_owner_group"
                          v-validate="'required'"
                          name="LDAP Gruppe">
                 </b-input>
@@ -168,7 +164,7 @@
                      :type="errors.has('Mega ID') ? 'is-danger' : ''"
                      :message="errors.first('Mega ID')">
                 <b-input type="text"
-                         v-model="extra_vars.provision_otc_megaid_tag"
+                         v-model="extra_vars.unifiedos_mega_id"
                          v-validate="'required'"
                          name="Mega ID">
                 </b-input>
@@ -188,7 +184,7 @@
                     :type="errors.has('SLA') ? 'is-danger' : ''"
                     :message="errors.first('SLA')">
 
-                <b-select v-model="extra_vars.provision_otc_sla_tag" required>
+                <b-select v-model="extra_vars.unifiedos_service_level" required>
                     <option>best_effort</option>
                     <option>1b</option>
                     <option>2a</option>
@@ -199,7 +195,7 @@
                     :type="errors.has('Servicezeit') ? 'is-danger' : ''"
                     :message="errors.first('Servicezeit')">
 
-                <b-select v-model="extra_vars.provision_otc_service_time_tag" required>
+                <b-select v-model="extra_vars.unifiedos_service_time" required>
                     <option>5x12</option>
                     <option>7x12</option>
                     <option>7x24</option>
@@ -227,24 +223,24 @@
               flavor: '',
               images: [],
               volumeTypes: [],
-              availabilityZones: [],
-              availabilityZone: '',
               loading: false,
               advanced: false,
               job: '',
-              job_template: '19296',
+              stage: 'p',
               extra_vars: {
-                provision_otc_project_tag: '',
-                data_disk_volume_size: 20,
+                unifiedos_image: '',
+                unifiedos_project: '',
+                unifiedos_data_disk_size: 20,
+                unifiedos_owner_group: '',
+                unifiedos_mega_id: '',
+                unifiedos_service_time: '5x12',
+                unifiedos_service_level: 'best_effort',
+                unifiedos_availability_zone: '01',
+
                 provision_otc_root_size: 10,
-                provision_otc_image: '',
                 provision_otc_ssh_key: '',
                 provision_otc_default_volume_type: '',
-                iam_pamd_projectadmingroup: '',
-                provision_otc_megaid_tag: '',
                 provision_otc_accountingnr_tag: '',
-                provision_otc_service_time_tag: '5x12',
-                provision_otc_sla_tag: 'best_effort',
               },
           };
       },
@@ -252,22 +248,18 @@
           this.getFlavors();
           this.getImages();
           this.getVolumeTypes();
-          this.getAvailabilityZones();
+      },
+      filters: {
+        placeholder: function (input, property) {
+            return ( input === undefined || input === '' || input === null ) ? property : input;
+        }
+      },
+      computed: {
+        job_template: function() {
+           return (this.stage == 'p') ? '19306' : '19296'
+        }
       },
       methods: {
-          getAvailabilityZones: function () {
-              this.loading = true;
-              this.$http.get(this.$store.state.backendURL + '/api/otc/availabilityzones').then((res) => {
-                  let result = res.body.availabilityZones;
-                  this.availabilityZones = result.sort();
-
-                  this.availabilityZone = this.availabilityZones[0];
-
-                  this.loading = false;
-              }, () => {
-                  this.loading = false;
-              });
-          },
           getFlavors: function () {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/flavors').then((res) => {
@@ -306,7 +298,7 @@
                   let result = res.body.images;
                   this.images = result.sort();
 
-                  this.extra_vars.provision_otc_image = this.images[0].name;
+                  this.extra_vars.unifiedos_image = this.images[0].name;
 
                   this.loading = false;
               }, () => {
@@ -317,11 +309,11 @@
               this.loading = false;
           },
           newECS: function() {
-              if (this.flavor.ram < this.extra_vars.provision_otc_image.minRAMMegabytes) {
+              if (this.flavor.ram < this.extra_vars.unifiedos_image.minRAMMegabytes) {
                   return;
               }
 
-              if (this.extra_vars.provision_otc_root_size < this.extra_vars.provision_otc_image.minDiskGigabytes) {
+              if (this.extra_vars.provision_otc_root_size < this.extra_vars.unifiedos_image.minDiskGigabytes) {
                   return;
               }
 
@@ -331,20 +323,21 @@
 
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/19296/launch', {
                           extra_vars: {
-                            provision_otc_rz_zone: this.availabilityZone.slice(-2),
+                            unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
+                            unifiedos_image: this.extra_vars.unifiedos_image,
+                            unifiedos_service_time: this.extra_vars.unifiedos_service_time,
+                            unifiedos_service_level: this.extra_vars.unifiedos_service_level,
+                            unifiedos_data_disk_size: this.extra_vars.unifiedos_data_disk_size,
+                            unifiedos_mega_id: this.extra_vars.unifiedos_mega_id,
+
+                            unifiedos_availability_zone: this.extra_vars.unifiedos_availability_zone,
                             provision_otc_instance_type: this.flavor.name,
 
 
                             provision_otc_root_size: this.extra_vars.provision_otc_root_size,
-                            iam_pamd_projectadmingroup: this.extra_vars.iam_pamd_projectadmingroup,
-                            provision_otc_image: this.extra_vars.provision_otc_image,
                             provision_otc_accountingnr_tag: '' + this.extra_vars.provision_otc_accountingnr_tag,
-                            provision_otc_megaid_tag: this.extra_vars.provision_otc_megaid_tag,
-                            provision_otc_project_tag: this.extra_vars.provision_otc_project_tag,
-                            provision_otc_service_time_tag: this.extra_vars.provision_otc_service_time_tag,
-                            provision_otc_sla_tag: this.extra_vars.provision_otc_sla_tag,
+                            unifiedos_project: this.extra_vars.unifiedos_project,
                             provision_otc_ssh_key: this.extra_vars.provision_otc_ssh_key,
-                            data_disk_volume_size: this.extra_vars.data_disk_volume_size,
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
                       }).then((resp) => {
