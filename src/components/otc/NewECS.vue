@@ -253,7 +253,7 @@
                 unifiedos_availability_zone: '1',
 
                 unifiedos_root_disk_size: 10,
-                provision_otc_default_volume_type: '',
+                provision_otc_default_volume_type: 'SATA',
                 unifiedos_accounting_number: '',
               },
           };
