@@ -2,6 +2,10 @@
     .b-tooltip.is-right.is-multiline:after {
         text-align: left;
     }
+    .maxlength .counter {
+        font-weight: bold;
+        transition: all .5s ease-in-out;
+    }
 </style>
 <template>
     <div>
@@ -19,17 +23,16 @@
             <b-field label="Project">
                 <b-input type="text"
                          pattern="^[a-zA-Z0-9\-]+$"
-                         oninvalid="setCustomValidity('Project must be two characters long and only contain letters, numbers and dashes')"
-                         oninput="setCustomValidity('')"
+                         validation-message="Project must be two characters long and only contain letters, numbers and dashes"
                          maxlength=6
                          minlength=2
-                         name="Project"
+                         v-bind:class="projectMaxLength"
                          v-model="extra_vars.unifiedos_project">
                 </b-input>
             </b-field>
 
             <b-message type="is-info">
-                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}-{{ stage }}&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen bereits gibt.
+                Note: The VM will be named: {{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}-{{ stage }}&lt;counter&gt;. Counter will be incremented if the name already exists.
             </b-message>
 
             <b-field label="Stage">
@@ -68,8 +71,7 @@
                 <b-select :loading="loading"
                         v-model="image"
                         required>
-                    <option
-                            v-for="m in images"
+                    <option v-for="m in images"
                             :value="m"
                             :key="m.name">
                         {{ m.trimmedName }}
@@ -144,7 +146,7 @@
                         <b-input type="number"
                                  required
                                  :min="image.minDiskGigabytes"
-                                 v-model.number="extra_vars.provision_otc_root_size">
+                                 v-model.number="extra_vars.unifiedos_root_disk_size">
                         </b-input>
                         <p class="control">
                             <span class="button is-static">GB</span>
@@ -152,21 +154,26 @@
                     </b-field>
                 </b-field>
 
-                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.provision_otc_root_size">
+                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.unifiedos_root_disk_size">
                     Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
                 </b-message>
             </template>
 
 
             <b-message type="is-info">
-                Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
+                The filesystem layout is described <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
-            <b-field label="LDAP Gruppe">
+            <b-field>
+                <template slot="label">
+                    Active Directory group name
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="The Active directory group name is used for instance ownership (e.g. login, admin permissions).">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
                 <b-input type="text"
                          v-model="extra_vars.unifiedos_owner_group"
-                         required
-                         name="LDAP Gruppe">
+                         required>
                 </b-input>
             </b-field>
 
@@ -179,24 +186,21 @@
                 </template>
                 <b-input type="email"
                          v-model="extra_vars.unifiedos_owner_email"
-                         required
-                         name="Email">
+                         required>
                 </b-input>
             </b-field>
 
             <b-field label="Mega ID">
                 <b-input type="text"
                          v-model="extra_vars.unifiedos_mega_id"
-                         required
-                         name="Mega ID">
+                         required>
                 </b-input>
             </b-field>
 
-            <b-field label="Kontierungsnummer">
+            <b-field label="Accounting number">
                 <b-input type="text"
                          v-model.number="extra_vars.unifiedos_accounting_number"
-                         required
-                         name="Kontierungsnummer">
+                         required>
                 </b-input>
             </b-field>
 
@@ -235,7 +239,7 @@
                 unifiedos_service_level: 'best_effort',
                 unifiedos_availability_zone: '1',
 
-                provision_otc_root_size: 10,
+                unifiedos_root_disk_size: 10,
                 provision_otc_default_volume_type: '',
                 unifiedos_accounting_number: '',
               },
@@ -243,10 +247,10 @@
       },
       watch: {
         image: function(image, old_image) {
-           let size = this.extra_vars.provision_otc_root_size
+           let size = this.extra_vars.unifiedos_root_disk_size
            // Set the minimum if the user hasn't changed the value or if the value is below minimum
            if (!old_image || size == old_image.minDiskGigabytes || size < image.minDiskGigabytes) {
-                this.extra_vars.provision_otc_root_size = image.minDiskGigabytes
+                this.extra_vars.unifiedos_root_disk_size = image.minDiskGigabytes
            }
         }
       },
@@ -261,6 +265,9 @@
         }
       },
       computed: {
+        projectMaxLength: function() {
+            return { maxlength: this.extra_vars.unifiedos_project.length == 6 }
+        },
         job_template: function() {
            return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
         }
@@ -319,7 +326,7 @@
                   return;
               }
 
-              if (this.extra_vars.provision_otc_root_size < this.image.minDiskGigabytes) {
+              if (this.extra_vars.unifiedos_root_disk_size < this.image.minDiskGigabytes) {
                   return;
               }
 
@@ -341,7 +348,7 @@
                             provision_otc_instance_type: this.flavor.name,
 
 
-                            provision_otc_root_size: this.extra_vars.provision_otc_root_size,
+                            unifiedos_root_disk_size: this.extra_vars.unifiedos_root_disk_size,
                             unifiedos_project: this.extra_vars.unifiedos_project,
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
