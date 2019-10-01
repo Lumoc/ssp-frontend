@@ -59,7 +59,15 @@
                 </b-select>
             </b-field>
 
-            <b-field label="SLA">
+            <b-field>
+                <template slot="label">
+                    Service Level Agreement
+                    <b-tooltip type="is-dark" animated position="is-right" label="Click for more information">
+                        <a target="_blank" href="https://confluence.sbb.ch/display/UOS">
+                            <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                        </a>
+                    </b-tooltip>
+                </template>
                 <b-select v-model="extra_vars.unifiedos_service_level" required>
                     <option>best_effort</option>
                     <option>1b</option>
@@ -67,7 +75,13 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Image">
+            <b-field>
+                <template slot="label">
+                    Image
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="UnifiedOS disk image name. Currently supported are Red Hat Enterprise Linux 7 and Windows Server 2016.">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
                 <b-select :loading="loading"
                         v-model="image"
                         required>
@@ -138,7 +152,7 @@
                 <b-field>
                     <template slot="label">
                         Root disk size
-                        <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system">
+                        <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system (Linux: min 10GB / Windows: min 60GB)">
                             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                         </b-tooltip>
                     </template>
@@ -224,7 +238,6 @@
               flavors: [],
               flavor: '',
               images: [],
-              volumeTypes: [],
               loading: false,
               advanced: false,
               job: '',
@@ -257,7 +270,6 @@
       mounted: function () {
           this.getFlavors();
           this.getImages();
-          this.getVolumeTypes();
       },
       filters: {
         placeholder: function (input, property) {
@@ -286,19 +298,6 @@
                   });
 
                   this.flavor = this.flavors[0];
-
-                  this.loading = false;
-              }, () => {
-                  this.loading = false;
-              });
-          },
-          getVolumeTypes: function () {
-              this.loading = true;
-              this.$http.get(this.$store.state.backendURL + '/api/otc/volumetypes').then((res) => {
-                  let result = res.body.volumeTypes;
-                  this.volumeTypes = result.sort();
-
-                  this.extra_vars.provision_otc_default_volume_type = this.volumeTypes[0].name;
 
                   this.loading = false;
               }, () => {
