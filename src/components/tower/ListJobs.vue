@@ -41,11 +41,6 @@
 
 <script>
   export default {
-    computed: {
-      username() {
-        return this.$store.state.user.name;
-      }
-    },
     data() {
       return {
         data: [],
@@ -65,12 +60,13 @@
               this.loading = false;
               let json = JSON.parse(res.body)
               let filtered = json.results.filter(function(job) {
+                // finished jobs are filtered on the backend
+                if (job.status != "running") return true
+                // filter the remaining jobs (not supported by tower api)
                 let extra_vars = JSON.parse(job.extra_vars)
-                console.log(extra_vars)
-                return job.status != "running" || extra_vars.provision_otc_rz_zone == "02"
-              });
+                return extra_vars.custom_tower_user_name == this.$store.state.user.name
+              }, this);
               this.data = filtered
-
               console.log(json.results)
             }, () => {
               this.loading = false;

@@ -24,7 +24,7 @@
             </b-field>
 
             <b-message type="is-info">
-                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}{{ stage }}-&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen bereits gibt.
+                Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}-{{ stage }}&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen bereits gibt.
             </b-message>
 
             <b-field label="Stage"
@@ -45,8 +45,8 @@
                 <b-select :loading="loading"
                           v-model="extra_vars.unifiedos_availability_zone"
                           required>
-                    <option>01</option>
-                    <option>02</option>
+                    <option>1</option>
+                    <option>2</option>
                 </b-select>
             </b-field>
 
@@ -236,7 +236,7 @@
                 unifiedos_owner_email: '',
                 unifiedos_mega_id: '',
                 unifiedos_service_level: 'best_effort',
-                unifiedos_availability_zone: '01',
+                unifiedos_availability_zone: '1',
 
                 provision_otc_root_size: 10,
                 provision_otc_ssh_key: '',
@@ -266,7 +266,7 @@
       },
       computed: {
         job_template: function() {
-           return (this.stage == 'p') ? '19306' : '19296'
+           return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
         }
       },
       methods: {
@@ -331,7 +331,7 @@
                   if (result) {
                       this.loading = true;
 
-                      this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/19296/launch', {
+                      this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
                           extra_vars: {
                             unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
                             unifiedos_owner_email: this.extra_vars.unifiedos_owner_email,
@@ -351,7 +351,6 @@
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
                       }).then((resp) => {
-                          console.log(resp)
                           let json = JSON.parse(resp.body)
                           this.job = json.job
                       }, () => {

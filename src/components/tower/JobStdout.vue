@@ -53,6 +53,12 @@
       <div v-if="job_data.status == 'running'" class="job_stdout_status">
           Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.
       </div>
+      <div v-if="job_data.status == 'successful'" class="job_stdout_status">
+        Folgende Variablen wurden vom Job zurückgegeben:<br>
+        <div v-for="(value, key) in job_data.artifacts">
+            <b>{{ key }}:</b> {{ value }}<br>
+        </div>
+      </div>
 
       <b-collapse v-if="job" class="card" :open="false">
             <div

@@ -84,7 +84,6 @@
                     </div>
                 </div>
 
-                <router-link to="/tower/jobs" class="navbar-item">Jobs</router-link>
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -116,6 +115,8 @@
             </div>
 
             <div class="navbar-end">
+                <!--<router-link to="/tower/jobs" class="navbar-item"><b-tooltip position="is-bottom" label="Jobs"><b-icon icon="view-dashboard"></b-icon></b-tooltip></router-link>-->
+                <router-link to="/tower/jobs" class="navbar-item">Jobs</router-link>
                 <a v-if="user" class="navbar-item">
                     <b-icon icon="face"></b-icon>
                     &nbsp; Hallo {{ user.firstname }}!
