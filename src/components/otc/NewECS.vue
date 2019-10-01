@@ -1,3 +1,8 @@
+<style>
+    .b-tooltip.is-right.is-multiline:after {
+        text-align: left;
+    }
+</style>
 <template>
     <div>
         <div class="hero is-light">
@@ -11,11 +16,11 @@
         </div>
         <br>
         <form v-on:submit.prevent="newECS">
-            <b-field label="Project"
-                     :type="errors.has('Project') ? 'is-danger' : ''"
-                     :message="errors.first('Project')">
+            <b-field label="Project">
                 <b-input type="text"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\-]+$/} }"
+                         pattern="^[a-zA-Z0-9\-]+$"
+                         oninvalid="setCustomValidity('Project must be two characters long and only contain letters, numbers and dashes')"
+                         oninput="setCustomValidity('')"
                          maxlength=6
                          minlength=2
                          name="Project"
@@ -27,33 +32,39 @@
                 Hinweis: Die ECS Instanz wird den Namen "{{ extra_vars.unifiedos_project | placeholder("&lt;project&gt;") }}-otc{{ extra_vars.unifiedos_availability_zone }}-{{ stage }}&lt;counter&gt;" tragen. Counter ist eine Laufnummer, falls es diesen Namen bereits gibt.
             </b-message>
 
-            <b-field label="Stage"
-                     :type="errors.has('Stage') ? 'is-danger' : ''"
-                     :message="errors.first('Stage')">
+            <b-field label="Stage">
                 <b-select :loading="loading"
                           v-model="stage"
                           required>
-                    <option value="p">Produktion</option>
+                    <option value="p">Production</option>
                     <option value="t">Test</option>
                 </b-select>
             </b-field>
 
-            <b-field label="Availability Zone"
-                     :type="errors.has('AZ') ? 'is-danger' : ''"
-                     :message="errors.first('AZ')">
-
+            <b-field>
+                <template slot="label">
+                    Availability Zone
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="This is where the VM will be started. It is recommended to distribute your VMs across different data centers.">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
                 <b-select :loading="loading"
                           v-model="extra_vars.unifiedos_availability_zone"
                           required>
-                    <option>1</option>
-                    <option>2</option>
+                    <option value="1">Zollikofen</option>
+                    <option value="2">Bern</option>
                 </b-select>
             </b-field>
 
-            <b-field label="Image"
-                    :type="errors.has('Image') ? 'is-danger' : ''"
-                    :message="errors.first('Image')">
+            <b-field label="SLA">
+                <b-select v-model="extra_vars.unifiedos_service_level" required>
+                    <option>best_effort</option>
+                    <option>1b</option>
+                    <option>2a</option>
+                </b-select>
+            </b-field>
 
+            <b-field label="Image">
                 <b-select :loading="loading"
                         v-model="image"
                         required>
@@ -66,9 +77,15 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Flavor"
-                     :type="errors.has('Flavor') ? 'is-danger' : ''"
-                     :message="errors.first('Flavor')">
+            <b-field label="Flavor">
+                <template slot="label">
+                    Flavor
+                    <b-tooltip type="is-dark" animated position="is-right" label="Click for more information">
+                        <a target="_blank" href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1045005162">
+                            <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                        </a>
+                    </b-tooltip>
+                </template>
 
                 <b-select :loading="loading"
                           v-model="flavor"
@@ -85,49 +102,55 @@
                 Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
-            <b-field label="Volume Type"
-                    :type="errors.has('Volume Type') ? 'is-danger' : ''"
-                    :message="errors.first('Volume Type')">
-
+            <b-field label="Disk volume storage type">
                 <b-select :loading="loading"
                         v-model="extra_vars.provision_otc_default_volume_type"
                         required>
-                    <option
-                            v-for="volumeType in volumeTypes"
-                            :value="volumeType.name"
-                            :key="volumeType.name">
-                        {{ volumeType.name }}
-                    </option>
+                    <option value="SATA">SATA: regular speed, cheaper</option>
+                    <option value="SSD">SSD: high speed, more expensive</option>
                 </b-select>
             </b-field>
 
-            <b-field label="Data-Disk-Grösse"
-                    :type="errors.has('Data-Disk-Grösse') ? 'is-danger' : ''"
-                    :message="errors.first('Data-Disk-Grösse')">
-                <b-input type="text"
-                        v-validate="{ rules: { required: true, regex: /^[0-9]+$/} }"
-                        name="Data-Disk-Grösse"
-                        v-model.number="extra_vars.unifiedos_data_disk_size">
-                </b-input>
+            <b-field>
+                <template slot="label">
+                    Persistent data size
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for persistent data (e.g. /var/data on Linux or D:\ on Windows)">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
+                <b-field>
+                    <b-input type="number" required v-model.number="extra_vars.unifiedos_data_disk_size"></b-input>
+                    <p class="control">
+                        <span class="button is-static">GB</span>
+                    </p>
+                </b-field>
             </b-field>
 
             <b-field>
                 <b-checkbox v-model="advanced">
-                    Fortgeschrittene Einstellungen
+                    Advanced settings
                 </b-checkbox>
             </b-field>
 
             <template v-if="advanced">
-                <b-field label="Root-Disk-Grösse"
-                        :type="errors.has('Root-Disk-Grösse') ? 'is-danger' : ''"
-                        :message="errors.first('Root-Disk-Grösse')">
-                    <b-input type="text"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                            name="Root Disk GB"
-                            v-model.number="extra_vars.provision_otc_root_size">
-                    </b-input>
+                <b-field>
+                    <template slot="label">
+                        Root disk size
+                        <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system">
+                            <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                        </b-tooltip>
+                    </template>
+                    <b-field>
+                        <b-input type="number"
+                                 required
+                                 :min="image.minDiskGigabytes"
+                                 v-model.number="extra_vars.provision_otc_root_size">
+                        </b-input>
+                        <p class="control">
+                            <span class="button is-static">GB</span>
+                        </p>
+                    </b-field>
                 </b-field>
-
 
                 <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.provision_otc_root_size">
                     Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
@@ -139,58 +162,42 @@
                 Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
             </b-message>
 
-            <b-field label="LDAP Gruppe"
-                     :type="errors.has('LDAP Gruppe') ? 'is-danger' : ''"
-                     :message="errors.first('LDAP Gruppe')">
+            <b-field label="LDAP Gruppe">
                 <b-input type="text"
                          v-model="extra_vars.unifiedos_owner_group"
-                         v-validate="'required'"
+                         required
                          name="LDAP Gruppe">
                 </b-input>
             </b-field>
 
-            <b-field label="Email"
-                     :type="errors.has('Email') ? 'is-danger' : ''"
-                     :message="errors.first('Email')">
+            <b-field>
+                <template slot="label">
+                    Email
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for alerts and notifications">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
                 <b-input type="email"
                          v-model="extra_vars.unifiedos_owner_email"
-                         v-validate="'required'"
+                         required
                          name="Email">
                 </b-input>
             </b-field>
-            <b-message type="is-info">
-                Diese Email wird für die Kommunikation betreffend der VM verwendet. Es werden alle Monitoring-Alerts und andere technische Meldungen an diese Addresse geschickt. Die Inbox muss regelmässig geprüft werden. Wir behalten uns das Recht vor, eine VM herunter zu fahren, falls keine Antwort erfolgt.
-            </b-message>
 
-            <b-field label="Mega ID"
-                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
-                     :message="errors.first('Mega ID')">
+            <b-field label="Mega ID">
                 <b-input type="text"
                          v-model="extra_vars.unifiedos_mega_id"
-                         v-validate="'required'"
+                         required
                          name="Mega ID">
                 </b-input>
             </b-field>
 
-            <b-field label="Kontierungsnummer"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
+            <b-field label="Kontierungsnummer">
                 <b-input type="text"
                          v-model.number="extra_vars.unifiedos_accounting_number"
-                         v-validate="'required'"
+                         required
                          name="Kontierungsnummer">
                 </b-input>
-            </b-field>
-
-            <b-field label="SLA"
-                    :type="errors.has('SLA') ? 'is-danger' : ''"
-                    :message="errors.first('SLA')">
-
-                <b-select v-model="extra_vars.unifiedos_service_level" required>
-                    <option>best_effort</option>
-                    <option>1b</option>
-                    <option>2a</option>
-                </b-select>
             </b-field>
 
 
