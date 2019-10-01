@@ -186,7 +186,7 @@
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"
-                         v-model.number="extra_vars.provision_otc_accountingnr_tag"
+                         v-model.number="extra_vars.unifiedos_accounting_number"
                          v-validate="'required'"
                          name="Kontierungsnummer">
                 </b-input>
@@ -241,7 +241,7 @@
                 provision_otc_root_size: 10,
                 provision_otc_ssh_key: '',
                 provision_otc_default_volume_type: '',
-                provision_otc_accountingnr_tag: '',
+                unifiedos_accounting_number: '',
               },
           };
       },
@@ -339,13 +339,13 @@
                             unifiedos_service_level: this.extra_vars.unifiedos_service_level,
                             unifiedos_data_disk_size: this.extra_vars.unifiedos_data_disk_size,
                             unifiedos_mega_id: this.extra_vars.unifiedos_mega_id,
+                            unifiedos_accounting_number: '' + this.extra_vars.unifiedos_accounting_number,
 
                             unifiedos_availability_zone: this.extra_vars.unifiedos_availability_zone,
                             provision_otc_instance_type: this.flavor.name,
 
 
                             provision_otc_root_size: this.extra_vars.provision_otc_root_size,
-                            provision_otc_accountingnr_tag: '' + this.extra_vars.provision_otc_accountingnr_tag,
                             unifiedos_project: this.extra_vars.unifiedos_project,
                             provision_otc_ssh_key: this.extra_vars.provision_otc_ssh_key,
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
