@@ -139,16 +139,6 @@
                 Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
             </b-message>
 
-            <b-field label="SSH Public Key"
-                     :type="errors.has('SSH Public Key') ? 'is-danger' : ''"
-                     :message="errors.first('SSH Public Key')">
-                <b-input type="textarea"
-                         v-model="extra_vars.provision_otc_ssh_key"
-                         v-validate="'required'"
-                         name="SSH Public Key">
-                </b-input>
-            </b-field>
-
             <b-field label="LDAP Gruppe"
                      :type="errors.has('LDAP Gruppe') ? 'is-danger' : ''"
                      :message="errors.first('LDAP Gruppe')">
@@ -239,7 +229,6 @@
                 unifiedos_availability_zone: '1',
 
                 provision_otc_root_size: 10,
-                provision_otc_ssh_key: '',
                 provision_otc_default_volume_type: '',
                 unifiedos_accounting_number: '',
               },
@@ -347,7 +336,6 @@
 
                             provision_otc_root_size: this.extra_vars.provision_otc_root_size,
                             unifiedos_project: this.extra_vars.unifiedos_project,
-                            provision_otc_ssh_key: this.extra_vars.provision_otc_ssh_key,
                             provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
                           }
                       }).then((resp) => {
