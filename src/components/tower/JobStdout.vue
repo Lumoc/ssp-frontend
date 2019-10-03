@@ -51,10 +51,10 @@
 <template>
     <div class="job_stdout_root">
       <div v-if="job_data.status == 'running'" class="job_stdout_status">
-          Dies kann einige Minuten dauern. Die Seite darf geschlossen werden und Sie erhalten eine Email sobald der Job ferig ist.
+          This could take a few minutes. You will receive an Email when the job is done.
       </div>
       <div v-if="job_data.status == 'successful'" class="job_stdout_status">
-        Folgende Variablen wurden vom Job zurückgegeben:<br>
+        The following variables were returned:<br>
         <div v-for="(value, key) in job_data.artifacts">
             <b>{{ key }}:</b> {{ value }}<br>
         </div>

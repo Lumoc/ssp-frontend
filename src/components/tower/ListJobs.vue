@@ -4,9 +4,9 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">person</i> Ansible-Tower Jobs anzeigen</h1>
+                        <i class="material-icons">person</i> Ansible-Tower Jobs</h1>
                     <h2 class="subtitle">
-                        Zeigt alle deine Jobs an, die du auf dem Ansible-Tower gestartet hast</h2>
+                        Only long running jobs are listed here</h2>
                 </div>
             </div>
         </div>

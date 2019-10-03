@@ -12,10 +12,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server erstellen</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Create a UnifiedOS Server</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen Elastic Cloud Server in der OTC erstellen. Alle Bestellungen werden geloggt & verrechnet.</h2>
+                    Create a new UnifiedOS server. All orders are logged and will be billed.
+                </h2>
             </div>
         </div>
         <br>
