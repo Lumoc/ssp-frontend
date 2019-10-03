@@ -4,25 +4,25 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">receipt</i> OpenShift Test-Projekt anlegen</h1>
+                        <i class="material-icons">receipt</i>Create OpenShift Test-Project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein OpenShift Test-Projekt erstellen</h2>
+                    Create your Openshift test-project here.</h2>
             </div>
         </div>
         <br>
         <article class="message is-info">
             <div class="message-body">
-                - Du kannst jederzeit ein Testprojekt erstellen um etwas auszuprobieren. Es entstehen keine Kosten.<br/>
-                - Ein Test-Projekt enthält deine u-Nummer<br/>
-                - Pods aus einem Test-Projekt können jederzeit durch das Cloud-Team gestoppt werden<br/>
-                - Test-Projekte werden automatisch und ohne Rückfrage nach 30 Tagen gelöscht<br/>
+                -You can always ceate a test-project witouth generating costs.<br/>
+		-A test-porject contains your U-Number<br/>
+		-Pods from the test-porject can be stopped by the Cloud Team by anytime<br/>
+		-Test-porject will be deleted after 30 Days witout inquiry<br/>
             </div>
         </article>
         <form v-on:submit.prevent="newTestProject">
             <cluster-select v-model="clusterid" feature="testprojects"></cluster-select>
             <b-field>
-                <label class="label">Testprojekt Name</label>
+                <label class="label">Test-projekt name</label>
             </b-field>
             <b-field class="has-addons" :type="errors.has('Testprojekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Testprojekt-Name')">
@@ -30,7 +30,7 @@
                     <span class="button is-static">{{ username }}-</span>
                 </p>
                 <p class="control">
-                    <b-input v-model.trim="testprojectname" name="Testprojekt-Name"
+                    <b-input v-model.trim="testprojectname" name="Test-projekt name"
                              v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
                              ref="autofocus"
                              placeholder="testprojekt">
@@ -39,11 +39,11 @@
             </b-field>
 
             <b-message type="is-info">
-                Testprojekt-Name darf nur Kleinbuchstaben, Zahlen und - enthalten
+                Test-project name can only contain lower case letters, numbers or "-"
             </b-message>
 
             <button :disabled="errors.any()" v-bind:class="{'is-loading': loading}" class="button is-primary">
-                Neues Test-Projekt erstellen
+                create new test-Projekt
             </button>
         </form>
     </div>

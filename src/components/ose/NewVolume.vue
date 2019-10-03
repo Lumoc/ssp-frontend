@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Persistent Volume anlegen</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i>Create  persistent Volume</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Persistent Volume für OpenShift erstellen</h2>
+                    Here you can create a persistent volume</h2>
             </div>
         </div>
         <br>
@@ -15,7 +15,7 @@
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <template v-if="technology == 'nfs'">
-                <b-field label="Grösse"
+                <b-field label="Size"
                         :type="errors.has('Grösse') ? 'is-danger' : ''"
                         :message="errors.first('Grösse')">
                     <b-input v-model.trim="size"
@@ -25,11 +25,11 @@
                     </b-input>
                 </b-field>
                 <b-message type="is-info">
-                    Mindestgrösse ist 1G. Grösse angeben mit Einheit (G) z.B. 5G
+                    min. size is 1G. Size in G e.g. 5G
                 </b-message>
             </template>
             <template v-else>
-                <b-field label="Grösse"
+                <b-field label="Size"
                         :type="errors.has('Grösse') ? 'is-danger' : ''"
                         :message="errors.first('Grösse')">
                     <b-input v-model.trim="size"
@@ -40,12 +40,12 @@
                 </b-field>
 
                 <b-message type="is-info">
-                    Mindestgrösse ist 500M. Grösse angeben mit Einheit (M/G) z.B. 500M oder 5G. Ab 1024M muss G verwendet werden
+                    min. size is 500M. Size in  M or G e.g. 500M oder 5G. At a size of 1024M you have to use G.
                 </b-message>
 
             </template>
 
-            <b-field label="Name des Persistent Volume Claims"
+            <b-field label="Persistent volume claims name"
                      :type="errors.has('PVC-Name') ? 'is-danger' : ''"
                      :message="errors.first('PVC-Name')">
                 <b-input v-model.trim="pvcName"
@@ -54,10 +54,10 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Name des Persistent Volume Claims darf nur Kleinbuchstaben, Zahlen und - enthalten
+                Persistent volume claims name can only contain lower case letters, numbers or "-"
             </b-message>
 
-            <label class="label">Verwendungsmodus</label>
+            <label class="label>Utilization mode</label>
             <b-field>
                 <b-radio-button v-model="mode"
                                 native-value="ReadWriteOnce"
@@ -72,22 +72,22 @@
                 </b-radio-button>
             </b-field>
             <b-message type="is-info">
-                Siehe <a target="_blank" href="https://docs.openshift.com/container-platform/3.6/architecture/additional_concepts/storage.html#pv-access-modes">Dokumentation</a>
+                Note <a target="_blank" href="https://docs.openshift.com/container-platform/3.6/architecture/additional_concepts/storage.html#pv-access-modes">Dokumentation</a>
             </b-message>
 
-            <label class="label">Technologie</label>
+            <label class="label">Technology</label>
             <b-message type="is-info">
-                Es wird ein {{ technology | capitalize }}-Volume erstellt.
-                Siehe <a target="_blank" href="https://confluence.sbb.ch/x/-LJENQ">Dokumentation</a>
+                A {{ technology | capitalize }}-Volume is created.
+                Note <a target="_blank" href="https://confluence.sbb.ch/x/-LJENQ">Documentation</a>
             </b-message>
             <br>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Persistent Volume erstellen
+                    class="button is-primary">Create persistent volume
             </button>
             <div v-if="progress">
-            Das Volume wird erstellt. Dies kann einige Minuten dauern. Sie dürfen diese Seite schliessen, der Vorgang wird im Hintergrund fertiggestellt.
+            The Volume is getting created. This may take some minutes. You may close this windows, the generating process is beeing finished in the background
             <progress :value="progress" max="100"></progress>
             </div>
         </form>
@@ -177,7 +177,7 @@
                 that.$store.commit('setNotification', {
                     notification: {
                         type: 'success',
-                        message: 'Das Volume wurde erstellt. Deinem Projekt wurde das PVC hinzugefügt.'
+                        message: 'Volume created. PVC has been added to your project.'
                     }
                 });
               }

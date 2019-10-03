@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server erstellen</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen Elastic Cloud Server in der OTC erstellen. Alle Bestellungen werden geloggt & verrechnet.</h2>
+		    Here you can create a Elastic Cloud Server insinde the OTC. All orders will be logged and charged.</h2>
             </div>
         </div>
         <br>
@@ -22,7 +22,7 @@
             </b-field>
 
             <b-message type="is-info">
-                Hinweis: Die ECS Instanz wird den Namen "sbb-[ECS Name]" tragen.
+                Note: The instance will bear the name "sbb-[ECS Name]".
             </b-message>
 
             <b-field label="Availability Zone"
@@ -74,7 +74,7 @@
             </b-field>
 
             <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
-                Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
+                The chossen image needs a minimum of {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
             <template v-if="advanced">
@@ -108,7 +108,7 @@
                 </b-field>
 
                 <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
-                    Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
+                    The choosen image needs a minimum size of {{ image.minDiskGigabytes }}GB for the Root Disk.
                 </b-message>
             </template>
 
@@ -144,7 +144,7 @@
 
 
             <b-field grouped>
-                <b-field label="Daten Disk"
+                <b-field label="Data Disk"
                         :type="errors.has('Data Disk') ? 'is-danger' : ''"
                         :message="errors.first('Data Disk')">
 
@@ -201,7 +201,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Kontierungsnummer"
+            <b-field label="Account assignment number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"

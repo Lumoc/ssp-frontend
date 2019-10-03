@@ -4,9 +4,9 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">dashboard</i> Sematext Logsene Apps anzeigen</h1>
+                        <i class="material-icons">dashboard</i>Show Sematext Logsene applikations</h1>
                     <h2 class="subtitle">
-                        Zeigt alle deine Sematext Logsene Apps an</h2>
+                        Shows all your Sematext Lognese applikations</h2>
                 </div>
             </div>
         </div>
@@ -30,19 +30,19 @@
                             :type="props.row.isFree ? 'is-success' : 'is-danger'">
                     </b-icon>
                 </b-table-column>
-                <b-table-column field="pricePerMonth" label="Kosten pro Monat">
+                <b-table-column field="pricePerMonth" label="Costs per Month">
                     {{ props.row.pricePerMonth }}$
                 </b-table-column>
-                <b-table-column field="billingInfo" label="Kontierungsdaten">
+                <b-table-column field="billingInfo" label="Account assignment">
                     {{ props.row.billingInfo }}
                 </b-table-column>
-                <b-table-column field="userRole" label="Deine Rolle">
+                <b-table-column field="userRole" label="Your Role">
                     {{ props.row.userRole }}
                 </b-table-column>
             </template>
 
             <div slot="empty" class="has-text-centered">
-                 Du hast keine Logsene Anwendungen
+                 You have no Logsene Application.
             </div>
         </b-table>
     </div>

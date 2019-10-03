@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Sematext Logsene-App Plan & MB-Limite anpassen
-                    </h1>
+                    <h1 class="title"><i class="material-icons">attach_money</i>Adjust Sematext logsene application plan & MB-Limit.
+		</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du den Plan und die MB-Limite deiner Sematext Logsene App anpassen</h2>
+                    You can adjust your MB-Limit for the sematext logsene application here.</h2>
             </div>
         </div>
         <br>
@@ -16,7 +16,7 @@
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
-                <b-select placeholder="Wähle die App aus"
+                <b-select placeholder="Choose your application"
                           :loading="loading"
                           v-model="appId"
                           required>
@@ -30,18 +30,18 @@
             </b-field>
 
             <b-message type="is-info">
-                Sematext Logsene Pläne siehe: <a href="https://confluence.sbb.ch/x/AisiMg">Log-Management Kosten</a><br/>
-                - Die max. MB pro Tag sind vom Plan abhängig.<br/>
-                - Man sollte den Plan so wählen, dass die effektive Logmenge knapp unter dem "Default MB" vom Plan ist.<br/>
-                - Die tägliche MB-Limite so erhöhen, dass die tägliche Menge etwas darunter liegt (Puffer).<br/>
-                - Grund: Das was im Plan enthalten ist bezahlt man immer komplett, egal ob man es ausschöpft!<br/>
+                Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
+                -Max MB depends on the plan.<br/>
+		-You should need a good plan so your logsize is just below the "default MB"<br/>
+		-Expand the daily MB-Limit just so its below the Puffer<br/>
+		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
 
-            <b-field label="Neuer Logsene-Plan"
+            <b-field label="New Logsene-Plan"
                      :type="errors.has('Neuer Logsene-Plan') ? 'is-danger' : ''"
                      :message="errors.first('Neuer Logsene-Plan')">
 
-                <b-select placeholder="Wähle den neuen Sematext Logsene Plan aus"
+                <b-select placeholder="Choose your Sematex logplan"
                           :loading="loading"
                           v-model="planId"
                           @input="updateLimit()"
@@ -55,7 +55,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Neue täglich MB Limite"
+            <b-field label="New daily MB-Limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"
@@ -66,7 +66,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Auswahl speichern
+                    class="button is-primary">Save selected
             </button>
         </form>
     </div>

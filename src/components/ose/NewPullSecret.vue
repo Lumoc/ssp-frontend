@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">account_circle</i> Docker Pull-Secret anlegen</h1>
+                    <h1 class="title"><i class="material-icons">account_circle</i>create Docker pull-secret</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du deinem Projekt Pull-Zugriff geben auf ein Docker Repository</h2>
+		    You can give your porject Pull-permissions to your Docker repository here.</h2>
             </div>
         </div>
         <br>
@@ -26,12 +26,12 @@
                 <b-input v-model.trim="password" name="password" type="password" password-reveal></b-input>
             </b-field>
             <b-message type="is-info">
-                "Username" und "Password" aus dem Email, welches bei der Docker Repo Bestellung von Artifactory verschickt wurde. <a target="_blank" href="https://confluence.sbb.ch/x/jwf5Q">Mehr Infos</a>
-            </b-message>
+                "Username" and "Password" which got provided by Artifactory in the Docker repo order from  <a target="_blank" href="https://confluence.sbb.ch/x/jwf5Q">More infos</a>
+	    </b-message>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Secret erstellen
+                    class="button is-primary">create secret
             </button>
         </form>
     </div>

@@ -3,12 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Sematext Logsene-App Kontierungsnummer
-                        anzeigen/anpassen
+                    <h1 class="title"><i class="material-icons">attach_money</i>Show/Adjust sematext Logsene application account assignment number
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du die Kontierungsnummer deiner Sematext Logsene App anzeigen/anpassen</h2>
+                    You can show or adjust you sematext logsene applicaton account assignment number here</h2>
             </div>
         </div>
         <br>
@@ -17,7 +16,7 @@
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
-                <b-select placeholder="Wähle die App aus"
+                <b-select placeholder="Choose your application"
                           :loading="loading"
                           v-model="appId"
                           required>
@@ -30,7 +29,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Name vom Projekt"
+            <b-field label="Porject name"
                      :type="errors.has('Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Projekt')">
                 <b-input v-model.trim="project"
@@ -39,7 +38,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Neue Kontierungsnummer"
+            <b-field label="New account assignment number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -50,7 +49,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Kontierungsinformation anpassen
+                    class="button is-primary">change account assignment information
             </button>
         </form>
     </div>
@@ -99,4 +98,4 @@
             }
         }
     };
-</script>
+</scriptchange >

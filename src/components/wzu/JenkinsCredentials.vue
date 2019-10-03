@@ -3,16 +3,16 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Jenkins Credentials erstellen</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Create Jenkins Credentials</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du Credentials in deiner Jenkins-Organization erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can create you jenkins organziation here.</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="newJenkinsCredentials">
-            <b-field label="Jenkins Organization Name"
+            <b-field label="Jenkins Organization name"
                      :type="errors.has('Jenkins Organization Name') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Organization Name')">
                 <b-input v-model.trim="organizationKey"
@@ -21,7 +21,7 @@
                          v-validate.rules="{ required: true }">
                 </b-input>
             </b-field>
-            <b-field label="Beschreibung"
+            <b-field label="Description"
                      :type="errors.has('Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Beschreibung')">
                 <b-input v-model.trim="description"
@@ -52,10 +52,10 @@
         custom: {
 
             "Jenkins Organization Name": {
-                required: "Bitte gib einen Jenkins Organization Namen an.",
+                required: "Please provide a jenkins organization name.",
             },
-            "Beschreibung": {
-                required: "Bitte gib eine Beschreibung an.",
+            "Description": {
+                required: "Please provide a description",
             }
         }
     };

@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Tasks User Gruppe</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Tasks User group</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du dich wieder auf tasks.sbb.ch berechtigen.</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can give permission for task.sbb.ch here</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Cklick here to get to the WZU SSP documentation.</a></h3>
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendTasks">
@@ -23,7 +23,7 @@
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">berechtigen
+                    class="button is-primary">authorize
             </button>
         </form>
     </div>
@@ -36,8 +36,8 @@
         custom: {
 
             "Username": {
-                required: "Bitte gib einen Usernamen an.",
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+                required: "Please provide a username.",
+                regex: "Please provide a valid U-,E- or Ue- number."
             }
         }
     };
@@ -65,9 +65,9 @@
                             this.loading = false;
                         });
                     }
-                });
-            }
-        }
+               });
+           }
+       }
 
-    };
+   };
 </script>

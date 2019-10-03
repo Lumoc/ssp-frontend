@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Jira Projekt</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Jira Project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Jira Projekt auf issues.sbb.ch erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can createa a jira project on issues.sbb here</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendJira">
@@ -17,7 +17,7 @@
                 <b-checkbox v-model="activatexray"></b-checkbox>
 
             </b-field>
-            <b-field label="Projekt Name (nur alphanummerische Zeichen)"
+            <b-field label="Projekt Name (only alphanumeric characters)"
                      :type="errors.has('ProjectName') ? 'is-danger' : ''"
                      :message="errors.first('ProjectName')">
                 <b-input v-model.trim="projectname"
@@ -26,7 +26,7 @@
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Projekt Key (nur Grossbuchstaben max 10 Zeichen)"
+            <b-field label="Projekt Key (only uper case letters max 10 signs)"
                      :type="errors.has('ProjectKey') ? 'is-danger': ''"
                      :message="errors.first('ProjectKey')">
                 <b-input v-model.trim="projectkey"
@@ -35,14 +35,14 @@
                          :message="errors.first('ProjectKey')">
                 </b-input>
             </b-field>
-            <b-field label="Projekt Beschreibung (kein Pflichtfeld)"
+            <b-field label="Project description (not mandatory)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="projectdescription"
                          name="Projekt Beschreibung">
                 </b-input>
             </b-field>
-            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
+            <b-field label="Order for other Useer (not mandatory)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="projectowner"
@@ -65,15 +65,16 @@
         custom: {
 
             "ProjectKey": {
-                required: "Bitte gib einen Projekt Key an.",
-                regex: "Der Projekt Key darf nur aus Grossbuchstaben und aus maximal 10 Zeichen bestehen."
+                required: "Please provide a project key.",
+                regex: "The project key can only contain uper case letters and max 10 signs."
+
             },
             "ProjectName": {
-                required: "Bitte gib einen Projekt Namen an.",
-                regex: "Der Projekt Name darf nur aus alphanummerischen Zeichen bestehen"
+                required: "Please provide a project name.",
+                regex: "The project name can only contian alphanumeric characters"
             },
-            "Bestellung für anderen User":{
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            "Order for other users":{
+                regex: "Please provide a valid U-,E- or Ue- number."
             }
         }
     };

@@ -3,16 +3,16 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Bitbucket Projekt</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Bitbucket Project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Bitbucket Projekt erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    Create BitBucket project here</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="Projekt Name (nur alphanummerische Zeichen)"
+            <b-field label="Project name (only alphanumberic signs)"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="bitprojectname"
@@ -22,7 +22,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Key (nur Grossbuchstaben beginnend mit Domänen Modell)"
+            <b-field label="Project Key (only uper case letters starting with the domain model)"
                      :type="errors.has('Projekt Key') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
@@ -31,7 +31,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Beschreibung (kein Pflichtfeld)"
+            <b-field label="Project Description (not mandatory)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
@@ -39,7 +39,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
+            <b-field label="Order for another user (not mandatory)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitprojectowner"
@@ -62,16 +62,16 @@
     const dictionary = {
         custom: {
 
-            "Projekt Name": {
-                required: "Bitte gib einen Projekt Namen an.",
-                regex: "Der Projekt Name darf sich nur aus alphanumerischen Zeichen zusammensetzen."
+            "Project Name": {
+                required: "Please provide a project name.",
+                regex: "The project name can only contain alphanumberic letters and numbers."
             },
             "Projekt Key": {
-                required: "Bitte gib einen Projekt Key an.",
-                regex: "Der Projekt Key muss mit dem Kürzel aus dem Domänenmodell und einem _ beginnen."
+                required: "Please provide a project key.",
+                regex: "The project key has to start with a contraction of the domainmodel and "_"."
             },
-            "Bestellung für anderen User": {
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            "Order for another user": {
+                regex: "Please provide a validated U-,E-, or Ue- number"
             }
         }
     };

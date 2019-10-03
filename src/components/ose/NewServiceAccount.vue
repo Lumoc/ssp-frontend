@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">account_circle</i> Service-Account anlegen</h1>
+                    <h1 class="title"><i class="material-icons">account_circle</i>Create  service-account</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du für dein Projekt einen Service-Account anlegen</h2>
+                    Here you can create a project for your service-account</h2>
             </div>
         </div>
         <br>
@@ -28,11 +28,11 @@
 
             <b-field>
                 <b-checkbox v-model="createJenkinsCredential">
-                    {{ 'Soll der Service-Account auf dem Jenkins hinterlegt werden (für Deployment Pipeline)?'}}
+                    {{ 'Is the Service-account to be added in to the jenkinsfile for the Deployment pipeline? '}}
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
-                    label="Jenkins Bitbucket/Team Job Name"
+                    label="Jenkins Bitbucket/Team job name"
                      :type="errors.has('Jenkins Bitbucket/Team Job Name') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Bitbucket/Team Job Name')">
                 <b-input v-model.trim="organizationKey"
@@ -42,7 +42,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Service-Account erstellen
+                    class="button is-primary">Create Service-Account
             </button>
         </form>
     </div>

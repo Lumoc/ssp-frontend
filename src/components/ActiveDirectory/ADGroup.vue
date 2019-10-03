@@ -6,13 +6,13 @@
                     <h1 class="title"><i class="material-icons">edit</i>WZU-Gruppenmanagement</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du eine AD Gruppe erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can create an AD group here.</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU SSP documentation.</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendCreateGroup">
-            <b-field label="Gruppen Name"
+            <b-field label="Group name"
                      :type="errors.has('Gruppen Name') ? 'is-danger' : ''"
                      :message="errors.first('Gruppen Name')">
                 <b-input v-model.trim="groupname"
@@ -22,7 +22,7 @@
             </b-field>
             <button :disabled="errors.any()"
                 v-bind:class="{'is-loading': loading}"
-                class="button is-primary">Gruppe erstellen
+                class="button is-primary">Create group
             </button>
         </form>
     </div>

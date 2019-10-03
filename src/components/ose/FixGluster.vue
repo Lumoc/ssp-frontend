@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Gluster Konfiguration erzeugen</h1>
+                    <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Generate gluster configuration</h1>
                 </div>
                 <h2 class="subtitle">
-                    Diese Funktion erstellt die Gluster Objekte (Service & Endpoints) in deinem Projekt</h2>
+                   this function creates the gluster objects (Service & Endpoints) in your project.</h2>
             </div>
         </div>
         <br>
@@ -20,7 +20,7 @@
                         class="button is-primary">Gluster Objekte erstellen
                 </button>
             </div>
-            <p v-if="!gluster">Dieser Cluster unterstützt aktuell kein Gluster</p>
+            <p v-if="!gluster">This Cluster doesnt not support a gluster at the moment</p>
         </form>
     </div>
 </template>

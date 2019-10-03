@@ -8,11 +8,11 @@
                     Cloud Selfservice Portal
                 </h1>
             </div>
-            <h2 class="subtitle">Willkommen beim Cloud Selfservice Portal. Wähle einen Bereich im Menü aus</h2>
+            <h2 class="subtitle">Wellcome to the Cloud Selfservice Portal. Please choose your topic</h2>
         </div>
     </div>
     <p>
-      Wir empfehlen: <a href="http://eaio-ng.sbb.ch/"><b>EAIO</b> SBB's integrated development environment</a>
+      We recommend: <a href="http://eaio-ng.sbb.ch/"><b>EAIO</b> SBB's integrated development environment</a>
     </p>
     </div>
 </template>

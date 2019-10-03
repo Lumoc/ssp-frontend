@@ -6,13 +6,13 @@
                     <h1 class="title"><i class="material-icons">edit</i>Artifactory Repository</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Artifactory Repository erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    Click here to create an Artifactory repo</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SSP documentary</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="newArtifactoryRepository">
-            <b-field label="Repository Name (nur Kleinbuchstaben und Zahlen)"
+            <b-field label="Repository name (can only contain lower case letters and numbers)"
                      :type="errors.has('RepositoryName') ? 'is-danger' : ''"
                      :message="errors.first('RepositoryName')">
                 <b-input v-model.trim="repository"
@@ -22,7 +22,7 @@
                          v-validate.rules="{ required: true, regex: /^([0-9a-zA-Z]{1,}|[0-9a-zA-Z]{1,}-[0-9a-zA-Z]{1,})$/}">
                 </b-input>
             </b-field>
-            <label class="label">Repository Typ</label>
+            <label class="label">Repository Type</label>
             <b-field>
                 <b-radio-button v-model="type"
                                 native-value="maven"
@@ -52,7 +52,7 @@
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Repository erstellen
+                    class="button is-primary">create Repository
             </button>
         </form>
     </div>
@@ -65,8 +65,8 @@
         custom: {
 
             "RepositoryName": {
-                required: "Bitte gib ein Repositoryname an.",
-                regex: "Der Repositoryname darf sich nur aus alphanumerischen Zeichen und maximal einem - zusammensetzen."
+                required: "Please type in a reponame",
+                regex: "The Repository name can only contain alphanumeric Signs and max. one "-""
             }
         }
     };

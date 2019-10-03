@@ -3,16 +3,16 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i> AWS EC2 Instanzen anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">list</i>show  AWS EC2 instances</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier werden alle deine AWS EC2 Instanzen angezeigt.</h2>
+                    All AWS EC2 instances will be displayed here.</h2>
             </div>
         </div>
         <br>
         <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed>
             <template slot-scope="props">
-                <b-table-column field="name" label="Name">
+                <b-table-column field="name" label="name">
                     {{ props.row.name }}
                 </b-table-column>
                 <b-table-column field="account" label="SBB AWS Account">
@@ -76,7 +76,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                Hier werden deine Instanzen angezeigt, wenn du welche hast.
+                The instances which you own will be displayed here.
             </div>
         </b-table>
         <!-- use the modal component, pass in the prop -->
@@ -91,10 +91,10 @@
                             :default-sort="['startTime', 'desc']"
                             narrowed>
                         <template slot-scope="props">
-                            <b-table-column field="description" label="Beschreibung" sortable>
+                            <b-table-column field="description" label="Descriptio" sortable>
                                 {{ props.row.Description }}
                             </b-table-column>
-                            <b-table-column field="startTime" label="Datum" sortable>
+                            <b-table-column field="startTime" label="Date" sortable>
                                 <b-tooltip :label="moment(props.row.StartTime).calendar()">
                                 {{ moment(props.row.StartTime).fromNow() }}
                                 </b-tooltip>
@@ -120,8 +120,8 @@
                             {{ volume.deviceName }}
                         </option>
                     </b-select>
-                    <b-input v-model="snapshotDescription" name="description" placeholder="Beschreibung"></b-input>
-                    <button class="button" @click="createSnapshot(modalData)">Snapshot erstellen</button>
+                    <b-input v-model="snapshotDescription" name="description" placeholder="description"></b-input>
+                    <button class="button" @click="createSnapshot(modalData)">Create snapshot</button>
                 </footer>
             </div>
         </b-modal>
@@ -173,7 +173,7 @@
       createSnapshot: function(row) {
         if (this.snapshotDescription == "" || this.snapshotVolume == "") {
             this.$toast.open({
-                message: 'Bitte fülle alle Felder aus',
+                message: 'Please fill out all the blanks',
                 type: 'is-danger',
                 duration: 7500
             })
@@ -203,7 +203,7 @@
         console.log("creating snapshot for instance: "+row.instanceId)
       },
       deleteSnapshot: function(row) {
-        if (confirm("Wollen Sie diesen Snapshot wirklich löschen?\n" + row.Description + " ("+row.SnapshotId+")")) {
+        if (confirm("Do you really want to remove this snapshot?\n" + row.Description + " ("+row.SnapshotId+")")) {
             this.snapshotLoading = true;
             this.$http.delete(this.$store.state.backendURL + '/api/aws/snapshots/' + this.modalData.account + '/' + row.SnapshotId).then((res) => {
                 // remove snapshot from list
@@ -232,7 +232,7 @@
         // use running as conditional! the 'else' case should not be stop
         nextState = (row.state == 'running') ? 'stop' : 'start';
 
-        if (nextState == 'start' || confirm("Wollen Sie diese Instanz wirklich stoppen?\n" + row.name)) {
+        if (nextState == 'start' || confirm("Do you really want the instance to be stopped\n" + row.name)) {
           // change state so that user interface is responsive
           row.state = (row.state == 'running') ? 'stopping' : 'pending';
           this.$http.post(this.$store.state.backendURL + '/api/aws/ec2/' + row.instanceId + '/' + nextState).then((res) => {

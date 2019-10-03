@@ -6,20 +6,20 @@
                     <h1 class="title"><i class="material-icons">edit</i>Bitbucket Repository</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein Bitbucket Repository erstellen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can create a Bitbucket repo here</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SPP documentation..</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="GitFlow-Template laden?"
+            <b-field label="Load GitFlow-Template?"
                      :type="errors.has('GitFlow-Template') ? 'is-danger' : ''"
                      :message="errors.first('GitFlow-Template')">
                 <b-checkbox v-model="templateyesno"></b-checkbox>
 
             </b-field>
 
-            <b-field label="Repository Name (nur alphanummerische Zeichen ohne Umlaute)"
+            <b-field label="Repository name (only alphanumeric characters without umlauts)"
                      :type="errors.has('Repository Name') ? 'is-danger' : ''"
                      :message="errors.first('Repository Name')">
                 <b-input v-model.trim="bitreponame"
@@ -29,7 +29,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Key (Projekt muss existieren)"
+            <b-field label="Projekt Key (Project has to exist)"
                      :type="errors.has('Projekt Key') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bestellung für anderen User (kein Pflichtfeld)"
+            <b-field label="Order for other User (not mandatory)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitrepoowner"
@@ -49,7 +49,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Repo erstellen
+                    class="button is-primary">Repo create
             </button>
         </form>
     </div>
@@ -62,15 +62,15 @@
         custom: {
 
             "Repository Name": {
-                required: "Bitte gib einen Repository Namen an.",
-                regex: "Der Projekt Name darf sich nur aus alphanumerischen Zeichen zusammensetzen."
+                required: "Please provide a project name.",
+                regex: "Project name can only contain alphanumberic signs."
             },
             "Projekt Key": {
-                required: "Bitte gib einen Projekt Key an.",
-                regex: "Der Projekt Key muss mit dem Kürzel aus dem Domänenmodell und einem _ beginnen."
+                required: "Please provide a project key.",
+                regex: "The project key has to start with a contraction of the domainmodel and "_".."
             },
-            "Bestellung für anderen User": {
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            "Order for another user": {
+                regex: "Please provide a validated U-,E-, or Ue- number"
             }
         }
     };

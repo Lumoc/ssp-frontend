@@ -6,25 +6,25 @@
                     <h1 class="title"><i class="material-icons">edit</i>Gruppen User Management</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen User zu/ von einer Active Directory Gruppe hinzufügen oder entfernen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can add or remove a user from the AD group here.</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU SSP documentation. </a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendCreateGroup">
             <b-field>
                 <b-radio-button v-model="type"
-                                native-value="hinzufügen"
+                                native-value="Add"
                                 type="is-success">
-                    <span>Hinzufügen</span>
+                    <span>Add</span>
                 </b-radio-button>
                 <b-radio-button v-model="type"
-                                native-value="löschen"
+                                native-value="remove"
                                 type="is-success">
-                    <span>löschen</span>
+                    <span>remove</span>
                 </b-radio-button>
             </b-field>
-            <b-field label="Gruppen Name"
+            <b-field label="Group name"
                      :type="errors.has('Gruppen Name') ? 'is-danger' : ''"
                      :message="errors.first('Gruppen Name')">
                 <b-input v-model.trim="groupname"
@@ -33,7 +33,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="User Name (UID)"
+            <b-field label="User name (UID)"
                      :type="errors.has('User Name') ? 'is-danger' : ''"
                      :message="errors.first('User Name')">
                 <b-input v-model.trim="user"

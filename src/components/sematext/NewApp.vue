@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">timeline</i> Sematext Logsene App anlegen</h1>
+                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene application
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du eine Sematext Logsene App erstellen</h2>
+                    You can create a Sematext logsene application here</h2>
             </div>
         </div>
         <br>
@@ -23,18 +23,18 @@
             </b-field>
 
             <b-message type="is-info">
-                Sematext Logsene Pläne siehe: <a href="https://confluence.sbb.ch/x/AisiMg">Log-Management Kosten</a><br/>
-                - Die max. MB pro Tag sind vom Plan abhängig.<br/>
-                - Man sollte den Plan so wählen, dass die effektive Logmenge knapp unter dem "Default MB" vom Plan ist.<br/>
-                - Die tägliche MB-Limite so erhöhen, dass die tägliche Menge etwas darunter liegt (Puffer).<br/>
-                - Grund: Das was im Plan enthalten ist bezahlt man immer komplett, egal ob man es ausschöpft!<br/>
+                Sematext Logsene koncepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
+                -Max MB depends on the plan.<br/>
+		-You should need a good plan so your logsize is just below the "default MB"<br/>
+		-Expand the daily MB-Limit just so its below the Puffer<br/>
+		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
 
             <b-field label="Logsene-Plan"
                      :type="errors.has('Logsene-Plan') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-Plan')">
 
-                <b-select placeholder="Wähle den neuen Sematext Logsene Plan aus"
+                <b-select placeholder="Choose your new Sematext logsene plan"
                           :loading="loading"
                           v-model="planId"
                           @input="updateLimit()"
@@ -48,7 +48,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Täglich MB Limite"
+            <b-field label="Daily MB-Limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"
@@ -57,7 +57,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Name vom Projekt"
+            <b-field label="Name of the project"
                      :type="errors.has('Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Projekt')">
                 <b-input v-model.trim="project"
@@ -66,7 +66,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Neue Kontierungsnummer"
+            <b-field label="New account assignment number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -155,6 +155,5 @@
                     }
                 });
             }
-        }
-    };
-</script>
+     	}
+    }:
