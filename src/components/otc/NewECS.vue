@@ -219,6 +219,19 @@
                 </b-input>
             </b-field>
 
+            <b-field v-if="windows">
+                <template slot="label">
+                    Windows Defender excludes
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Comma-separated file system paths that are excluded from Windows Defender malware scanner">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
+                <b-input type="textarea"
+                         v-model.number="extra_vars.defender_exclude_path"
+                         required>
+                </b-input>
+            </b-field>
+
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
@@ -256,6 +269,7 @@
                 unifiedos_root_disk_size: 10,
                 provision_otc_default_volume_type: 'SATA',
                 unifiedos_accounting_number: '',
+                defender_exclude_path: '',
               },
           };
       },
@@ -283,6 +297,9 @@
         },
         job_template: function() {
            return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
+        },
+        windows: function() {
+            return (this.image && this.image.name.toLowerCase().indexOf("windows") !== -1)
         }
       },
       methods: {
@@ -334,24 +351,13 @@
                   if (result) {
                       this.loading = true;
 
+                      let ev = this.extra_vars
+                      ev.unifiedos_image = this.image.name
+                      ev.unifiedos_accounting_number = '' + this.extra_vars.unifiedos_accounting_number
+                      ev.provision_otc_instance_type = this.flavor.name,
+
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
-                          extra_vars: {
-                            unifiedos_owner_group: this.extra_vars.unifiedos_owner_group,
-                            unifiedos_owner_email: this.extra_vars.unifiedos_owner_email,
-                            unifiedos_image: this.image.name,
-                            unifiedos_service_level: this.extra_vars.unifiedos_service_level,
-                            unifiedos_data_disk_size: this.extra_vars.unifiedos_data_disk_size,
-                            unifiedos_mega_id: this.extra_vars.unifiedos_mega_id,
-                            unifiedos_accounting_number: '' + this.extra_vars.unifiedos_accounting_number,
-
-                            unifiedos_availability_zone: this.extra_vars.unifiedos_availability_zone,
-                            provision_otc_instance_type: this.flavor.name,
-
-
-                            unifiedos_root_disk_size: this.extra_vars.unifiedos_root_disk_size,
-                            unifiedos_project: this.extra_vars.unifiedos_project,
-                            provision_otc_default_volume_type: this.extra_vars.provision_otc_default_volume_type,
-                          }
+                            extra_vars: ev
                       }).then((resp) => {
                           let json = JSON.parse(resp.body)
                           this.job = json.job
