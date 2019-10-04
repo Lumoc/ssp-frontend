@@ -161,7 +161,7 @@
             }
         },
         created: function () {
-            this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body )
+            this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
         }
     }
 
