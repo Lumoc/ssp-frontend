@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server erstellen</h1>
                 </div>
                 <h2 class="subtitle">
-		    Here you can create a Elastic Cloud Server insinde the OTC. All orders will be logged and charged.</h2>
+		    Here you can create an Elastic Cloud Server on the Open Telekom Cloud (OTC). All orders will be logged and charged.</h2>
             </div>
         </div>
         <br>

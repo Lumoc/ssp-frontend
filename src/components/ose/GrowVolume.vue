@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud_upload</i>expand persistent volume</h1>
+                    <h1 class="title"><i class="material-icons">cloud_upload</i>Expand persistent volume</h1>
                 </div>
                 <h2 class="subtitle">
                     You can expand the persistent volume here</h2>
@@ -11,7 +11,7 @@
         </div>
         <br>
         <b-message type="is-danger">
-            After expanding openshift will still show the size before the change. This is unfortunately unchangable for the moment.
+            Note that OpenShift will still show the original size after volume expansion. This is a display issue that currently cannot be fixed.
         </b-message>
 
         <form v-on:submit.prevent="growVolume">
@@ -25,7 +25,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Not the name of PVC, instead which is written in Openshift under "Storage" > cloumn "Status" > <strong>fat</strong>
+                Not the name of the PVC itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
             </b-message>
 
             <b-field label="New size"
@@ -85,4 +85,4 @@
       }
     }
   };
-</scriptersistent volume>
+</script>

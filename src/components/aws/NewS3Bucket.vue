@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Create  AWS S3 bucket</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you can create all your AWS S3 buckets. All Orders will be logged and charged.</h2>
+                    Here you can create all your AWS S3 buckets. All orders will be logged and charged.</h2>
             </div>
         </div>
         <br>
@@ -31,12 +31,12 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                The buckets name consists of your name for the bucket and the following descriptions:
+                The bucket name will be constructed as follows:
                 <br/>sbb-[BucketName]-prod/nonprod
                 <br/><br/>Beispiel: sbb-my-bucket-prod oder sbb-my-app-prod
             </b-message>
 
-            <b-field label="Account assignment nummber"
+            <b-field label="Accounting number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"
@@ -51,7 +51,7 @@
                 <b-radio-button v-model="stage"
                                 native-value="dev"
                                 type="is-success">
-                    <span>dev</span>
+                    <span>Development</span>
                 </b-radio-button>
                 <b-radio-button v-model="stage"
                                 native-value="test"

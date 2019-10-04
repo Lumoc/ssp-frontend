@@ -5,7 +5,7 @@
                 <div class="container">
                     <h1 class="title"><i class="material-icons">cloud</i> Show Elastic Cloud Server</h1>
                 </div>
-                <h2 class="subtitle">Your Elastic Cloud Server will be displayed here.</h2>
+                <h2 class="subtitle">Your Elastic Cloud Servers will be listed here.</h2>
             </div>
         </div>
         <br>
@@ -79,7 +79,7 @@
                                 {{ props.row.megaId }}
                             </td></tr>
                             <tr><td>
-                                Account assignment number:
+                                Accounting number:
                             </td><td>
                                 {{ props.row.billing }}
                             </td></tr>
@@ -88,7 +88,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                If you have ECS instances they will be displayed here.
+                If you have ECS instances they will be listed here.
             </div>
         </b-table>
     </div>

@@ -10,7 +10,7 @@
 
 <form method="post" onsubmit="spinner();">
     <div class="form-group">
-        <label for="project">Projectname</label>
+        <label for="project">Project name</label>
         <input type="text" class="form-control" required id="project" name="project" placeholder="projektname-dev">
     </div>
     <div class="form-group">
@@ -20,7 +20,7 @@
             <option value="2">February</optionv>
             <option value="3">March</option>
             <option value="4">April</option>
-            <option value="5">Mai</option>
+            <option value="5">May</option>
             <option value="6">June</option>
             <option value="7">July</option>
             <option value="8">August</optionv>
@@ -40,7 +40,7 @@
             <option>2021</option>
         </select>
     </div>
-    <button class="btn btn-primary" id="submitBtn" type="submit">calculate costs</button>
+    <button class="btn btn-primary" id="submitBtn" type="submit">Calculate costs</button>
 </form>
 
 {{ template "spinner.html" . }}
@@ -55,7 +55,7 @@
         <td></td>
     </tr>
     <tr>
-        <th>Account assignment number</th>       
+        <th>Accounting number</th>       
 	<td>{{ .data.AccountAssignment }}</td>
         <td></td>
     </tr>
@@ -85,12 +85,12 @@
         <td>{{ .data.Costs.Storage }} CHF</td>
     </tr>
     <tr>
-        <th>Avg. CPU usage</th>
+        <th>Avg. CPU utilization</th>
         <td>{{ .data.TotalUsedCPU }}</td>
         <td>{{ .data.Costs.UsedCPU }} CHF</td>
     </tr>
     <tr>
-        <th>Avg. Memory usage</th>
+        <th>Avg. memory utilization</th>
         <td>{{ .data.TotalUsedMemory }}</td>
         <td>{{ .data.Costs.UsedMemory }} CHF</td>
     </tr>
@@ -125,7 +125,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'CPU usage',
+                    label: 'CPU utilization',
                     data: cpuUsage,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)'
@@ -141,7 +141,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Memory usage',
+                    label: 'Memory utilization',
                     data: memoryUsage,
                     backgroundColor: [
                         'rgba(255, 159, 64, 0.2'

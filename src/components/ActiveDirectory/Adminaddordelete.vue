@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Gruppen Admin Management</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Group Admin Management</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create an AD group.</h2>
@@ -14,12 +14,12 @@
         <form v-on:submit.prevent="addToBackendCreateGroup">
             <b-field>
                 <b-radio-button v-model="type"
-                                native-value="Add"
+                                native-value="hinzufügen"
                                 type="is-success">
                     <span>Add</span>
                 </b-radio-button>
                 <b-radio-button v-model="type"
-                                native-value="remove"
+                                native-value="löschen"
                                 type="is-success">
                     <span>Remove</span>
                 </b-radio-button>

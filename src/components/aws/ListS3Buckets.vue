@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i>Show  AWS S3 buckets</h1>
+                    <h1 class="title"><i class="material-icons">list</i>List AWS S3 buckets</h1>
                 </div>
                 <h2 class="subtitle">
-                    All you AWS S3 buckets will be displayed here</h2>
+                    All your AWS S3 buckets will be displayed here</h2>
             </div>
         </div>
         <br>

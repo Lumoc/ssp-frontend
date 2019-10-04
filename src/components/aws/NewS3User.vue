@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">perm_identity</i> Create AWS bucket User</h1>
+                    <h1 class="title"><i class="material-icons">perm_identity</i> Create AWS S3 bucket user</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create a user for your AWS bucket. All orders will be logged and charged.</h2>
@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newS3User">
-            <b-field label="name of the new User"
+            <b-field label="Name of the new user"
                      :type="errors.has('Name vom neuen Benutzer') ? 'is-danger' : ''"
                      :message="errors.first('Name vom neuen Benutzer')">
                 <b-input type="text"
@@ -24,7 +24,7 @@
             <b-message type="is-info">
                 The name of the new user will be put together with your details as follows:
                 <br/>[BucketName]-[Benutzername]
-                <br/><br/>Beispiel: sbb-my-bucket-prod-user oder sbb-my-app-prod-admin
+                <br/><br/>Example: sbb-my-bucket-prod-user or sbb-my-app-prod-admin
             </b-message>
 
             <b-field label="Bucket-Name"
@@ -49,7 +49,7 @@
                 <b-radio-button v-model="isReadonly"
                                 native-value="true"
                                 type="is-success">
-                    <span>Only read</span>
+                    <span>Read-only</span>
                 </b-radio-button>
                 <b-radio-button v-model="isReadonly"
                                 native-value="false"
@@ -60,7 +60,7 @@
 
             <button :disabled="errors.any() || loading"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">create S3 user
+                    class="button is-primary">Create S3 user
             </button>
         </form>
     </div>

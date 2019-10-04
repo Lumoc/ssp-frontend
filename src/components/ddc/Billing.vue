@@ -12,7 +12,7 @@
         <br>
         <button v-bind:class="{'is-loading': loading}"
                 v-on:click="getDDCBilling"
-                class="button is-primary">create cost accounting
+                class="button is-primary">Create cost accounting
         </button>
         <a v-if="csvDownload"
            class="button is-primary"
@@ -54,7 +54,7 @@
             </template>
 
             <div slot="empty" class="has-text-centered">
-                click the Button above to start the cost calculation
+                Click the button above to start the cost calculation
             </div>
         </b-table>
     </div>

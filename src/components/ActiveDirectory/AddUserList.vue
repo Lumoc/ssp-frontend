@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Gruppen Admin Management</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Group Admin Management</h1>
                 </div>
                 <h2 class="subtitle">
-			Here you can add or remove a Groupadmin</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU and SSP documentation</a></h3>
+			Here you can add or remove a group admin</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU-SSP documentation</a></h3>
             </div>
         </div>
         <br>

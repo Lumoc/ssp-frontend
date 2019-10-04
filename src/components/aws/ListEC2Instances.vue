@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i>show  AWS EC2 instances</h1>
+                    <h1 class="title"><i class="material-icons">list</i>List AWS EC2 instances</h1>
                 </div>
                 <h2 class="subtitle">
                     All AWS EC2 instances will be displayed here.</h2>
@@ -91,7 +91,7 @@
                             :default-sort="['startTime', 'desc']"
                             narrowed>
                         <template slot-scope="props">
-                            <b-table-column field="description" label="Descriptio" sortable>
+                            <b-table-column field="description" label="Description" sortable>
                                 {{ props.row.Description }}
                             </b-table-column>
                             <b-table-column field="startTime" label="Date" sortable>
@@ -120,7 +120,7 @@
                             {{ volume.deviceName }}
                         </option>
                     </b-select>
-                    <b-input v-model="snapshotDescription" name="description" placeholder="description"></b-input>
+                    <b-input v-model="snapshotDescription" name="description" placeholder="Description"></b-input>
                     <button class="button" @click="createSnapshot(modalData)">Create snapshot</button>
                 </footer>
             </div>
@@ -232,7 +232,7 @@
         // use running as conditional! the 'else' case should not be stop
         nextState = (row.state == 'running') ? 'stop' : 'start';
 
-        if (nextState == 'start' || confirm("Do you really want the instance to be stopped\n" + row.name)) {
+        if (nextState == 'start' || confirm("Do you really want to stop this instance?\n" + row.name)) {
           // change state so that user interface is responsive
           row.state = (row.state == 'running') ? 'stopping' : 'pending';
           this.$http.post(this.$store.state.backendURL + '/api/aws/ec2/' + row.instanceId + '/' + nextState).then((res) => {

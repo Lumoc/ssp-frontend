@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Show/Adjust project-informations
+                    <h1 class="title"><i class="material-icons">attach_money</i> Display/Update project details
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    You can show or adjust the informations about your project here</h2>
+                    You can show or adjust the details of your project here</h2>
             </div>
         </div>
         <br>
@@ -16,10 +16,10 @@
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation"></project-select>
 
             <b-message type="is-info">
-                All fields below will be filled with information, once a project is choosen.
+                The details will appear below once a project is selected.
             </b-message>
 
-            <b-field label="account assignment number"
+            <b-field label="Accounting number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"

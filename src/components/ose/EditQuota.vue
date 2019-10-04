@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cached</i>Adjust project Quotas </h1>
+                    <h1 class="title"><i class="material-icons">cached</i>Adjust Project Quotas </h1>
                 </div>
                 <h2 class="subtitle">
-                    you can adjust the CPU / memory quotas here. All changes will be logged!</h2>
+                    You can adjust the CPU / memory quotas here. All changes are logged and will be billed.</h2>
             </div>
         </div>
         <br>
@@ -14,7 +14,7 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="New CPU quotas [Cores]"
+            <b-field label="New CPU quota [cores]"
                      :type="errors.has('CPU') ? 'is-danger' : ''"
                      :message="errors.first('CPU')">
                 <b-input type="number"
@@ -25,7 +25,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="New memory quotas [GB]"
+            <b-field label="New memory quota [GB]"
                      :type="errors.has('Memory') ? 'is-danger' : ''"
                      :message="errors.first('Memory')">
                 <b-input type="number"

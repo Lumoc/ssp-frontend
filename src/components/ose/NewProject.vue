@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">speaker_notes</i> Create Openshift project</h1>
+                    <h1 class="title"><i class="material-icons">speaker_notes</i> Create OpenShift project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you can create new Openshift porfects</h2>
+                    Here you can create new OpenShift projects</h2>
             </div>
         </div>
         <br>
@@ -23,13 +23,13 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Project name can only contain lower case letters, numbers and "-"</br>
-                Productive projects:</br>
-                - Pease note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
-                - No productive projects auf Test04</br>
+                The project name can only contain lower case letters, numbers and "-"</br>
+                Production projects:</br>
+                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
+                - No production projects auf Test04</br>
             </b-message>
 
-            <b-field label="Account assignment"
+            <b-field label="Accounting number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -38,8 +38,8 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-            Account assignment (e.g 77606105), Internal order (70029490) oder PSP-Element inkl. Phase-Number (1157803.4-10.1)
-            Please do not give any Information without guarantee , give only current information, if necessary change under: <a href="#/ose/project" target="_blank">Projekt Informationen ändern</a>
+            Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)
+            Please only fill in correct information. It can later still be changed at: <a href="#/ose/project" target="_blank">Change project information</a>
             </b-message>
 
             <b-field label="Mega ID"
@@ -51,7 +51,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Handy Links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applikations</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g tracking form applikation)</a>
+                Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
             </b-message>
 
             <button :disabled="errors.any()"

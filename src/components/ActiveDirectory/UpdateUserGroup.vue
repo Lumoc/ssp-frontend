@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Gruppen User Management</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Group User Management</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can add or remove a user from the AD group here.</h2>
+                    You can add or remove a user from the Active Directory group here.</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU SSP documentation. </a></h3>
             </div>
         </div>
@@ -14,12 +14,12 @@
         <form v-on:submit.prevent="addToBackendCreateGroup">
             <b-field>
                 <b-radio-button v-model="type"
-                                native-value="Add"
+                                native-value="hinzufügen"
                                 type="is-success">
                     <span>Add</span>
                 </b-radio-button>
                 <b-radio-button v-model="type"
-                                native-value="remove"
+                                native-value="löschen"
                                 type="is-success">
                     <span>remove</span>
                 </b-radio-button>

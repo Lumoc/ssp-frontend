@@ -7,7 +7,7 @@
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    You can show or adjust you sematext logsene applicaton account assignment number here</h2>
+                    You can show or adjust your Sematext Logsene App accounting number here</h2>
             </div>
         </div>
         <br>
@@ -16,7 +16,7 @@
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
-                <b-select placeholder="Choose your application"
+                <b-select placeholder="Choose your App"
                           :loading="loading"
                           v-model="appId"
                           required>
@@ -29,7 +29,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Porject name"
+            <b-field label="Project name"
                      :type="errors.has('Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Projekt')">
                 <b-input v-model.trim="project"
@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="New account assignment number"
+            <b-field label="New accounting number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -49,7 +49,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">change account assignment information
+                    class="button is-primary">Change accounting number
             </button>
         </form>
     </div>
@@ -98,4 +98,4 @@
             }
         }
     };
-</scriptchange >
+</script>

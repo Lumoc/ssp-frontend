@@ -4,9 +4,9 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">person</i>show Openshift project Admins </h1>
+                        <i class="material-icons">person</i>Show OpenShift project admins </h1>
                     <h2 class="subtitle">
-                       shows all adminisrator-user in the project </h2>
+                       Lists all admins in an OpenShift project</h2>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             </template>
 
             <div slot="empty" class="has-text-centered">
-                No queray commited
+                No query commited
             </div>
         </b-table>
     </div>

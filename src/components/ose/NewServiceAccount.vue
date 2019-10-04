@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">account_circle</i>Create  service-account</h1>
+                    <h1 class="title"><i class="material-icons">account_circle</i>Create service account</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you can create a project for your service-account</h2>
+                    Here you can create a service account for your project</h2>
             </div>
         </div>
         <br>
@@ -28,7 +28,7 @@
 
             <b-field>
                 <b-checkbox v-model="createJenkinsCredential">
-                    {{ 'Is the Service-account to be added in to the jenkinsfile for the Deployment pipeline? '}}
+                    {{ 'Create Jenkins credential from the service account (used by ESTA deployment pipeline)? '}}
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
@@ -42,7 +42,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Create Service-Account
+                    class="button is-primary">Create service account
             </button>
         </form>
     </div>

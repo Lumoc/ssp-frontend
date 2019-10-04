@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i>Create  persistent Volume</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i>Create persistent volume</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create a persistent volume</h2>
@@ -45,7 +45,7 @@
 
             </template>
 
-            <b-field label="Persistent volume claims name"
+            <b-field label="Name of the persistent volume claim"
                      :type="errors.has('PVC-Name') ? 'is-danger' : ''"
                      :message="errors.first('PVC-Name')">
                 <b-input v-model.trim="pvcName"
@@ -54,10 +54,10 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Persistent volume claims name can only contain lower case letters, numbers or "-"
+                The name of the persistent volume claim can only contain lower case letters, numbers or "-"
             </b-message>
 
-            <label class="label>Utilization mode</label>
+            <label class="label>Access mode</label>
             <b-field>
                 <b-radio-button v-model="mode"
                                 native-value="ReadWriteOnce"
@@ -72,22 +72,22 @@
                 </b-radio-button>
             </b-field>
             <b-message type="is-info">
-                Note <a target="_blank" href="https://docs.openshift.com/container-platform/3.6/architecture/additional_concepts/storage.html#pv-access-modes">Dokumentation</a>
+                For details check the <a target="_blank" href="https://docs.openshift.com/container-platform/3.11/architecture/additional_concepts/storage.html#pv-access-modes">official documentation</a>
             </b-message>
 
-            <label class="label">Technology</label>
+            <label class="label">File system type</label>
             <b-message type="is-info">
-                A {{ technology | capitalize }}-Volume is created.
-                Note <a target="_blank" href="https://confluence.sbb.ch/x/-LJENQ">Documentation</a>
+                A {{ technology | capitalize }} volume will be created.
+                Check the <a target="_blank" href="https://confluence.sbb.ch/x/-LJENQ">documentation</a>
             </b-message>
             <br>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Create persistent volume
+                    class="button is-primary">Create a persistent volume
             </button>
             <div v-if="progress">
-            The Volume is getting created. This may take some minutes. You may close this windows, the generating process is beeing finished in the background
+            The volume will be created. This may take some minutes. You can close this windows while the creation is completing in the background.
             <progress :value="progress" max="100"></progress>
             </div>
         </form>
@@ -177,7 +177,7 @@
                 that.$store.commit('setNotification', {
                     notification: {
                         type: 'success',
-                        message: 'Volume created. PVC has been added to your project.'
+                        message: 'Persistent volume successfully created. A PVC has been added to your project.'
                     }
                 });
               }
