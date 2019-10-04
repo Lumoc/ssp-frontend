@@ -111,6 +111,15 @@
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
                     </div>
                 </div>
+
+                <div v-if="user && features.kafka.enabled" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Kafka
+                    </a>
+                    <div class="navbar-dropdown">
+                        <router-link to="/kafka/listtopics" class="navbar-item">Topics anzeigen</router-link>
+                    </div>
+                </div>
             </div>
 
             <div class="navbar-end">
@@ -144,12 +153,15 @@
                     },
                     otc: {
                         enabled: false
+                    },
+                    kafka: {
+                        enabled: false
                     }
                 }
             }
         },
         created: function () {
-            this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
+            this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body )
         }
     }
 
