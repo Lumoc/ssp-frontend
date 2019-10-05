@@ -3,9 +3,9 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">all_inclusive</i> Kafka Topics anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">all_inclusive</i> Kafka Topic List</h1>
                 </div>
-                <h2 class="subtitle">Hier werden deine Kafka Topics angezeigt.</h2>
+                <h2 class="subtitle">Your topics will be listed here.</h2>
             </div>
         </div>
         <br>
@@ -14,7 +14,7 @@
                 v-for="option in backends"
                 :value="option.url"
                 :key="option.name">
-                Umgebung: {{ option.name }}
+                Environment: {{ option.name }}
             </option>
         </b-select>
         <br>
@@ -44,7 +44,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                Wie, du hast noch keine Kafka Topics? So muss es nicht bleiben, schaue dir das Kafka <a href="https://confluence.sbb.ch/display/KAFKA/Getting+Started">Getting Started</a> an.
+                Don't have any topics yet? It doesn't have to be like that, read the <a href="https://confluence.sbb.ch/display/KAFKA/Getting+Started">getting started</a>.
             </div>
         </b-table>
     </div>
