@@ -105,6 +105,9 @@ const routes = [
     },
     {
         path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
+    },
+    {
+        path: '/kafka/listtopics', component: LocalComponents.ListTopics
     }
 ];
 

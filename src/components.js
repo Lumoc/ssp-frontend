@@ -47,6 +47,9 @@ import ADGroup from './components/ActiveDirectory/ADGroup.vue';
 import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
+// Kafka Components
+import ListTopics from './components/Kafka/ListTopics.vue'
+
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
 
@@ -99,5 +102,6 @@ export const LocalComponents = {
     WZUDevProxy,
     ADGroup,
     ADGroupAdmin,
-    ADGroupUser
+    ADGroupUser,
+    ListTopics
 };
