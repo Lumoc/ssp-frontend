@@ -111,6 +111,9 @@ const routes = [
     },
     {
         path: '/tower/jobs/:jobID', component: LocalComponents.SingleJob, props: true
+    },
+    {
+        path: '/kafka/listtopics', component: LocalComponents.ListTopics
     }
 ];
 
