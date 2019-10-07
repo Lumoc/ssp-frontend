@@ -24,7 +24,7 @@
             </template>
 
             <div slot="empty" class="has-text-centered">
-                All your buckets will be displayed here
+                You don't seem to have any buckets
             </div>
 
         </b-table>
