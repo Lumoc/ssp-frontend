@@ -48,7 +48,7 @@ import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
 // Kafka Components
-import ListTopics from './components/Kafka/ListTopics.vue'
+import ListTopics from './components/kafka/ListTopics.vue'
 
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
