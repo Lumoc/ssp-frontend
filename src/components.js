@@ -107,6 +107,6 @@ export const LocalComponents = {
     ADGroupAdmin,
     ADGroupUser,
     ListJobs,
-    SingleJob
+    SingleJob,
     ListTopics
 };
