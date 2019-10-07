@@ -79,7 +79,7 @@
 
             <template v-if="advanced">
                 <b-field grouped>
-                    <b-field label="Root Disk"
+                    <b-field label="Root Disc"
                             :type="errors.has('Root Disk') ? 'is-danger' : ''"
                             :message="errors.first('Root Disk')">
 
@@ -100,7 +100,7 @@
                             :message="errors.first('Root Disk GB')">
                         <b-input type="text"
                                 v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                                name="Root Disk GB"
+                                name="Root Disc GB"
                                 v-model.number="rootDiskSize">
                         </b-input>
                     </b-field>
@@ -108,13 +108,13 @@
                 </b-field>
 
                 <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > rootDiskSize">
-                    The choosen image needs a minimum size of {{ image.minDiskGigabytes }}GB for the Root Disk.
+                    The choosen image needs a minimum size of {{ image.minDiskGigabytes }}GB for the Root Disc.
                 </b-message>
             </template>
 
             <b-field grouped>
 
-                <b-field label="System Disk"
+                <b-field label="System Disc"
                         :type="errors.has('System Disk') ? 'is-danger' : ''"
                         :message="errors.first('System Disk')">
 
@@ -144,7 +144,7 @@
 
 
             <b-field grouped>
-                <b-field label="Data Disk"
+                <b-field label="Data Disc"
                         :type="errors.has('Data Disk') ? 'is-danger' : ''"
                         :message="errors.first('Data Disk')">
 
@@ -178,7 +178,7 @@
                 </b-checkbox>
             </b-field>
             <b-message type="is-info">
-                Das Filesystem Layout wird <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">hier</a> beschrieben.
+                Layot for the Filesystem is described<a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
             <b-field label="SSH Public Key"

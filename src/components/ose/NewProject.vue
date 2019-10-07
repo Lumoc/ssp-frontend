@@ -26,7 +26,7 @@
                 The project name can only contain lower case letters, numbers and "-"</br>
                 Production projects:</br>
                 - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
-                - No production projects auf Test04</br>
+                - No productive projects on Test04</br>
             </b-message>
 
             <b-field label="Accounting number"

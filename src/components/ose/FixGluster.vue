@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Generate Gluster configuration</h1>
                 </div>
                 <h2 class="subtitle">
-                   this function creates the gluster objects (Service & Endpoints) in your project.</h2>
+                   This function creates the GlusterFS objects (Service & Endpoints) in your project.</h2>
             </div>
         </div>
         <br>
@@ -17,10 +17,10 @@
 
                 <button :disabled="errors.any()"
                         v-bind:class="{'is-loading': loading}"
-                        class="button is-primary">Gluster Objekte erstellen
+                        class="button is-primary">GlusterFS Objekte erstellen
                 </button>
             </div>
-            <p v-if="!gluster">This Cluster doesnt not support a gluster at the moment</p>
+            <p v-if="!gluster">This Cluster doesnt not support a GlusterFS at the moment</p>
         </form>
     </div>
 </template>

@@ -33,7 +33,7 @@
                 Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 -Max MB depends on the plan.<br/>
 		-You should need a good plan so your logsize is just below the "default MB"<br/>
-		-Expand the daily MB-Limit just so its below the Puffer<br/>
+		-Expand the daily MB-Limit just so its below the Pkuffer<br/>
 		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
 

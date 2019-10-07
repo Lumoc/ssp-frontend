@@ -4,9 +4,9 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">dashboard</i>Show Sematext Logsene applikations</h1>
+                        <i class="material-icons">dashboard</i>Show Sematext Logsene apps</h1>
                     <h2 class="subtitle">
-                        Shows all your Sematext Lognese applikations</h2>
+                        Shows all your Sematext Lognese apps</h2>
                 </div>
             </div>
         </div>

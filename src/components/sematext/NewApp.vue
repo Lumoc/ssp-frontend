@@ -26,7 +26,7 @@
                 Sematext Logsene koncepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 -Max MB depends on the plan.<br/>
 		-You should need a good plan so your logsize is just below the "default MB"<br/>
-		-Expand the daily MB-Limit just so its below the Puffer<br/>
+		-Expand the daily MB-Limit just so its below the puffer<br/>
 		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
 
@@ -48,7 +48,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Daily MB-Limit"
+            <b-field label="Daily MB limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"

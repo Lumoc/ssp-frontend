@@ -99,7 +99,7 @@
                                 {{ moment(props.row.StartTime).fromNow() }}
                                 </b-tooltip>
                             </b-table-column>
-                            <b-table-column field="disk" label="Disk" sortable>
+                            <b-table-column field="disk" label="Disc" sortable>
                                 {{ getTag(props.row, "devicename") }}
                             </b-table-column>
                             <b-table-column field="delete" label="Löschen">
@@ -109,7 +109,7 @@
                             </b-table-column>
                         </template>
                         <div slot="empty" class="has-text-centered">
-                            Keine Snapshots vorhanden
+                            There are no snpashots
                         </div>
                     </b-table>
                 </div>

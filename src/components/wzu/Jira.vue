@@ -11,13 +11,13 @@
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendJira">
-            <b-field label="Xray aktivieren?"
+            <b-field label="Activate Xray?"
                      :type="errors.has('XRay') ? 'is-danger' : ''"
                      :message="errors.first('XRay')">
                 <b-checkbox v-model="activatexray"></b-checkbox>
 
             </b-field>
-            <b-field label="Projekt Name (only alphanumeric characters)"
+            <b-field label="Project name (only alphanumeric characters)"
                      :type="errors.has('ProjectName') ? 'is-danger' : ''"
                      :message="errors.first('ProjectName')">
                 <b-input v-model.trim="projectname"
@@ -26,7 +26,7 @@
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Projekt Key (only uper case letters max 10 signs)"
+            <b-field label="Project key (only uper case letters max 10 signs)"
                      :type="errors.has('ProjectKey') ? 'is-danger': ''"
                      :message="errors.first('ProjectKey')">
                 <b-input v-model.trim="projectkey"
@@ -42,7 +42,7 @@
                          name="Projekt Beschreibung">
                 </b-input>
             </b-field>
-            <b-field label="Order for other Useer (not mandatory)"
+            <b-field label="Order for other User (not mandatory)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="projectowner"
@@ -66,7 +66,7 @@
 
             "ProjectKey": {
                 required: "Please provide a project key.",
-                regex: "The project key can only contain uper case letters and max 10 signs."
+                regex: "The project key can only contain uper case letters and max 10 characters."
 
             },
             "ProjectName": {

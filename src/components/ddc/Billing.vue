@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> DDC-Kosten anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">attach_money</i> Show DDC expenses</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you find the costs for the DDC-infrastructure </h2>

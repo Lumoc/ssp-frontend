@@ -25,7 +25,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Not the name of the PVC itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
+                Not the name of the persistent volume name(PVC) itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
             </b-message>
 
             <b-field label="New size"
@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                The volume is getting resized to the provided size. Downsizing is not possible.e.g 100M or 5G
+                The volume is getting resized to the provided size. Shrinking is not possible.e.g 100M or 5G
             </b-message>
 
             <button :disabled="errors.any()"

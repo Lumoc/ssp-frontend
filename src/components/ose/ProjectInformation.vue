@@ -39,7 +39,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Kontierungsinformation anpassen
+                    class="button is-primary">Change account management
             </button>
         </form>
     </div>

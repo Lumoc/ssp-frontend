@@ -66,7 +66,7 @@
 
             "RepositoryName": {
                 required: "Please type in a reponame",
-                regex: "The Repository name can only contain alphanumeric Signs and max. one "-""
+                regex: "The Repository name can only contain alphanumeric characters and max. one "-""
             }
         }
     };

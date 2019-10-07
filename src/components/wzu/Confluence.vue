@@ -61,14 +61,14 @@
 
             "SpaceKey": {
                 required: "Please provide a space key.",
-                regex: "The space key can only contain uper case letters and max 10 signs."
+                regex: "The space key can only contain uper case letters and max 10 characters."
             },
             "Space Name": {
                 required: "Please provide a space name",
                 regex: "The space name can only contain alphanumeric letters"
             },
             "Order for another user": {
-                regex: "Please provide a validated U-,E-, or Ue- number"
+                regex: "Please provide a valid U-,E-, or Ue- number"
             }
         }
     };

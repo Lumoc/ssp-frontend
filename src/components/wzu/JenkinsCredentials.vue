@@ -39,7 +39,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Credentials erstellen
+                    class="button is-primary">Create credentials
             </button>
         </form>
     </div>
@@ -51,7 +51,7 @@
     const dictionary = {
         custom: {
 
-            "Jenkins Organization Name": {
+            "Jenkins Organication name": {
                 required: "Please provide a jenkins organization name.",
             },
             "Description": {

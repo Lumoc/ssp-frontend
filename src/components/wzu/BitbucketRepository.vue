@@ -63,7 +63,7 @@
 
             "Repository Name": {
                 required: "Please provide a project name.",
-                regex: "Project name can only contain alphanumberic signs."
+                regex: "Project name can only contain alphanumberic characters."
             },
             "Projekt Key": {
                 required: "Please provide a project key.",

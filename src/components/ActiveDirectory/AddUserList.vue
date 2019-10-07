@@ -31,7 +31,7 @@
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Admin updaten
+                    class="button is-primary">Update admin
             </button>
         </form>
     </div>

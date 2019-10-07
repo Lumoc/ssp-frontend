@@ -19,13 +19,13 @@
                         OpenShift
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/ose/editquotas" class="navbar-item"> Quotas anpassen</router-link>
-                        <router-link to="/ose/newproject" class="navbar-item">Projekt anlegen</router-link>
-                        <router-link to="/ose/newtestproject" class="navbar-item">Test-Projekt anlegen</router-link>
-                        <router-link to="/ose/adminlist" class="navbar-item">Projekt Admins anzeigen</router-link>
-                        <router-link to="/ose/project" class="navbar-item">Projekt-Informationen anzeigen/ändern</router-link>
-                        <router-link to="/ose/newserviceaccount" class="navbar-item">Service-Account anlegen</router-link>
-                        <router-link to="/ose/newpullsecret" class="navbar-item">Docker Pull-Secret anlegen</router-link>
+                        <router-link to="/ose/editquotas" class="navbar-item">Adjust quotas</router-link>
+                        <router-link to="/ose/newproject" class="navbar-item">Create project</router-link>
+                        <router-link to="/ose/newtestproject" class="navbar-item">Create trial project</router-link>
+                        <router-link to="/ose/adminlist" class="navbar-item">Show project admins</router-link>
+                        <router-link to="/ose/project" class="navbar-item">Show/adjust project informations</router-link>
+                        <router-link to="/ose/newserviceaccount" class="navbar-item">Create service account</router-link>
+                        <router-link to="/ose/newpullsecret" class="navbar-item">Create docker pull secret</router-link>
                         <hr class="navbar-divider">
                         <router-link to="/ose/volume/new" class="navbar-item">
                             Create persistent volume
@@ -78,7 +78,7 @@
                         <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps plan & limit
                         </router-link>
                         <router-link to="/sematext/changebilling" class="navbar-item">Logsene-Apps project &
-                            accont assignment number stimmt
+                            accont assignment numbers are right
                             
                         </router-link>
                     </div>

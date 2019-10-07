@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newS3Bucket">
-            <b-field label="Projekt-Name"
+            <b-field label="Project name"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
                 <b-input v-model.trim="project"
@@ -21,7 +21,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bucket-Name"
+            <b-field label="Bucket name"
                      :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
                      :message="errors.first('Bucket-Name')">
                 <b-input type="text"

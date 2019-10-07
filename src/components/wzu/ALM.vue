@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
 		    You can add a new ALM user to a project.</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SPP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU self-service portal documentation.</a></h3>
             </div>
         </div>
         <br>
@@ -38,7 +38,7 @@
                 <b-radio-button v-model="projectfunction"
                                 native-value="SBB_Project_Tester"
                                 type="is-success">
-                    <span>SBB Project Tester</span>
+                    <span>SBB Project tester</span>
                 </b-radio-button>
                 <b-radio-button v-model="projectfunction"
                                 native-value="SBB_Viewer"
@@ -96,10 +96,10 @@
         custom: {
 
             "Project name": {
-                required: "Bitte gib einen Projekt Key an."
+                required: "Please provide a project key."
             },
             "Order for other users":{
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+                regex: "Please provide a valid U-, E- or Ue- number."
             }
         }
     };
