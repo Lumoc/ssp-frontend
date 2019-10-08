@@ -179,18 +179,7 @@
                 The filesystem layout is described <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
-            <b-field>
-                <template slot="label">
-                    Active Directory group name
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="The Active directory group name is used for instance ownership (e.g. login, admin permissions).">
-                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
-                    </b-tooltip>
-                </template>
-                <b-input type="text"
-                         v-model="extra_vars.unifiedos_owner_group"
-                         required>
-                </b-input>
-            </b-field>
+            <ldap-groups v-bind:project.sync="extra_vars.unifiedos_owner_group"></ldap-groups>
 
             <b-field>
                 <template slot="label">
@@ -243,9 +232,11 @@
 </template>
 <script>
   import JobStdout from '../tower/JobStdout.vue'
+  import LDAPGroups from '../shared/LDAPGroups.vue'
   export default {
       components: {
-          'job-stdout': JobStdout
+          'job-stdout': JobStdout,
+          'ldap-groups': LDAPGroups,
       },
       data() {
           return {
