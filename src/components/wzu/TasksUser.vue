@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Tasks User group</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can give permission for task.sbb.ch here</h2>
+                    Here you can give yourself permissions again for task.sbb.ch here</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here for the WZU SSP documentation.</a></h3>
             </div>
         </div>

@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Bitbucket Repository</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can create a Bitbucket repo here</h2>
+                    You can create a Bitbucket repository here</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SPP documentation..</a></h3>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Order for other User (not mandatory)"
+            <b-field label="Order for other User (optional)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitrepoowner"

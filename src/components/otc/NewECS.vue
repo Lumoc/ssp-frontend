@@ -79,7 +79,7 @@
 
             <template v-if="advanced">
                 <b-field grouped>
-                    <b-field label="Root Disc"
+                    <b-field label="Root Disk"
                             :type="errors.has('Root Disk') ? 'is-danger' : ''"
                             :message="errors.first('Root Disk')">
 
@@ -100,7 +100,7 @@
                             :message="errors.first('Root Disk GB')">
                         <b-input type="text"
                                 v-validate="{ rules: { required: true, regex: /^[0-9]+$/}, min_value: image.minDiskGigabytes }"
-                                name="Root Disc GB"
+                                name="Root Disk GB"
                                 v-model.number="rootDiskSize">
                         </b-input>
                     </b-field>
@@ -114,7 +114,7 @@
 
             <b-field grouped>
 
-                <b-field label="System Disc"
+                <b-field label="System Disk"
                         :type="errors.has('System Disk') ? 'is-danger' : ''"
                         :message="errors.first('System Disk')">
 
@@ -144,7 +144,7 @@
 
 
             <b-field grouped>
-                <b-field label="Data Disc"
+                <b-field label="Data Disk"
                         :type="errors.has('Data Disk') ? 'is-danger' : ''"
                         :message="errors.first('Data Disk')">
 

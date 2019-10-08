@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Generate Gluster configuration</h1>
+                    <h1 class="title"><i class="material-icons">perm_scan_wifi</i> Generate GlusterFS configuration</h1>
                 </div>
                 <h2 class="subtitle">
                    This function creates the GlusterFS objects (Service & Endpoints) in your project.</h2>

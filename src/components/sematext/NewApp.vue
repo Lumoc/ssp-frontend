@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene application
+                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene app
                 </div>
                 <h2 class="subtitle">
-                    You can create a Sematext Logsene application here</h2>
+                    You can create a Sematext Logsene app here</h2>
             </div>
         </div>
         <br>
@@ -23,9 +23,9 @@
             </b-field>
 
             <b-message type="is-info">
-                Sematext Logsene koncepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
+                Sematext Logsene concepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 - The maximum allowed transfer volume per day depends on the plan.<br/>
-		-You should need a good plan so your logsize is just below the "default MB"<br/>
+              - You should need a good plan so your logsize is just below the "default MB"<br/>
 		-Expand the daily MB-Limit just so its below the puffer<br/>
 		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>

@@ -7,7 +7,7 @@
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    You can show or adjust your Sematext Logsene App accounting number here</h2>
+                    You can show or adjust your Sematext Logsene app accounting number here</h2>
             </div>
         </div>
         <br>
@@ -16,7 +16,7 @@
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
-                <b-select placeholder="Choose your App"
+                <b-select placeholder="Choose your app"
                           :loading="loading"
                           v-model="appId"
                           required>

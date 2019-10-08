@@ -40,7 +40,7 @@
                 </b-field>
 
                 <b-message type="is-info">
-                    min. size is 500M. Size in  M or G e.g. 500M oder 5G. At a size of 1024M you have to use G.
+                    Min. size is 500M. Size in  M or G e.g. 500M oder 5G. At a size of 1024M you have to use G.
                 </b-message>
 
             </template>
@@ -87,7 +87,7 @@
                     class="button is-primary">Create a persistent volume
             </button>
             <div v-if="progress">
-            The volume will be created. This may take some minutes. You can close this windows while the creation is completing in the background.
+            The volume will be created. This may take some minutes. You can close this window while the creation is going to be completed in the background.
             <progress :value="progress" max="100"></progress>
             </div>
         </form>
@@ -177,7 +177,7 @@
                 that.$store.commit('setNotification', {
                     notification: {
                         type: 'success',
-                        message: 'Persistent volume successfully created. A PVC has been added to your project.'
+                        message: 'Persistent volume successfully created. A persistent volume claim (PVC) has been added to your project.'
                     }
                 });
               }

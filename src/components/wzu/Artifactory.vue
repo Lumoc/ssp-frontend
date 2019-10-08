@@ -6,8 +6,8 @@
                     <h1 class="title"><i class="material-icons">edit</i>Artifactory Repository</h1>
                 </div>
                 <h2 class="subtitle">
-                    Click here to create an Artifactory repo</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SSP documentary</a></h3>
+                    Click here to create an Artifactory repository</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SSP documentation</a></h3>
             </div>
         </div>
         <br>
@@ -65,8 +65,8 @@
         custom: {
 
             "RepositoryName": {
-                required: "Please type in a reponame",
-                regex: "The Repository name can only contain alphanumeric characters and max. one "-""
+                required: "Please type in a repository name",
+                regex: "The repository name can only contain alphanumeric characters and max. one "-""
             }
         }
     };

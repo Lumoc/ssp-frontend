@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i>Adjust Sematext Logsene application plan & MB-Limit.
+                    <h1 class="title"><i class="material-icons">attach_money</i>Adjust Sematext Logsene app plan & MB-Limit.
 		</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can adjust your MB-Limit for the Sematext Logsene application here.</h2>
+                    You can adjust your MB-Limit for the Sematext Logsene app here.</h2>
             </div>
         </div>
         <br>
@@ -16,7 +16,7 @@
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
-                <b-select placeholder="Choose your application"
+                <b-select placeholder="Choose your app"
                           :loading="loading"
                           v-model="appId"
                           required>
@@ -31,9 +31,9 @@
 
             <b-message type="is-info">
                 Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
-                -Max MB depends on the plan.<br/>
-		-You should need a good plan so your logsize is just below the "default MB"<br/>
-		-Expand the daily MB-Limit just so its below the Pkuffer<br/>
+                -Daily max MB depends on the plan.<br/>
+		-You should plan a head so your logsize is just below the "default MB"<br/>
+		-Expand the daily MB-Limit just so its below the Puffer<br/>
 		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
 

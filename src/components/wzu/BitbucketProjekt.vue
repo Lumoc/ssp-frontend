@@ -31,7 +31,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Project Description (not mandatory)"
+            <b-field label="Project Description (optional)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
@@ -39,7 +39,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Order for another user (not mandatory)"
+            <b-field label="Order for another user (optional)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="bitprojectowner"

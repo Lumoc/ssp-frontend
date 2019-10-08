@@ -34,7 +34,7 @@
                             Expand persistent volume
                         </router-link>
                         <router-link to="/ose/volume/fixgluster" class="navbar-item">
-                            Generate new Gluster Objects
+                            Generate new GlusterFS Objects
                         </router-link>
                     </div>
                 </div>

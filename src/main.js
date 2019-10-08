@@ -71,7 +71,7 @@ Vue.http.interceptors.push(function (request, next) {
             this.$store.commit('setNotification', {
                 notification: {
                     type: 'danger',
-                    message: "Communication with the Backend failed, please open up a ticket"
+                    message: "Communication with the Backend failed, please create a ticket"
                 }
             });
         }

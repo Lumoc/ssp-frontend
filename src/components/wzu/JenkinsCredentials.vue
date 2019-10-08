@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Create Jenkins Credentials</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can create you Jenkins organization here.</h2>
+                    Here you can create you Jenkins organization.</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>

@@ -61,7 +61,7 @@
 
             "SpaceKey": {
                 required: "Please provide a space key.",
-                regex: "The Space Key must be shorter than 10 characters and only contain uppercase letters."
+                regex: "The Space Key can contain max 10 characters and only uppercase letters."
             },
             "Space Name": {
                 required: "Please provide a space name",

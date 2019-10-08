@@ -36,13 +36,13 @@
                 <b-table-column field="billingInfo" label="Account number">
                     {{ props.row.billingInfo }}
                 </b-table-column>
-                <b-table-column field="userRole" label="Your Role">
+                <b-table-column field="userRole" label="Your role">
                     {{ props.row.userRole }}
                 </b-table-column>
             </template>
 
             <div slot="empty" class="has-text-centered">
-                 You have no Logsene applications.
+                 You have no Logsene apps.
             </div>
         </b-table>
     </div>

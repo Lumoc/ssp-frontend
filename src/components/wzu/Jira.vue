@@ -71,7 +71,7 @@
             },
             "ProjectName": {
                 required: "Please provide a project name.",
-                regex: "The project name may only contain alphanumeric characters"
+                regex: "The project name can only contain alphanumeric characters"
             },
             "Order for other users":{
                 regex: "Please provide a valid U-,E- or Ue- number."
