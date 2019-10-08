@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i>Adjust Sematext logsene application plan & MB-Limit.
+                    <h1 class="title"><i class="material-icons">attach_money</i>Adjust Sematext Logsene application plan & MB-Limit.
 		</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can adjust your MB-Limit for the sematext logsene application here.</h2>
+                    You can adjust your MB-Limit for the Sematext Logsene application here.</h2>
             </div>
         </div>
         <br>
@@ -41,7 +41,7 @@
                      :type="errors.has('Neuer Logsene-Plan') ? 'is-danger' : ''"
                      :message="errors.first('Neuer Logsene-Plan')">
 
-                <b-select placeholder="Choose your Sematex logplan"
+                <b-select placeholder="Choose your Sematext plan"
                           :loading="loading"
                           v-model="planId"
                           @input="updateLimit()"

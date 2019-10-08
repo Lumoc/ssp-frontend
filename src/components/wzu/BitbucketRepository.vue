@@ -49,7 +49,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Repo create
+                    class="button is-primary">Create Repository
             </button>
         </form>
     </div>
@@ -63,14 +63,14 @@
 
             "Repository Name": {
                 required: "Please provide a project name.",
-                regex: "Project name can only contain alphanumberic characters."
+                regex: "Project name can only contain alphanumeric characters."
             },
             "Projekt Key": {
                 required: "Please provide a project key.",
                 regex: "The project key has to start with a contraction of the domainmodel and "_".."
             },
             "Order for another user": {
-                regex: "Please provide a validated U-,E-, or Ue- number"
+                regex: "Please provide a valid U-,E-, or Ue- number"
             }
         }
     };

@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Jira Project</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can createa a jira project on issues.sbb here</h2>
+                    You can createa a Jira project on issues.sbb here</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>
@@ -26,7 +26,7 @@
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Project key (only uper case letters max 10 signs)"
+            <b-field label="Project key (uppercase, less than 10 characters)"
                      :type="errors.has('ProjectKey') ? 'is-danger': ''"
                      :message="errors.first('ProjectKey')">
                 <b-input v-model.trim="projectkey"
@@ -35,14 +35,14 @@
                          :message="errors.first('ProjectKey')">
                 </b-input>
             </b-field>
-            <b-field label="Project description (not mandatory)"
+            <b-field label="Project description (optional)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="projectdescription"
                          name="Projekt Beschreibung">
                 </b-input>
             </b-field>
-            <b-field label="Order for other User (not mandatory)"
+            <b-field label="Order for other user (optional)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="projectowner"
@@ -66,12 +66,12 @@
 
             "ProjectKey": {
                 required: "Please provide a project key.",
-                regex: "The project key can only contain uper case letters and max 10 characters."
+                regex: "The project key must be shorter than 10 characters and only contain uppercase letters."
 
             },
             "ProjectName": {
                 required: "Please provide a project name.",
-                regex: "The project name can only contian alphanumeric characters"
+                regex: "The project name may only contain alphanumeric characters"
             },
             "Order for other users":{
                 regex: "Please provide a valid U-,E- or Ue- number."

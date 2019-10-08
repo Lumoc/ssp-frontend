@@ -8,7 +8,7 @@
                     Cloud Selfservice Portal
                 </h1>
             </div>
-            <h2 class="subtitle">Wellcome to the Cloud Selfservice Portal. Please choose your topic</h2>
+            <h2 class="subtitle">Welcome to the Cloud Selfservice Portal.</h2>
         </div>
     </div>
     <p>

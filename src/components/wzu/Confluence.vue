@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Confluence Space</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can create a Confluence space here.</h2>
+                    You can create a Confluence Space here.</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>
@@ -14,7 +14,7 @@
         <!-- die regex error message funktioniert iwie mit type="errors... aber auch ohne, jedoch manchmal geht es dann nicht mehr...
         notiere es hier, damit ich in zukunft effizienter handeln kann"-->
         <form v-on:submit.prevent="addToBackendConfluence">
-            <b-field label="Space Name (only alphanumeric signs)"
+            <b-field label="Space Name (only alphanumeric characters)"
                      :type="errors.has('Space Name') ? 'is-danger' : ''"
                      :message="errors.first('Space Name')">
                 <b-input v-model.trim="spacename"
@@ -23,7 +23,7 @@
                          v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/}">
                 </b-input>
             </b-field>
-            <b-field label="Space Key (only uper case letters max. 10 Signs)"
+            <b-field label="Space Key (uppercase, less than 10 characters)"
                      :message="errors.first('SpaceKey')"
                      :type="errors.has('SpaceKey') ? 'is-danger' : ''">
                 <b-input v-model.trim="spacekey"
@@ -31,12 +31,12 @@
                          v-validate.rules="{ required: true, regex: /^[A-Z]{0,10}$/}">
                 </b-input>
             </b-field>
-            <b-field label="Space description (not mandatory)">
+            <b-field label="Space description (optional)">
                 <b-input v-model.trim="spacedescription"
                          name="spacedescription">
                 </b-input>
             </b-field>
-            <b-field label="Order for another user (not mandatory)"
+            <b-field label="Order for another user (optional)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-validate.rules="{ required: false, regex:/^(u|U)[0-9]{6}|(e|E)[0-9]{6}|(ue|Ue|UE)[0-9]{5}$/ }"
@@ -61,7 +61,7 @@
 
             "SpaceKey": {
                 required: "Please provide a space key.",
-                regex: "The space key can only contain uper case letters and max 10 characters."
+                regex: "The Space Key must be shorter than 10 characters and only contain uppercase letters."
             },
             "Space Name": {
                 required: "Please provide a space name",
