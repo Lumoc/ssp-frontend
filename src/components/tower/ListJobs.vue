@@ -58,16 +58,7 @@
             this.loading = true;
             this.$http.get(this.$store.state.backendURL + '/api/tower/jobs').then((res) => {
               this.loading = false;
-              let json = JSON.parse(res.body)
-              let filtered = json.results.filter(function(job) {
-                // finished jobs are filtered on the backend
-                if (job.status != "running") return true
-                // filter the remaining jobs (not supported by tower api)
-                let extra_vars = JSON.parse(job.extra_vars)
-                return extra_vars.custom_tower_user_name == this.$store.state.user.name
-              }, this);
-              this.data = filtered
-              console.log(json.results)
+              this.data = JSON.parse(res.body)
             }, () => {
               this.loading = false;
             });
