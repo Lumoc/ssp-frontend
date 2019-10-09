@@ -44,7 +44,7 @@
                 </b-select>
             </b-field>
 
-            <label class="label">Permissions: Read/write</label>
+            <label class="label">Permissions: read/write</label>
             <b-field>
                 <b-radio-button v-model="isReadonly"
                                 native-value="true"

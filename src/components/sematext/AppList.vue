@@ -6,7 +6,7 @@
                     <h1 class="title">
                         <i class="material-icons">dashboard</i>Show Sematext Logsene apps</h1>
                     <h2 class="subtitle">
-                        Shows all your Sematext Lognese apps</h2>
+                        Shows all your Sematext Logsene apps</h2>
                 </div>
             </div>
         </div>

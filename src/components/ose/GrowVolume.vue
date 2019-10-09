@@ -25,7 +25,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Not the name of the persistent volume name(PVC) itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
+                Not the name of the Persistent Volume Claim (PVC) itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
             </b-message>
 
             <b-field label="New size"

@@ -24,7 +24,7 @@
                  :narrowed="true">
 
             <template slot-scope="props">
-                <b-table-column field="sender" label="off" width="40">
+                <b-table-column field="sender" label="of" width="40">
                     {{ props.row.sender }}
                 </b-table-column>
                 <b-table-column field="receptionAssignment" label="receiving office" width="40">
