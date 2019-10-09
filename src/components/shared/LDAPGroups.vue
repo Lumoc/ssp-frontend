@@ -2,16 +2,18 @@
 <b-field>
     <template slot="label">
         Active Directory group name
-        <b-tooltip type="is-dark" multilined animated position="is-right" label="The Active directory group name is used for instance ownership (e.g. login, admin permissions).">
+        <b-tooltip type="is-dark" multilined animated position="is-right" :label="help">
             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
         </b-tooltip>
     </template>
     <b-autocomplete
-        v-model="selectedGroup"
+        v-model="valueData"
+        @input="inputChanged"
         :data="filteredDataArray"
         :loading="loading"
+        :pattern="pattern"
         open-on-focus
-        @input="inputChanged"
+        ref="el"
         required>
         <template slot="empty">No groups found</template>
     </b-autocomplete>
@@ -21,41 +23,44 @@
 <script>
   export default {
     name: 'ldap-groups',
+    props: ['value', 'help'],
     data() {
       return {
-        selectedGroup: '',
+        valueData: this.value,
         groups: [],
-        loading: false
+        loading: false,
+        pattern: ''
       };
-    },
-    watch: {
-      selectedGroup(val) {
-        this.$emit('update:group', val);
-      },
     },
     mounted: function () {
         this.getGroups();
     },
+    watch: {
+        valueData: function(val) {
+            // Fix for html5 validation not correctly working
+            // when selecting from dropdown before entering any text
+            // or selecting something, then removing characters and
+            // selecting the same thing again.
+            this.$nextTick(() => {
+                console.log(this.$refs.el.checkHtml5Validity())
+            })
+        }
+    },
     methods: {
       inputChanged: function(val) {
         if (this.groups.indexOf(val) > -1) {
-            localStorage.ldapgroup = val;
-            this.$emit('selected', val)
+            this.$emit('input', val)
         }
       },
       getGroups: function() {
         this.loading = true;
         this.$http.get(this.$store.state.backendURL + '/api/ldap/groups', null).then((res) => {
           this.groups = res.body;
+          this.pattern = this.groups.join('|')
           this.loading = false;
         }, () => {
           this.loading = false;
         });
-      },
-      setGroup: function() {
-        if (localStorage.ldapgroup) {
-          this.selectedGroup = localStorage.ldapgroup;
-        }
       },
     },
     computed: {
@@ -65,7 +70,7 @@
           return option
             .toString()
             .toLowerCase()
-            .indexOf(this.selectedGroup.toLowerCase()) >= 0
+            .indexOf(this.valueData.toLowerCase()) >= 0
         })
       }
     }

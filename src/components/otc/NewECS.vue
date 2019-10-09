@@ -179,7 +179,7 @@
                 The filesystem layout is described <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
-            <ldap-groups v-bind:project.sync="extra_vars.unifiedos_owner_group"></ldap-groups>
+            <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field>
                 <template slot="label">
