@@ -7,12 +7,12 @@
                 </div>
                 <h2 class="subtitle">
                     Here you can create you Jenkins organization.</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU self service portal documentation.</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="newJenkinsCredentials">
-            <b-field label="Jenkins Organization name"
+            <b-field label="Jenkins organization name"
                      :type="errors.has('Jenkins Organization Name') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Organization Name')">
                 <b-input v-model.trim="organizationKey"

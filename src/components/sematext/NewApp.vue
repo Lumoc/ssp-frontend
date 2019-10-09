@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newLogseneApp">
-            <b-field label="App-Name"
+            <b-field label="App name"
                      :type="errors.has('App-Name') ? 'is-danger' : ''"
                      :message="errors.first('App-Name')">
                 <b-input v-model.trim="appName"
@@ -25,7 +25,7 @@
             <b-message type="is-info">
                 Sematext Logsene concepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 - The maximum allowed transfer volume per day depends on the plan.<br/>
-              - You should need a good plan so your logsize is just below the "default MB"<br/>
+                - You should need a good plan so your logsize is just below the "default MB"<br/>
 		-Expand the daily MB-Limit just so its below the puffer<br/>
 		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
             </b-message>
@@ -75,7 +75,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Discount Code">
+            <b-field label="Discount code">
                 <b-input v-model.trim="discountcode"
                          name="Discountcode">
                 </b-input>

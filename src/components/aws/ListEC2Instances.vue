@@ -76,7 +76,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                The instances which you own will be displayed here.
+                Instances owned by you will be displayed here.
             </div>
         </b-table>
         <!-- use the modal component, pass in the prop -->
@@ -109,7 +109,7 @@
                             </b-table-column>
                         </template>
                         <div slot="empty" class="has-text-centered">
-                            There are no snpashots
+                            There are no snapshots
                         </div>
                     </b-table>
                 </div>

@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateSematextPlanAndLimits">
-            <b-field label="Logsene-App"
+            <b-field label="Logsene app"
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 

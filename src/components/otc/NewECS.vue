@@ -213,7 +213,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">ECS erstellen
+                    class="button is-primary">Create ECS
             </button>
         </form>
     </div>

@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     Here you can give yourself permissions again for task.sbb.ch here</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here for the WZU SSP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here for the WZU self service portal documentation.</a></h3>
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendTasks">

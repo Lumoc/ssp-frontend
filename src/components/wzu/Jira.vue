@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     You can createa a Jira project on issues.sbb here</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU self service portal documentation.</a></h3>
             </div>
         </div>
         <form v-on:submit.prevent="addToBackendJira">

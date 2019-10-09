@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     You can create a Confluence Space here.</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU self service portal documentation.</a></h3>
             </div>
         </div>
         <br>
@@ -23,7 +23,7 @@
                          v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/}">
                 </b-input>
             </b-field>
-            <b-field label="Space Key (uppercase, less than 10 characters)"
+            <b-field label="Space key (uppercase, less than 10 characters)"
                      :message="errors.first('SpaceKey')"
                      :type="errors.has('SpaceKey') ? 'is-danger' : ''">
                 <b-input v-model.trim="spacekey"

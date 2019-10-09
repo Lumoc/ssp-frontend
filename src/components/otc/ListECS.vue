@@ -60,7 +60,7 @@
                                 {{ props.row.imageName }}
                             </td></tr>                            
                             <tr><td>
-                                IP Adressen:
+                                IP adres:
                             </td><td>
                                 <ul id="ips">
                                     <li v-for="ip in props.row.ipv4" v-bind:key="ip">
@@ -222,4 +222,4 @@
             }
         }
     };
-</script>
+</scripa>

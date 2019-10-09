@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     You can create a Bitbucket repository here</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SPP documentation..</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU self service portal documentation..</a></h3>
             </div>
         </div>
         <br>
@@ -29,7 +29,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Projekt Key (Project has to exist)"
+            <b-field label="Projekt key (Project has to exist)"
                      :type="errors.has('Projekt Key') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"

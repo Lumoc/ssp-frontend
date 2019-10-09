@@ -23,7 +23,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Service-Account Name darf nur Kleinbuchstaben, Zahlen und - enthalten
+                Service account name can only contain lower case letters, numbers and "-".
             </b-message>
 
             <b-field>
@@ -84,9 +84,9 @@
                     }, () => {
                         this.loading = false;
                     });
-                }
+                 }
             });
-        }
-    }
-  };
+         }
+      }
+   };
 </script>

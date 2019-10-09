@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     Create BitBucket project here</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU self service portal documentation.</a></h3>
             </div>
         </div>
         <br>
@@ -31,7 +31,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Project Description (optional)"
+            <b-field label="Project description (optional)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
@@ -50,7 +50,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Projekt erstellen
+                    class="button is-primary">Create projekt
             </button>
         </form>
     </div>

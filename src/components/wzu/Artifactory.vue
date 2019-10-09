@@ -7,7 +7,7 @@
                 </div>
                 <h2 class="subtitle">
                     Click here to create an Artifactory repository</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU SSP documentation</a></h3>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU self service portal documentation</a></h3>
             </div>
         </div>
         <br>
