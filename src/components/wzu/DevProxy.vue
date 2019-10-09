@@ -5,7 +5,7 @@
                 <div class="container">
                     <h1 class="title"><i class="material-icons">edit</i>Developer Proxy</h1>
                 </div>
-                <h2 class="subtitle">You can create a APi-token for the DevProxy here..</h2>
+                <h2 class="subtitle">You can create an API token for the DevProxy here.</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU SPP documentation.</a></h3>
             </div>
         </div>

@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">edit</i>Create AWS S3 bucket</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you can create all your AWS S3 buckets. All orders will be logged and charged.</h2>
+                    Here you can create an AWS S3 bucket. All orders will be logged and charged.</h2>
             </div>
         </div>
         <br>
@@ -72,7 +72,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">create  S3 Bucket
+                    class="button is-primary">Create S3 Bucket
             </button>
         </form>
     </div>

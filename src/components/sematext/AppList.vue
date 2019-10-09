@@ -33,7 +33,7 @@
                 <b-table-column field="pricePerMonth" label="Costs per Month">
                     {{ props.row.pricePerMonth }}$
                 </b-table-column>
-                <b-table-column field="billingInfo" label="Account number">
+                <b-table-column field="billingInfo" label="Accounting number">
                     {{ props.row.billingInfo }}
                 </b-table-column>
                 <b-table-column field="userRole" label="Your role">

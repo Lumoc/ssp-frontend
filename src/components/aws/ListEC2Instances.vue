@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">list</i>List AWS EC2 instances</h1>
                 </div>
                 <h2 class="subtitle">
-                    All AWS EC2 instances will be displayed here.</h2>
+                    All your AWS EC2 instances will be displayed here.</h2>
             </div>
         </div>
         <br>
@@ -76,7 +76,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                The instances which you own will be displayed here.
+                Your instances will be displayed here.
             </div>
         </b-table>
         <!-- use the modal component, pass in the prop -->
@@ -109,7 +109,7 @@
                             </b-table-column>
                         </template>
                         <div slot="empty" class="has-text-centered">
-                            There are no snpashots
+                            There are no snapshots
                         </div>
                     </b-table>
                 </div>

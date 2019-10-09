@@ -6,13 +6,13 @@
                     <h1 class="title"><i class="material-icons">attach_money</i> Show DDC expenses</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you find the costs for the DDC-infrastructure </h2>
+                    Here you find your DDC infrastructure costs</h2>
             </div>
         </div>
         <br>
         <button v-bind:class="{'is-loading': loading}"
                 v-on:click="getDDCBilling"
-                class="button is-primary">Create cost accounting
+                class="button is-primary">Create cost report
         </button>
         <a v-if="csvDownload"
            class="button is-primary"

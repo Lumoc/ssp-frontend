@@ -65,7 +65,7 @@
                     </a>
                     <div class="navbar-dropdown">
                         <router-link to="/otc/listecs" class="navbar-item">Show Elastic Cloud Server</router-link>
-                        <router-link to="/otc/newecs" class="navbar-item">Creste Elastic Cloud Server</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Create Elastic Cloud Server</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
@@ -77,8 +77,8 @@
                         <router-link to="/sematext/newapp" class="navbar-item">Create Logsene-Apps</router-link>
                         <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps plan & limit
                         </router-link>
-                        <router-link to="/sematext/changebilling" class="navbar-item">Logsene-Apps project &
-                            accont assignment numbers are right
+                        <router-link to="/sematext/changebilling" class="navbar-item">Update Logsene App project &
+                            accounting number
                             
                         </router-link>
                     </div>
@@ -86,7 +86,7 @@
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        WZU-Services
+                        WZU Services
                     </a>
                     <div class="navbar-dropdown">
                         <router-link to="/wzu/artifactory" class="navbar-item">Artifactory</router-link>

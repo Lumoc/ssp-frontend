@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                The volume is getting resized to the provided size. Shrinking is not possible.e.g 100M or 5G
+                The volume is being resized to the provided size. Shrinking is not possible.e.g 100M or 5G
             </b-message>
 
             <button :disabled="errors.any()"
