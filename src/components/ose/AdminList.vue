@@ -6,7 +6,7 @@
                     <h1 class="title">
                         <i class="material-icons">person</i>Show OpenShift project admins </h1>
                     <h2 class="subtitle">
-                       Lists all admins in an OpenShift project</h2>
+                       Lists all admins of an OpenShift project</h2>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             </template>
 
             <div slot="empty" class="has-text-centered">
-                No query commited
+                No query committed
             </div>
         </b-table>
     </div>

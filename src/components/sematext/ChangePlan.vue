@@ -31,13 +31,13 @@
 
             <b-message type="is-info">
                 Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
-                -Daily max MB depends on the plan.<br/>
-		-You should plan a head so your logsize is just below the "default MB"<br/>
-		-Expand the daily MB-Limit just so its below the Puffer<br/>
-		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
+                - Daily max MB depends on the plan.<br/>
+                - You should plan ahead so your log size is just below the "default MB"<br/>
+                - Raise the daily MB limit to be above the expected log amount<br/>
+                - Reason: The size of your data plan is what you pay even if there is leftover capacity.<br/>
             </b-message>
 
-            <b-field label="New Logsene-Plan"
+            <b-field label="New Logsene Plan"
                      :type="errors.has('Neuer Logsene-Plan') ? 'is-danger' : ''"
                      :message="errors.first('Neuer Logsene-Plan')">
 
@@ -55,7 +55,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="New daily MB-Limit"
+            <b-field label="New daily MB limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"

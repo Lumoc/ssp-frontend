@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">speaker_notes</i> Create OpenShift project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Here you can create new OpenShift projects</h2>
+                    Here you can create a new OpenShift project</h2>
             </div>
         </div>
         <br>
@@ -39,7 +39,7 @@
             </b-field>
             <b-message type="is-info">
             Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)
-            Please only fill in correct information. It can later still be changed at: <a href="#/ose/project" target="_blank">Change project information</a>
+            Please only fill in correct information. This can be changed later at: <a href="#/ose/project" target="_blank">Change project information</a>
             </b-message>
 
             <b-field label="Mega ID"

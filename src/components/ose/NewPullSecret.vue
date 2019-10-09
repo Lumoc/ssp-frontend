@@ -6,7 +6,7 @@
                     <h1 class="title"><i class="material-icons">account_circle</i>Create Docker Pull-Secret</h1>
                 </div>
                 <h2 class="subtitle">
-		    Here you can allow your project to pull from a specific Docker repository.</h2>
+                    Here you can allow your project to pull from a specific Docker repository.</h2>
             </div>
         </div>
         <br>
