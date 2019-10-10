@@ -172,7 +172,7 @@
       createSnapshot: function(row) {
         if (this.snapshotDescription == "" || this.snapshotVolume == "") {
             this.$toast.open({
-                message: 'Please fill out all the blanks',
+                message: 'Please fill out all the inputs',
                 type: 'is-danger',
                 duration: 7500
             })
