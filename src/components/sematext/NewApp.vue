@@ -24,10 +24,10 @@
 
             <b-message type="is-info">
                 Sematext Logsene concepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
-                - The maximum allowed transfer volume per day depends on the plan.<br/>
+                - Daily MB max depends on the plan.<br/>
                 - You should need a good plan so your logsize is just below the "default MB"<br/>
 		-Expand the daily MB-Limit just so its below the puffer<br/>
-		-Reason: What you planned is what you pay even if there is leftover capacity.<br/>
+		- Reason: You pay for the reserved capacity, even if you don't use it.<br/>
             </b-message>
 
             <b-field label="Logsene-Plan"

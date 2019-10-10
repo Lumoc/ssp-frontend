@@ -33,7 +33,7 @@
             <b-message type="is-info">
                 The bucket name will be constructed as follows:
                 <br/>sbb-[BucketName]-prod/nonprod
-                <br/><br/>Beispiel: sbb-my-bucket-prod oder sbb-my-app-prod
+                <br/><br/>Example: sbb-my-bucket-prod or sbb-my-app-prod
             </b-message>
 
             <b-field label="Accounting number"

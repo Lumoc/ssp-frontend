@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="Load GitFlow-Template?"
+            <b-field label="Load GitFlow template?"
                      :type="errors.has('GitFlow-Template') ? 'is-danger' : ''"
                      :message="errors.first('GitFlow-Template')">
                 <b-checkbox v-model="templateyesno"></b-checkbox>
