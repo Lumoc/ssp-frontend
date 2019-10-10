@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <b-collapse v-if="job" class="card" :open="false">
+      <b-collapse v-if="job" class="card" ref="collapse" :open="false" @open="openCollapse">
             <div
                 slot="trigger"
                 slot-scope="props"
@@ -119,6 +119,13 @@
           clearInterval(interval)
           this.$emit('finished')
       },
+      openCollapse: function() {
+        let content = this.$refs.collapse.$el.getElementsByClassName("card-content")[0]
+        // This needs to run after the collapse is opened
+        this.$nextTick(() => {
+                content.scrollTop = content.scrollHeight;
+        })
+      },
       getJobStdout: function(job_id) {
         var that = this
         var interval = setInterval(function() {
@@ -131,9 +138,22 @@
             });
             if (that.job_data.status != "pending") {
                 that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job_id + '/stdout').then((res) => {
-                    var el = document.createElement( 'html' );
+                    let content = that.$refs.collapse.$el.getElementsByClassName("card-content")[0]
+
+                    // Check if the user scrolled to the bottom
+                    let scrollDown = (content.scrollTop + content.offsetHeight === content.scrollHeight)
+
+                    // We only need the body, not the whole page
+                    let el = document.createElement( 'html' );
                     el.innerHTML = res.body
                     that.job_stdout_html = el.getElementsByTagName('body')[0].innerHTML
+
+                    if (scrollDown) {
+                        // Wait for page to update
+                        that.$nextTick(() => {
+                            content.scrollTop = content.scrollHeight;
+                        })
+                    }
                     that.loading = false
                 }, () => {
                     that.finished(interval)
