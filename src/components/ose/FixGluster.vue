@@ -17,7 +17,7 @@
 
                 <button :disabled="errors.any()"
                         v-bind:class="{'is-loading': loading}"
-                        class="button is-primary">GlusterFS Objekte erstellen
+                        class="button is-primary">Create GlusterFS object
                 </button>
             </div>
             <p v-if="!gluster">This Cluster doesnt not support a GlusterFS at the moment</p>

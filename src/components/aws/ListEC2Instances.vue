@@ -15,7 +15,7 @@
                 <b-table-column field="name" label="name">
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="account" label="SBB AWS Account">
+                <b-table-column field="account" label="SBB AWS account">
                     {{ props.row.account }}
                 </b-table-column>
                 <b-table-column field="snapshots" label="Snapshots">
@@ -102,9 +102,8 @@
                             <b-table-column field="disk" label="Disk" sortable>
                                 {{ getTag(props.row, "devicename") }}
                             </b-table-column>
-                            <b-table-column field="delete" label="Löschen">
+                            <b-table-column field="delete" label="Delete">
                                 <a @click="deleteSnapshot(props.row)">
-                                x
                                 </a>
                             </b-table-column>
                         </template>

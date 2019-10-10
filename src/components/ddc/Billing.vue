@@ -33,7 +33,7 @@
                 <b-table-column field="orderReception" label="reception order" width="40">
                     {{ props.row.orderReception }}
                 </b-table-column>
-                <b-table-column field="pspElement" label="Recepicant-PSP-element" width="40">
+                <b-table-column field="pspElement" label="Recipient-PSP-element" width="40">
                     {{ props.row.pspElement }}
                 </b-table-column>
                 <b-table-column field="art" label="Art" width="40">

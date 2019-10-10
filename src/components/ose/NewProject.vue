@@ -25,7 +25,7 @@
             <b-message type="is-info">
                 The project name can only contain lower case letters, numbers and "-"</br>
                 Production projects:</br>
-                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
+                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
                 - No productive projects on Test04</br>
             </b-message>
 
@@ -51,7 +51,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
+                Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
             </b-message>
 
             <button :disabled="errors.any()"

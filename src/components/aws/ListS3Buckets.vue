@@ -15,7 +15,7 @@
                  :narrowed="true">
 
             <template slot-scope="props">
-                <b-table-column field="name" label="Bucket-Name">
+                <b-table-column field="name" label="Bucket name">
                     {{ props.row.name }}
                 </b-table-column>
                 <b-table-column field="account" label="SBB AWS Account">
