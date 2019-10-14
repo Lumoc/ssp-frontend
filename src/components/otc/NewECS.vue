@@ -370,7 +370,6 @@
 
                       let ev = this.extra_vars
                       ev.unifiedos_image = this.image.name
-                      ev.unifiedos_accounting_number = '' + this.extra_vars.unifiedos_accounting_number
                       ev.provision_otc_instance_type = this.flavor.name,
 
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
