@@ -70,7 +70,7 @@
                     </b-tooltip>
                 </template>
                 <b-select v-model="extra_vars.unifiedos_service_level" required>
-                    <option>best_effort</option>
+                    <option value="best_effort">Best Effort</option>
                     <option>1b</option>
                     <option>2a</option>
                 </b-select>
@@ -119,7 +119,7 @@
                 Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
-            <b-field label="Disk volume storage type">
+            <b-field label="Disk Volume Storage Type">
                 <b-select :loading="loading"
                         v-model="extra_vars.provision_otc_default_volume_type"
                         required>
@@ -130,7 +130,7 @@
 
             <b-field>
                 <template slot="label">
-                    Persistent data size
+                    Persistent Data Size
                     <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for persistent data (e.g. /var/data on Linux or D:\ on Windows)">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
@@ -152,7 +152,7 @@
             <template v-if="advanced">
                 <b-field>
                     <template slot="label">
-                        Root disk size
+                        Root Disk Size
                         <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system (Linux: min 10GB / Windows: min 60GB)">
                             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                         </b-tooltip>
@@ -196,7 +196,7 @@
 
             <b-field>
                 <template slot="label">
-                    Accounting number
+                    Accounting Number
                     <b-tooltip type="is-dark" multilined animated position="is-right" label="Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
@@ -216,7 +216,7 @@
 
             <b-field v-if="windows">
                 <template slot="label">
-                    Windows Defender excludes
+                    Windows Defender Excludes
                     <b-tooltip type="is-dark" multilined animated position="is-right" label="Comma-separated file system paths that are excluded from Windows Defender malware scanner">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
