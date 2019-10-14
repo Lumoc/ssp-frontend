@@ -5,6 +5,7 @@
     .job_stdout_html pre {
         background-color: inherit;
         color: inherit;
+        white-space: pre-wrap;
     }
     .ansi_fore { color: #000000; }
     .ansi_back { background-color: #F5F5F5; }
