@@ -1,7 +1,7 @@
 <template>
 <b-field>
     <template slot="label">
-        Active Directory group name
+        Active Directory Group Name
         <b-tooltip type="is-dark" multilined animated position="is-right" :label="help">
             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
         </b-tooltip>

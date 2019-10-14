@@ -108,7 +108,7 @@
                           v-model="flavor"
                           required>
                     <option
-                            v-for="flavor in flavors"
+                            v-for="flavor in filteredFlavors"
                             :value="flavor"
                             :key="flavor.name">
                         {{ flavor.name + " (VCPUs: " + flavor.vcpus + ", RAM: " + flavor.ram/1024 + "GB)" }}
@@ -179,7 +179,7 @@
                 The filesystem layout is described <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
-            <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
+            <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field>
                 <template slot="label">
@@ -296,7 +296,16 @@
            return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
         },
         windows: function() {
-            return (this.image && this.image.name.toLowerCase().indexOf("windows") !== -1)
+            return this.isWindows(this.image)
+        },
+        filteredFlavors: function() {
+            if (!this.image) return this.flavors
+            if (!this.windows) return this.flavors
+            return this.flavors.filter(function(flavor) {
+            //  Value not yet returned by the API
+            //  return this.image.minRAMMegabytes < flavor.ram
+                return flavor.ram >= 2000
+            }, this);
         }
       },
       methods: {
@@ -319,11 +328,22 @@
                   this.loading = false;
               });
           },
+          isWindows: function(image) {
+            return (image && image.name.toLowerCase().indexOf("windows") !== -1)
+          },
           getImages: function () {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
                   let result = res.body.images;
-                  this.images = result.sort();
+                  // Sort Linux before Windows
+                  this.images = result.sort((a,b) => {
+                    // use var, so that the definitions are hoisted
+                    var wa = this.isWindows(a)
+                    var wb = this.isWindows(b)
+                    if (wa && !wb) return 1 // sort b before a
+                    if (!wa && wb) return -1 // sort a before b
+                    return b['name'].localeCompare(a['name']) // sort alphabetically by name
+                  }, this);
 
                   this.image = this.images[0];
 
