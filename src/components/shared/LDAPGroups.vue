@@ -55,7 +55,7 @@
       getGroups: function() {
         this.loading = true;
         this.$http.get(this.$store.state.backendURL + '/api/ldap/groups', null).then((res) => {
-          this.groups = res.body;
+          this.groups = res.body.sort();
           this.pattern = this.groups.join('|')
           this.loading = false;
         }, () => {
