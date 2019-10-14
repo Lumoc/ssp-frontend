@@ -28,6 +28,29 @@
             {{ moment(job.started).calendar() | capitalize }}<br>
             </div>
         </div>
+        <button class="button"
+            @click="isExtraVarsModalActive = true">
+            Show advanced details
+        </button>
+        <br>
+        <br>
+        <b-modal :active.sync="isExtraVarsModalActive" has-modal-card trap-focus>
+            <div class="modal-card modal-card-body">
+                The following variables were used to start this job:
+                <div class="columns">
+                    <div class="column is-narrow bold">
+                        <template v-for="(value, key) in extra_vars">
+                        {{ key }}:<br>
+                        </template>
+                    </div>
+                    <div class="column">
+                        <template v-for="(value, key) in extra_vars">
+                        {{ value }}<br>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
         <job-stdout :job="jobID" v-on:finished="stopLoading"></job-stdout>
     </div>
 </template>
@@ -47,7 +70,8 @@
     data() {
       return {
         job: {},
-        loading: true
+        loading: true,
+        isExtraVarsModalActive: false,
       };
     },
     filters: {
@@ -71,6 +95,13 @@
     methods: {
         stopLoading: function() {
             this.loading = false;
+        }
+    },
+    computed: {
+        extra_vars: function() {
+            if (!this.job) return []
+            if (!this.job.extra_vars) return []
+            return JSON.parse(this.job.extra_vars)
         }
     }
   };
