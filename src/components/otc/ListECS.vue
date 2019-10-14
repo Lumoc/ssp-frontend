@@ -1,3 +1,8 @@
+<style>
+    .groups {
+        color: #888;
+    }
+</style>
 <template>
     <div>
         <div class="hero is-light">
@@ -85,6 +90,7 @@
                 Solltest du ECS Instanzen besitzen, werden diese hier angezeigt.
             </div>
         </b-table>
+        VMs are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>
     </div>
 </template>
 <script>
@@ -93,11 +99,13 @@
             return {
                 data: [],
                 checkedRows: [],
-                loading: false
+                loading: false,
+                groups: '',
             };
         },
         mounted: function() {
             this.listECServers();
+            this.getADGroups();
         },
         filters: {
             replaceUnderscores: function (value) {
@@ -228,6 +236,12 @@
                     }
                 });
                 return stopped
+            }, getADGroups: function() {
+                this.$http.get(this.$store.state.backendURL + '/api/ldap/groups', null).then((res) => {
+                    this.groups = res.body.sort().join(", ");
+                }, () => {
+                    // error
+                });
             }
         }
     };
