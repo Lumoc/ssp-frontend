@@ -27,6 +27,7 @@
                          validation-message="Project must be two characters long and only contain letters, numbers and dashes"
                          maxlength=6
                          minlength=2
+                         required
                          v-bind:class="projectMaxLength"
                          v-model="extra_vars.unifiedos_project">
                 </b-input>
