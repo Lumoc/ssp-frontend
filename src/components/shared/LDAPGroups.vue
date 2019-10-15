@@ -1,23 +1,29 @@
 <template>
-<b-field>
-    <template slot="label">
-        Active Directory Group Name
-        <b-tooltip type="is-dark" multilined animated position="is-right" :label="help">
-            <b-icon size="is-small" icon="help-circle-outline"></b-icon>
-        </b-tooltip>
-    </template>
-    <b-autocomplete
-        v-model="valueData"
-        @input="inputChanged"
-        :data="filteredDataArray"
-        :loading="loading"
-        :pattern="pattern"
-        open-on-focus
-        ref="el"
-        required>
-        <template slot="empty">No groups found</template>
-    </b-autocomplete>
-</b-field>
+    <div>
+        <b-field>
+            <template slot="label">
+                Active Directory Group Name
+                <b-tooltip type="is-dark" multilined animated position="is-right" :label="help">
+                    <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                </b-tooltip>
+            </template>
+            <b-autocomplete
+                v-model="valueData"
+                @input="inputChanged"
+                :data="filteredDataArray"
+                :loading="loading"
+                :pattern="pattern"
+                open-on-focus
+                ref="el"
+                required>
+                <template slot="empty">No groups found</template>
+            </b-autocomplete>
+        </b-field>
+        <!-- not clear why margin is missing -->
+        <b-message style="margin-bottom: 1.5rem" type="is-info">
+           <a href="https://confluence.sbb.ch/x/1pfxS">Learn how to manage your Active Directory groups</a>
+        </b-message>
+    </div>
 </template>
 
 <script>
