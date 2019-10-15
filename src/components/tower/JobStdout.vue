@@ -54,18 +54,20 @@
       <div v-if="job_data.status == 'running'" class="job_stdout_status">
           This could take a few minutes. You will receive an Email when the job is done.
       </div>
-        The following variables were returned:<br>
-      <div class="columns job_stdout_status" v-if="job_data.status == 'successful'">
-            <div class="column is-narrow bold">
-                <template v-for="(value, key) in job_data.artifacts">
-                {{ key }}:<br>
-                </template>
-            </div>
-            <div class="column">
-                <template v-for="(value, key) in job_data.artifacts">
-                {{ value }}<br>
-                </template>
-            </div>
+      <div class="job_stdout_status" v-if="job_data.status == 'successful'">
+          The following variables were returned:
+          <div class="columns">
+              <div class="column is-narrow bold">
+                  <template v-for="(value, key) in job_data.artifacts">
+                  {{ key }}:<br>
+                  </template>
+              </div>
+              <div class="column">
+                  <template v-for="(value, key) in job_data.artifacts">
+                  {{ value }}<br>
+                  </template>
+              </div>
+          </div>
       </div>
 
       <b-collapse v-if="job" class="card" ref="collapse" :open="false" @open="openCollapse">
