@@ -38,14 +38,6 @@
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user && features.ddc.enabled" class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        DDC
-                    </a>
-                    <div class="navbar-dropdown">
-                        <router-link to="/ddc/billing" class="navbar-item">DDC Kostenverrechnung</router-link>
-                    </div>
-                </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         AWS
@@ -148,9 +140,6 @@
         data: function () {
             return {
                 features: {
-                    ddc: {
-                        enabled: false
-                    },
                     otc: {
                         enabled: false
                     },
