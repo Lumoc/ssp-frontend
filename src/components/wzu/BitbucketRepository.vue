@@ -67,7 +67,7 @@
             },
             "Projekt Key": {
                 required: "Please provide a project key.",
-                regex: "The project key has to start with a contraction of the domainmodel and "_".."
+                regex: "The project key must begin with an abbreviation from the domain model and '_'"
             },
             "Order for another user": {
                 regex: "Please provide a valid U-,E-, or Ue- number"

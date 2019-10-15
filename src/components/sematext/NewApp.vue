@@ -26,7 +26,7 @@
                 Sematext Logsene concepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 - Daily MB max depends on the plan.<br/>
                 - You should need a good plan so your logsize is just below the "default MB"<br/>
-		-Expand the daily MB-Limit just so its below the puffer<br/>
+		- Raise the daily MB limit to be above the expected log amount<br/>
 		- Reason: You pay for the reserved capacity, even if you don't use it.<br/>
             </b-message>
 
