@@ -13,7 +13,7 @@
         <br>
         <form v-on:submit.prevent="ALMUser">
 
-            <b-field label="Project name"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="projectname"

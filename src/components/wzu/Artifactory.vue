@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newArtifactoryRepository">
-            <b-field label="Repository name (can only contain lower case letters and numbers)"
+            <b-field label="Repository Name (can only contain lower case letters and numbers)"
                      :type="errors.has('RepositoryName') ? 'is-danger' : ''"
                      :message="errors.first('RepositoryName')">
                 <b-input v-model.trim="repository"
@@ -52,7 +52,7 @@
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">create Repository
+                    class="button is-primary">Create Repository
             </button>
         </form>
     </div>

@@ -45,7 +45,7 @@
 
             </template>
 
-            <b-field label="Name of the persistent volume claim"
+            <b-field label="Name of the Persistent Volume Claim"
                      :type="errors.has('PVC-Name') ? 'is-danger' : ''"
                      :message="errors.first('PVC-Name')">
                 <b-input v-model.trim="pvcName"
@@ -75,7 +75,7 @@
                 For details check the <a target="_blank" href="https://docs.openshift.com/container-platform/3.11/architecture/additional_concepts/storage.html#pv-access-modes">official documentation</a>
             </b-message>
 
-            <label class="label">File system type</label>
+            <label class="label">Filesystem Type</label>
             <b-message type="is-info">
                 A {{ technology | capitalize }} volume will be created.
                 Check the <a target="_blank" href="https://confluence.sbb.ch/x/-LJENQ">documentation</a>

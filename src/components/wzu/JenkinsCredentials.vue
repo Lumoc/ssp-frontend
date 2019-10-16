@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newJenkinsCredentials">
-            <b-field label="Jenkins organization name"
+            <b-field label="Jenkins Organization Name"
                      :type="errors.has('Jenkins Organization Name') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Organization Name')">
                 <b-input v-model.trim="organizationKey"

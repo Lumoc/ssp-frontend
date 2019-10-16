@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newLogseneApp">
-            <b-field label="App name"
+            <b-field label="App Name"
                      :type="errors.has('App-Name') ? 'is-danger' : ''"
                      :message="errors.first('App-Name')">
                 <b-input v-model.trim="appName"
@@ -48,7 +48,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Daily MB limit"
+            <b-field label="Daily MB Limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"
@@ -66,7 +66,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="New accounting number"
+            <b-field label="New Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -75,7 +75,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Discount code">
+            <b-field label="Discount Code">
                 <b-input v-model.trim="discountcode"
                          name="Discountcode">
                 </b-input>

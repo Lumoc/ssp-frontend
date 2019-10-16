@@ -17,7 +17,7 @@
                 <b-checkbox v-model="activatexray"></b-checkbox>
 
             </b-field>
-            <b-field label="Project name (only alphanumeric characters)"
+            <b-field label="Project Name (only alphanumeric characters)"
                      :type="errors.has('ProjectName') ? 'is-danger' : ''"
                      :message="errors.first('ProjectName')">
                 <b-input v-model.trim="projectname"
@@ -26,7 +26,7 @@
                          v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9öäüÖÄÜ\s]+$/} }">
                 </b-input>
             </b-field>
-            <b-field label="Project key (uppercase, less than 10 characters)"
+            <b-field label="Project Key (uppercase, less than 10 characters)"
                      :type="errors.has('ProjectKey') ? 'is-danger': ''"
                      :message="errors.first('ProjectKey')">
                 <b-input v-model.trim="projectkey"
@@ -35,14 +35,14 @@
                          :message="errors.first('ProjectKey')">
                 </b-input>
             </b-field>
-            <b-field label="Project description (optional)"
+            <b-field label="Project Description (optional)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="projectdescription"
                          name="Projekt Beschreibung">
                 </b-input>
             </b-field>
-            <b-field label="Order for other user (optional)"
+            <b-field label="Order for another user (optional)"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="projectowner"

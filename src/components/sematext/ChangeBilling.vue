@@ -29,7 +29,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Project name"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Projekt')">
                 <b-input v-model.trim="project"
@@ -38,7 +38,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="New accounting number"
+            <b-field label="New Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"

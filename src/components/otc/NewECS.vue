@@ -201,7 +201,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Account assignment number"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"

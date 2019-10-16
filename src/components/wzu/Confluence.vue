@@ -31,7 +31,7 @@
                          v-validate.rules="{ required: true, regex: /^[A-Z]{0,10}$/}">
                 </b-input>
             </b-field>
-            <b-field label="Space description (optional)">
+            <b-field label="Space Description (optional)">
                 <b-input v-model.trim="spacedescription"
                          name="spacedescription">
                 </b-input>

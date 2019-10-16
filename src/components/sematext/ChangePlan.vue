@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateSematextPlanAndLimits">
-            <b-field label="Logsene app"
+            <b-field label="Logsene App"
                      :type="errors.has('Logsene-App') ? 'is-danger' : ''"
                      :message="errors.first('Logsene-App')">
 
@@ -31,10 +31,10 @@
 
             <b-message type="is-info">
                 Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
-                - Daily max MB depends on the plan.<br/>
-                - You should plan ahead so your log size is just below the "default MB"<br/>
-                - Raise the daily MB limit to be above the expected log amount<br/>
-                - Reason: The size of your data plan is what you pay even if there is leftover capacity.<br/>
+                - The "Daily Volume" should be just below your average expected log amount<br/>
+                - The "Daily Volume" (capacity) is cheaper, but is always billed, even if you do not use it
+                - Your log usage should be between the "Daily Volume" and the "Daily Volume Limit"<br/>
+                - Sematext will reject logs if the usage increases above the "Daily Volume Limit"<br/>
             </b-message>
 
             <b-field label="New Logsene Plan"
@@ -55,7 +55,7 @@
                 </b-select>
             </b-field>
 
-            <b-field label="New daily MB limit"
+            <b-field label="Daily Volume Limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
                 <b-input v-model.trim="limit"

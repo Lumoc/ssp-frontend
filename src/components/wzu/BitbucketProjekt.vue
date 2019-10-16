@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="addToBackendBitbucket">
-            <b-field label="Project name (only alphanumberic signs)"
+            <b-field label="Project Name (only alphanumberic signs)"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="bitprojectname"
@@ -31,7 +31,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Project description (optional)"
+            <b-field label="Project Description (optional)"
                      :type="errors.has('Projekt Beschreibung') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Beschreibung')">
                 <b-input v-model.trim="bitprojectdescription"
