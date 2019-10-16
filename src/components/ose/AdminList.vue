@@ -4,7 +4,7 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">person</i>Show OpenShift project admins </h1>
+                        <i class="material-icons">person</i>Show OpenShift Project Admins </h1>
                     <h2 class="subtitle">
                        Lists all admins of an OpenShift project</h2>
                 </div>

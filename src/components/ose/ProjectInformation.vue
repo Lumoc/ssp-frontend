@@ -19,7 +19,7 @@
                 The details will appear below once a project is selected.
             </b-message>
 
-            <b-field label="Accounting number"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"

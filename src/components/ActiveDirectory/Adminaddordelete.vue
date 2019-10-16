@@ -24,7 +24,7 @@
                     <span>Remove</span>
                 </b-radio-button>
             </b-field>
-            <b-field label="Group name"
+            <b-field label="Group Name"
                      :type="errors.has('Gruppen Name') ? 'is-danger' : ''"
                      :message="errors.first('Gruppen Name')">
                 <b-input v-model.trim="groupname"
@@ -33,7 +33,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Admin name (UID)"
+            <b-field label="Admin Name (UID)"
                      :type="errors.has('Admin Name') ? 'is-danger' : ''"
                      :message="errors.first('Admin Name')">
                 <b-input v-model.trim="adminname"

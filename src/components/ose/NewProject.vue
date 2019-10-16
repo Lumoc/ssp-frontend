@@ -29,7 +29,7 @@
                 - No productive projects on Test04</br>
             </b-message>
 
-            <b-field label="Accounting number"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"

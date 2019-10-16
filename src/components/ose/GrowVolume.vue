@@ -16,7 +16,7 @@
 
         <form v-on:submit.prevent="growVolume">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Persistent volume name"
+            <b-field label="Persistent Volume Name"
                      :type="errors.has('PV-Name') ? 'is-danger' : ''"
                      :message="errors.first('PV-Name')">
                 <b-input v-model.trim="pvName"
@@ -28,7 +28,7 @@
                 Not the name of the Persistent Volume Claim (PVC) itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
             </b-message>
 
-            <b-field label="New size"
+            <b-field label="New Size"
                      :type="errors.has('Grösse') ? 'is-danger' : ''"
                      :message="errors.first('Grösse')">
                 <b-input v-model.trim="newSize"

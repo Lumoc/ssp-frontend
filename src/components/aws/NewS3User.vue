@@ -27,7 +27,7 @@
                 <br/><br/>Example: sbb-my-bucket-prod-user or sbb-my-app-prod-admin
             </b-message>
 
-            <b-field label="Bucket name"
+            <b-field label="Bucket Name"
                      :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
                      :message="errors.first('Bucket-Name')">
 

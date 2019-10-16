@@ -14,7 +14,7 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="New CPU quota [cores]"
+            <b-field label="New CPU Quota [cores]"
                      :type="errors.has('CPU') ? 'is-danger' : ''"
                      :message="errors.first('CPU')">
                 <b-input type="number"
@@ -25,7 +25,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="New memory quota [GB]"
+            <b-field label="New Memory Quota [GB]"
                      :type="errors.has('Memory') ? 'is-danger' : ''"
                      :message="errors.first('Memory')">
                 <b-input type="number"

@@ -57,7 +57,7 @@
                 The name of the persistent volume claim can only contain lower case letters, numbers or "-"
             </b-message>
 
-            <label class="label>Access mode</label>
+            <label class="label>Access Mode</label>
             <b-field>
                 <b-radio-button v-model="mode"
                                 native-value="ReadWriteOnce"

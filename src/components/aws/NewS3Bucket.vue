@@ -11,7 +11,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newS3Bucket">
-            <b-field label="Project name"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
                 <b-input v-model.trim="project"
@@ -21,7 +21,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bucket name"
+            <b-field label="Bucket Name"
                      :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
                      :message="errors.first('Bucket-Name')">
                 <b-input type="text"
@@ -36,7 +36,7 @@
                 <br/><br/>Example: sbb-my-bucket-prod or sbb-my-app-prod
             </b-message>
 
-            <b-field label="Accounting number"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"

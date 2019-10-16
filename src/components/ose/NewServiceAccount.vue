@@ -32,7 +32,7 @@
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
-                    label="Jenkins Bitbucket/Team job name"
+                    label="Jenkins Bitbucket/Team Job Name"
                      :type="errors.has('Jenkins Bitbucket/Team Job Name') ? 'is-danger' : ''"
                      :message="errors.first('Jenkins Bitbucket/Team Job Name')">
                 <b-input v-model.trim="organizationKey"
