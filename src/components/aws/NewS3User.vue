@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">perm_identity</i> Create AWS S3 bucket user</h1>
+                    <h1 class="title"><i class="material-icons">perm_identity</i> Create AWS S3 Bucket User</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create a user for your AWS bucket. All orders will be logged and charged.</h2>

@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server erstellen</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Create Elastic Cloud Server</h1>
                 </div>
                 <h2 class="subtitle">
 		    Here you can create an Elastic Cloud Server on the Open Telekom Cloud (OTC). All orders will be logged and charged.</h2>

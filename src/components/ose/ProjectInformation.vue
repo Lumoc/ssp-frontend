@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Display/Update project details
+                    <h1 class="title"><i class="material-icons">attach_money</i> Display/Update Project Details
                     </h1>
                 </div>
                 <h2 class="subtitle">

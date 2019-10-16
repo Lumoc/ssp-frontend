@@ -4,7 +4,7 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">receipt</i>Create OpenShift trial project</h1>
+                        <i class="material-icons">receipt</i>Create OpenShift Trial Project</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create an OpenShift trial project.</h2>

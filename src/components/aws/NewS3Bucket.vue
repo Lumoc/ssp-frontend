@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Create AWS S3 bucket</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Create AWS S3 Bucket</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create an AWS S3 bucket. All orders will be logged and charged.</h2>

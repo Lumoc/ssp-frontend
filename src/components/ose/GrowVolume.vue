@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud_upload</i>Expand persistent volume</h1>
+                    <h1 class="title"><i class="material-icons">cloud_upload</i>Expand Persistent Volume</h1>
                 </div>
                 <h2 class="subtitle">
                     You can expand the persistent volume here</h2>

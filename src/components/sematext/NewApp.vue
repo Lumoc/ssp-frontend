@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene app
+                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene App
                 </div>
                 <h2 class="subtitle">
                     You can create a Sematext Logsene app here</h2>

@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">account_circle</i>Create service account</h1>
+                    <h1 class="title"><i class="material-icons">account_circle</i>Create Service Account</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create a service account for your project</h2>
