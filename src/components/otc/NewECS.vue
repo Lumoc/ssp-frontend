@@ -87,10 +87,10 @@
                 <b-select :loading="loading"
                         v-model="image"
                         required>
-                    <option v-for="m in images"
+                    <option v-for="m in filteredImages"
                             :value="m"
                             :key="m.name">
-                        {{ m.trimmedName }}
+                        {{ m.pretty }}
                     </option>
                 </b-select>
             </b-field>
@@ -273,6 +273,7 @@
       },
       watch: {
         image: function(image, old_image) {
+            console.log(image)
            let size = this.extra_vars.unifiedos_root_disk_size
            // Set the minimum if the user hasn't changed the value or if the value is below minimum
            if (!old_image || size == old_image.minDiskGigabytes || size < image.minDiskGigabytes) {
@@ -307,6 +308,22 @@
             //  return this.image.minRAMMegabytes < flavor.ram
                 return flavor.ram >= 2000
             }, this);
+        },
+        filteredImages: function() {
+            // Add pretty name to object
+            let filtered = this.images.map(function(image) {
+                image.pretty = image.name.match("(?:.*)_(.*?)_(?:.*)")[1].replace("-", " ")
+                return image
+            })
+            let cache = []
+            // sort the array and only keep the first instance
+            filtered = filtered.sort((a, b) => b.name.localeCompare(a.name)).filter(function(image) {
+                if (cache.includes(image.pretty)) return false
+                cache.push(image.pretty)
+                return true
+            })
+            // Sort Linux before Windows
+            return filtered.reverse()
         }
       },
       methods: {
@@ -335,18 +352,10 @@
           getImages: function () {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
-                  let result = res.body.images;
-                  // Sort Linux before Windows
-                  this.images = result.sort((a,b) => {
-                    // use var, so that the definitions are hoisted
-                    var wa = this.isWindows(a)
-                    var wb = this.isWindows(b)
-                    if (wa && !wb) return 1 // sort b before a
-                    if (!wa && wb) return -1 // sort a before b
-                    return b['name'].localeCompare(a['name']) // sort alphabetically by name
-                  }, this);
+                  this.images = res.body.images;
 
-                  this.image = this.images[0];
+
+                  this.image = this.filteredImages[0];
 
                   this.loading = false;
               }, () => {
