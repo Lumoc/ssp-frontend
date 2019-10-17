@@ -180,6 +180,15 @@
                 The filesystem layout is described <a target="_blank" href="https://confluence.sbb.ch/x/3g6iQQ">here</a>.
             </b-message>
 
+            <b-message type="is-info">
+                Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | times30 | round }}/month)<br>
+                - SLA: CHF {{ computedCosts.sla | round }}<br>
+                - CPU: CHF {{ computedCosts.cpu }}<br>
+                - RAM: CHF {{ computedCosts.ram }}<br>
+                - Storage: CHF {{ computedCosts.volume }}
+            </b-message>
+
+
             <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field>
@@ -202,14 +211,20 @@
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
-                <b-input v-model="extra_vars.unifiedos_accounting_number" required pattern="[0-9.-]*"></b-input>
+                <b-input v-model="extra_vars.unifiedos_accounting_number"
+                         required
+                         pattern="[0-9.-]*"
+                         validation-message="Please enter a valid accounting number"></b-input>
             </b-field>
             <b-message type="is-info">
                 Please only fill in correct information.
             </b-message>
 
             <b-field label="Mega ID">
-                <b-input v-model="extra_vars.unifiedos_mega_id" required pattern="[a-zA-Z0-9]{16}"></b-input>
+                <b-input v-model="extra_vars.unifiedos_mega_id"
+                         required
+                         pattern="[a-zA-Z0-9]{16}"
+                         validation-message="Please enter a valid Mega ID"></b-input>
             </b-field>
             <b-message type="is-info">
                 Useful links for Mega ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
@@ -228,10 +243,9 @@
                 </b-input>
             </b-field>
 
-
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">ECS erstellen
+                    class="button is-primary">Order UnifiedOS Server
             </button>
         </form>
         <job-stdout :job="job" v-on:finished="stopLoading"></job-stdout>
@@ -256,18 +270,38 @@
               stage: 'p',
               image: '',
               extra_vars: {
-                unifiedos_project: '',
-                unifiedos_data_disk_size: 20,
-                unifiedos_owner_group: '',
-                unifiedos_owner_email: '',
-                unifiedos_mega_id: '',
-                unifiedos_service_level: 'best_effort',
-                unifiedos_availability_zone: Math.floor(Math.random() * 2) + 1, // returns a random integer from 1 to 2
+                  unifiedos_project: '',
+                  unifiedos_data_disk_size: 20,
+                  unifiedos_owner_group: '',
+                  unifiedos_owner_email: '',
+                  unifiedos_mega_id: '',
+                  unifiedos_service_level: 'best_effort',
+                  unifiedos_availability_zone: Math.floor(Math.random() * 2) + 1, // returns a random integer from 1 to 2
 
-                unifiedos_root_disk_size: 10,
-                provision_otc_default_volume_type: 'SATA',
-                unifiedos_accounting_number: '',
-                defender_exclude_path: '',
+                  unifiedos_root_disk_size: 10,
+                  provision_otc_default_volume_type: 'SATA',
+                  unifiedos_accounting_number: '',
+                  defender_exclude_path: '',
+              },
+              costs: {
+                  sla: {
+                    windows: {
+                      best_effort: 30/30,
+                      '1b': 50/30,
+                      '2a': 160/30,
+                    },
+                    linux: {
+                      best_effort: 20/30,
+                      '1b': 30/30,
+                      '2a': 100/30,
+                    }
+                  },
+                  cpu: 1.2,
+                  ram: 0.3,
+                  volume: {
+                    SATA: 0.005,
+                    SSD: 0.01,
+                  }
               },
           };
       },
@@ -288,9 +322,39 @@
       filters: {
         placeholder: function (input, property) {
             return ( input === undefined || input === '' || input === null ) ? property : input;
+        },
+        round: function(input) {
+            return Math.round(input * 100) / 100
+        },
+        times30: function(input) {
+            return input * 30
+        },
+        sumObject: function(input) {
+            console.log(input)
+            var total = 0;
+            for (var p in input) {
+                total += input[p]
+            }
+            console.log(total)
+            return total
         }
       },
       computed: {
+        computedCosts: function() {
+            let sla
+            if (this.isWindows(this.image)) {
+                sla = this.costs.sla["windows"][this.extra_vars.unifiedos_service_level]
+            } else {
+                sla = this.costs.sla["linux"][this.extra_vars.unifiedos_service_level]
+            }
+
+            return {
+                sla: sla,
+                cpu: this.flavor.vcpus * this.costs.cpu,
+                ram: (this.flavor.ram/1024) * this.costs.ram,
+                volume: this.extra_vars.unifiedos_data_disk_size * this.costs.volume[this.extra_vars.provision_otc_default_volume_type],
+            }
+        },
         projectMaxLength: function() {
             return { maxlength: this.extra_vars.unifiedos_project.length == 6 }
         },
