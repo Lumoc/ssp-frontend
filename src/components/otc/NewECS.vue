@@ -21,7 +21,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newECS">
-            <b-field label="Project">
+            <b-field label="Project/Product Name">
                 <b-input type="text"
                          pattern="^[a-zA-Z0-9\-]+$"
                          validation-message="Project must be two characters long and only contain letters, numbers and dashes"
@@ -65,7 +65,7 @@
                 <template slot="label">
                     Service Level Agreement
                     <b-tooltip type="is-dark" animated position="is-right" label="Click for more information">
-                        <a target="_blank" href="https://confluence.sbb.ch/display/UOS">
+                        <a target="_blank" href="https://confluence.sbb.ch/x/cQUFQQ#GrobkonzeptUnifiedOS-VerfügbareServiceLevels(SLA)">
                             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                         </a>
                     </b-tooltip>
@@ -184,7 +184,7 @@
 
             <b-field>
                 <template slot="label">
-                    Email
+                    Contact Email
                     <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for alerts and notifications">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
@@ -262,7 +262,7 @@
                 unifiedos_owner_email: '',
                 unifiedos_mega_id: '',
                 unifiedos_service_level: 'best_effort',
-                unifiedos_availability_zone: '1',
+                unifiedos_availability_zone: Math.floor(Math.random() * 2) + 1, // returns a random integer from 1 to 2
 
                 unifiedos_root_disk_size: 10,
                 provision_otc_default_volume_type: 'SATA',
