@@ -61,11 +61,11 @@
                 </div>
                 <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        OTC
+                        UOS
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/otc/listecs" class="navbar-item">Elastic Cloud Server anzeigen</router-link>
-                        <router-link to="/otc/newecs" class="navbar-item">Elastic Cloud Server erstellen</router-link>
+                        <router-link to="/otc/listecs" class="navbar-item">Your UnifiedOS Servers</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Create a UnifiedOS Server</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">

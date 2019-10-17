@@ -15,6 +15,7 @@
         </div>
         <br>
 
+        <b-field grouped>
         <b-dropdown :disabled="!checkedRows.length"  class="media-left">
             <button class="button is-danger" slot="trigger" v-bind:class="{'is-loading': loading}">
                 <span>Actions</span>
@@ -30,9 +31,21 @@
         <button class="button is-danger" @click="listECServers()" v-bind:class="{'is-loading': loading}">
             <span>Aktualisieren</span>
         </button>
-
+         <b-taginput
+                expanded
+                v-model="tags"
+                :data="filteredMetadata"
+                autocomplete
+                :allow-new="false"
+                :open-on-focus="true"
+                icon="label"
+                placeholder="Add a tag"
+                @typing="getFilteredMetadata"
+                @input="getFilteredData">
+            </b-taginput>
+        </b-field>
         <br><br>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="true" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
+        <b-table :data="filteredData" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
@@ -98,9 +111,13 @@
         data() {
             return {
                 data: [],
+                filteredData: [],
                 checkedRows: [],
                 loading: false,
                 groups: '',
+                tags: [],
+                filteredMetadata: [],
+                metadata: [],
             };
         },
         mounted: function() {
@@ -114,6 +131,36 @@
             }
         },
         methods: {
+            getFilteredData: function() {
+                this.filteredData = this.data.filter(function(value) {
+                    let res = true
+                    for (let tag of this.tags) {
+                       var kv = tag.split("=")
+                       if (value.metadata[kv[0]] != kv[1]) {
+                            res = false
+                            break
+                        }
+                    }
+                    return res
+                }, this)
+            },
+            getMetadata: function() {
+                let result = new Set()
+                this.data.forEach(function(d) {
+                    for (var key in d.metadata) {
+                        result.add(key +"="+d.metadata[key])
+                    }
+                })
+                return [...result].sort()
+            },
+            getFilteredMetadata: function(text) {
+                this.filteredMetadata = this.metadata.filter((option) => {
+                    return option
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(text.toLowerCase()) >= 0
+                })
+            },
             getFirstId: function() {
                 if (this.data.length > 0) {
                     return [this.data[0].id];
@@ -137,8 +184,14 @@
             },
             listECServers: function() {
                 this.loading = true;
+                this.tags = [];
                 this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
                     this.data = res.body.ecServers;
+                    // filteredData is not computed and only updated when a tag is added or removed
+                    this.filteredData = this.data;
+                    this.metadata = this.getMetadata();
+                    // filteredMetadata is not computed and only updated when the user types something in the taginput
+                    this.filteredMetadata = this.metadata;
                     this.checkedRows = [];
                     this.loading = false;
                 }, () => {
