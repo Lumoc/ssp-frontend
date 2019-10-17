@@ -2,6 +2,9 @@
     .groups {
         color: #888;
     }
+    .field.is-grouped > div, .field.is-grouped > button {
+        margin: 0 5px;
+    }
 </style>
 <template>
     <div>
@@ -16,36 +19,33 @@
         <br>
 
         <b-field grouped>
-        <b-dropdown :disabled="!checkedRows.length"  class="media-left">
-            <button class="button is-danger" slot="trigger" v-bind:class="{'is-loading': loading}">
-                <span>Actions</span>
-                <b-icon icon="menu-down"></b-icon>
-            </button>
+            <b-dropdown :disabled="!checkedRows.length">
+                <b-button type="is-danger" slot="trigger" icon-right="menu-down" :loading="loading">
+                    Actions
+                </b-button>
 
-            <b-dropdown-item @click="stopECServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
-            <b-dropdown-item @click="startECServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
-            <b-dropdown-item @click="rebootECServers()">Reboot</b-dropdown-item>
-            <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
-        </b-dropdown>
+                <b-dropdown-item @click="stopECServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
+                <b-dropdown-item @click="startECServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
+                <b-dropdown-item @click="rebootECServers()">Reboot</b-dropdown-item>
+                <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
+            </b-dropdown>
 
-        <button class="button is-danger" @click="listECServers()" v-bind:class="{'is-loading': loading}">
-            <span>Aktualisieren</span>
-        </button>
-         <b-taginput
+            <b-button type="is-danger" @click="listECServers()" :loading="loading">Aktualisieren</b-button>
+            <b-taginput
                 expanded
                 v-model="tags"
+                :loading="loading"
                 :data="filteredMetadata"
                 autocomplete
                 :allow-new="false"
                 :open-on-focus="true"
                 icon="label"
-                placeholder="Add a tag"
+                placeholder="Filter by tag"
                 @typing="getFilteredMetadata"
                 @input="getFilteredData">
             </b-taginput>
         </b-field>
-        <br><br>
-        <b-table :data="filteredData" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
+        <b-table :data="filteredData" :loading="loading" :checked-rows.sync="checkedRows" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
