@@ -1,13 +1,25 @@
+<style>
+    .root {
+        margin-bottom: .75rem;
+    }
+</style>
 <template>
-<b-field label="Cluster">
-    <b-select v-model="clusteridData" required>
-        <option v-for="cluster in clusters"
-                :value="cluster.id"
-                :key="cluster.name">
-            {{ cluster.name }}
-        </option>
-    </b-select>
-</b-field>
+<div class="root">
+    <b-field label="Cluster">
+        <b-select v-model="cluster" required>
+            <optgroup :label="v?v:'SBB (for everyone)'" v-for="(clustergroup, v) in groupedClusters">
+                <option v-for="cluster in clustergroup"
+                        :value="cluster"
+                        :key="cluster.id">
+                    {{ cluster.name }}
+                </option>
+            </optgroup>
+        </b-select>
+    </b-field>
+    <b-message v-if="cluster.optgroup"  type="is-warning">
+        This is a private cluster. Only select this cluster if you have permission to use it!
+    </b-message>
+</div>
 </template>
 
 <script>
@@ -16,15 +28,25 @@
     props: ["clusterid","feature"],
     data() {
       return {
-        clusteridData: this.clusterid,
         clusters: [],
+        cluster: {},
         loading: false
       };
     },
     watch: {
-      clusteridData(val) {
-        localStorage.clusterid = val;
-        this.$emit('input', val);
+      cluster(c) {
+        localStorage.clusterid = c.id;
+        this.$emit('input', c.id);
+      }
+    },
+    computed: {
+      groupedClusters: function() {
+        let grouped = this.clusters.reduce(function (r, a) {
+          r[a.optgroup] = r[a.optgroup] || [];
+          r[a.optgroup].push(a);
+          return r;
+        }, {});
+        return Object.keys(grouped).sort().reduce((r, k) => (r[k] = grouped[k], r), {});
       }
     },
     mounted: function () {
@@ -47,9 +69,15 @@
       },
       setSelect: function() {
         if (localStorage.clusterid) {
-          this.clusteridData = localStorage.clusterid;
+          for (let c of this.clusters) {
+             if (c.id == localStorage.clusterid) {
+                this.cluster = c
+                break
+             }
+          }
         } else if (this.clusters.length > 0) {
-          this.clusteridData = this.clusters[0].id
+          // Select first cluster that is not in a "group"
+          this.cluster = this.groupedClusters[''][0]
         }
       }
     }
