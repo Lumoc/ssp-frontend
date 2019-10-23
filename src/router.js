@@ -38,9 +38,6 @@ const routes = [
         path: '/ose/volume/grow', component: LocalComponents.GrowVolume
     },
     {
-        path: '/ddc/billing', component: LocalComponents.DDCBilling
-    },
-    {
         path: '/aws/lists3buckets', component: LocalComponents.ListS3Buckets
     },
     {
@@ -105,6 +102,9 @@ const routes = [
     },
     {
         path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
+    },
+    {
+        path: '/kafka/listtopics', component: LocalComponents.ListTopics
     }
 ];
 

@@ -38,15 +38,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user && features.ddc.enabled" class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        DDC
-                    </a>
-                    <div class="navbar-dropdown">
-                        <router-link to="/ddc/billing" class="navbar-item">DDC Cost calculation</router-link>
-                    </div>
-                </div>
-                <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+               <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         AWS
                     </a>
@@ -111,6 +103,15 @@
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User permissions</router-link>
                     </div>
                 </div>
+
+                <div v-if="user && features.kafka.enabled" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Kafka
+                    </a>
+                    <div class="navbar-dropdown">
+                        <router-link to="/kafka/listtopics" class="navbar-item">List Topics</router-link>
+                    </div>
+                </div>
             </div>
 
             <div class="navbar-end">
@@ -139,10 +140,10 @@
         data: function () {
             return {
                 features: {
-                    ddc: {
+                    otc: {
                         enabled: false
                     },
-                    otc: {
+                    kafka: {
                         enabled: false
                     }
                 }

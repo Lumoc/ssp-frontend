@@ -16,8 +16,6 @@ import NewPullSecret from './components/ose/NewPullSecret.vue';
 import FixGluster from './components/ose/FixGluster.vue';
 import NewVolume from './components/ose/NewVolume.vue';
 import GrowVolume from './components/ose/GrowVolume.vue';
-// DDC-Components
-import DDCBilling from './components/ddc/Billing.vue';
 // AWS Components
 import ListS3Buckets from './components/aws/ListS3Buckets.vue';
 import NewS3Bucket from './components/aws/NewS3Bucket.vue';
@@ -46,6 +44,9 @@ import WZUDevProxy from './components/wzu/DevProxy.vue';
 import ADGroup from './components/ActiveDirectory/ADGroup.vue';
 import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
+
+// Kafka Components
+import ListTopics from './components/kafka/ListTopics.vue'
 
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
@@ -77,7 +78,6 @@ export const LocalComponents = {
     FixGluster,
     NewVolume,
     GrowVolume,
-    DDCBilling,
     ListS3Buckets,
     ListEC2Instances,
     NewS3Bucket,
@@ -99,5 +99,6 @@ export const LocalComponents = {
     WZUDevProxy,
     ADGroup,
     ADGroupAdmin,
-    ADGroupUser
+    ADGroupUser,
+    ListTopics
 };
