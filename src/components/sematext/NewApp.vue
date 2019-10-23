@@ -23,11 +23,11 @@
             </b-field>
 
             <b-message type="is-info">
-                Sematext Logsene concepts: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
-                - Daily MB max depends on the plan.<br/>
-                - You should need a good plan so your logsize is just below the "default MB"<br/>
-		- Raise the daily MB limit to be above the expected log amount<br/>
-		- Reason: You pay for the reserved capacity, even if you don't use it.<br/>
+                 Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
+                - The "Daily Volume" should be just below your average expected log amount<br/>
+                - The "Daily Volume" (capacity) is cheaper, but is always billed, even if you do not use it<br/>
+		- Your log usage should be between the "Daily Volume" and the "Daily Volume Limit"<br/>
+		- Sematext will reject logs if the usage increases above the "Daily Volume Limit"<br/>
             </b-message>
 
             <b-field label="Logsene-Plan"
@@ -156,5 +156,5 @@
                 });
             }
      	}
-    }:
+    };
 </script>
