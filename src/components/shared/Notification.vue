@@ -1,10 +1,17 @@
+<style>
+    .notification {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 5px;
+        z-index: 10;
+    }
+</style>
 <template>
-    <b-message v-if="notification && notification.type"
-               :title="notification.type === 'success' ? 'Success' : 'Failed'"
-               :type="'is-' + notification.type"
-               :closable="false">
+    <b-notification v-if="notification && notification.type"
+               has-icon
+               :type="'is-' + notification.type">
         <span v-html="notification.message"></span>
-    </b-message>
+    </b-notification>
 </template>
 
 <script>
