@@ -4,34 +4,34 @@
         crossorigin="anonymous"></script>
 
 <div class="jumbotron">
-    <h1><span class="fa fa-bar-chart"></span> Projektkosten berechnen</h1>
-    <p>Hier kannst die Kosten deines Projektes aufgeteilt sehen</p>
+    <h1><span class="fa fa-bar-chart"></span> Calculate project costs</h1>
+    <p>Your costs are listed here </p>
 </div>
 
 <form method="post" onsubmit="spinner();">
     <div class="form-group">
-        <label for="project">Projektname</label>
+        <label for="project">Project Name</label>
         <input type="text" class="form-control" required id="project" name="project" placeholder="projektname-dev">
     </div>
     <div class="form-group">
-        <label for="month">Monat:</label>
+        <label for="month">Month:</label>
         <select class="form-control" id="month" name="month">
-            <option value="1">Januar</option>
-            <option value="2">Februar</optionv>
-            <option value="3">März</option>
+            <option value="1">January</option>
+            <option value="2">February</optionv>
+            <option value="3">March</option>
             <option value="4">April</option>
-            <option value="5">Mai</option>
-            <option value="6">Juni</option>
-            <option value="7">Juli</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
             <option value="8">August</optionv>
             <option value="9">September</option>
-            <option value="10">Oktober</option>
+            <option value="10">October</option>
             <option value="11">November</optionv>
-            <option value="12">Dezember</option>
+            <option value="12">December</option>
         </select>
     </div>
     <div class="form-group">
-        <label for="year">Jahr:</label>
+        <label for="year">Year:</label>
         <select class="form-control" id="year" name="year">
             <option>2017</option>
             <option>2018</option>
@@ -40,7 +40,7 @@
             <option>2021</option>
         </select>
     </div>
-    <button class="btn btn-primary" id="submitBtn" type="submit">Kosten berechnen</button>
+    <button class="btn btn-primary" id="submitBtn" type="submit">Calculate costs</button>
 </form>
 
 {{ template "spinner.html" . }}
@@ -50,13 +50,13 @@
 {{ if .data }}
 <table class="table table-condensed table-striped">
     <tr>
-        <th>Projekt</th>
+        <th>Project</th>
         <td>{{ .data.Project }}</td>
         <td></td>
     </tr>
     <tr>
-        <th>Kontierungsnummer</th>
-        <td>{{ .data.AccountAssignment }}</td>
+        <th>Accounting number</th>       
+	<td>{{ .data.AccountAssignment }}</td>
         <td></td>
     </tr>
     <tr>
@@ -85,12 +85,12 @@
         <td>{{ .data.Costs.Storage }} CHF</td>
     </tr>
     <tr>
-        <th>Durchschnitt CPU Auslastung</th>
+        <th>Avg. CPU utilization</th>
         <td>{{ .data.TotalUsedCPU }}</td>
         <td>{{ .data.Costs.UsedCPU }} CHF</td>
     </tr>
     <tr>
-        <th>Durchschnitt Memory Auslastung</th>
+        <th>Avg. memory utilization</th>
         <td>{{ .data.TotalUsedMemory }}</td>
         <td>{{ .data.Costs.UsedMemory }} CHF</td>
     </tr>
@@ -125,7 +125,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'CPU Nutzung',
+                    label: 'CPU utilization',
                     data: cpuUsage,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)'
@@ -141,7 +141,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Memory Nutzung',
+                    label: 'Memory utilization',
                     data: memoryUsage,
                     backgroundColor: [
                         'rgba(255, 159, 64, 0.2'

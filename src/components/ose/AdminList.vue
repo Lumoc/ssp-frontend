@@ -4,9 +4,9 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        <i class="material-icons">person</i> OpenShift Projekt Admins anzeigen</h1>
+                        <i class="material-icons">person</i>Show OpenShift Project Admins </h1>
                     <h2 class="subtitle">
-                        Zeigt alle User eines Projektes mit Admin-Rolle an</h2>
+                       Lists all admins of an OpenShift project</h2>
                 </div>
             </div>
         </div>
@@ -16,23 +16,23 @@
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <button :disabled="errors.any()" v-bind:class="{'is-loading': loading}" class="button is-primary">
-                Admin-Liste anzeigen
+                Show list of admins
             </button>
         </form>
         <br><br>
-        <label><strong>Administratoren</strong></label><br><br>
+        <label><strong>Administrators</strong></label><br><br>
         <b-table :data="data"
                  :narrowed="true"
                  :loading="loading">
 
             <template slot-scope="props">
-                <b-table-column field="sender" label="Benutzername">
+                <b-table-column field="sender" label="Username">
                     {{ props.row }}
                 </b-table-column>
             </template>
 
             <div slot="empty" class="has-text-centered">
-                Noch keine Abfrage durchgeführt
+                No query committed
             </div>
         </b-table>
     </div>

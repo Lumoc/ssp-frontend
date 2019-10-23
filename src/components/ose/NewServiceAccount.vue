@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">account_circle</i> Service-Account anlegen</h1>
+                    <h1 class="title"><i class="material-icons">account_circle</i>Create Service Account</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du für dein Projekt einen Service-Account anlegen</h2>
+                    Here you can create a service account for your project</h2>
             </div>
         </div>
         <br>
@@ -23,12 +23,12 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Service-Account Name darf nur Kleinbuchstaben, Zahlen und - enthalten
+                Service account name can only contain lower case letters, numbers and "-".
             </b-message>
 
             <b-field>
                 <b-checkbox v-model="createJenkinsCredential">
-                    {{ 'Soll der Service-Account auf dem Jenkins hinterlegt werden (für Deployment Pipeline)?'}}
+                    {{ 'Create Jenkins credential from the service account (used by ESTA deployment pipeline)? '}}
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
@@ -42,7 +42,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Service-Account erstellen
+                    class="button is-primary">Create service account
             </button>
         </form>
     </div>
@@ -84,9 +84,9 @@
                     }, () => {
                         this.loading = false;
                     });
-                }
+                 }
             });
-        }
-    }
-  };
+         }
+      }
+   };
 </script>

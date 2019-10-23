@@ -19,35 +19,35 @@
                         OpenShift
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/ose/editquotas" class="navbar-item"> Quotas anpassen</router-link>
-                        <router-link to="/ose/newproject" class="navbar-item">Projekt anlegen</router-link>
-                        <router-link to="/ose/newtestproject" class="navbar-item">Test-Projekt anlegen</router-link>
-                        <router-link to="/ose/adminlist" class="navbar-item">Projekt Admins anzeigen</router-link>
-                        <router-link to="/ose/project" class="navbar-item">Projekt-Informationen anzeigen/ändern</router-link>
-                        <router-link to="/ose/newserviceaccount" class="navbar-item">Service-Account anlegen</router-link>
-                        <router-link to="/ose/newpullsecret" class="navbar-item">Docker Pull-Secret anlegen</router-link>
+                        <router-link to="/ose/editquotas" class="navbar-item">Adjust quotas</router-link>
+                        <router-link to="/ose/newproject" class="navbar-item">Create project</router-link>
+                        <router-link to="/ose/newtestproject" class="navbar-item">Create trial project</router-link>
+                        <router-link to="/ose/adminlist" class="navbar-item">Show project admins</router-link>
+                        <router-link to="/ose/project" class="navbar-item">Show/adjust project informations</router-link>
+                        <router-link to="/ose/newserviceaccount" class="navbar-item">Create service account</router-link>
+                        <router-link to="/ose/newpullsecret" class="navbar-item">Create docker pull secret</router-link>
                         <hr class="navbar-divider">
                         <router-link to="/ose/volume/new" class="navbar-item">
-                            Persistent Volume anlegen
+                            Create persistent volume
                         </router-link>
                         <router-link to="/ose/volume/grow" class="navbar-item">
-                            Persistent Volume vergrössern
+                            Expand persistent volume
                         </router-link>
                         <router-link to="/ose/volume/fixgluster" class="navbar-item">
-                            Gluster Objekte neu anlegen lassen
+                            Generate new GlusterFS Objects
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+               <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         AWS
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/aws/lists3buckets" class="navbar-item">AWS S3 Buckets anzeigen</router-link>
-                        <router-link to="/aws/news3bucket" class="navbar-item">AWS S3 Bucket erstellen</router-link>
-                        <router-link to="/aws/news3user" class="navbar-item">AWS S3 Bucket Benutzer erstellen
+                        <router-link to="/aws/lists3buckets" class="navbar-item">Show AWS S3 Buckets</router-link>
+                        <router-link to="/aws/news3bucket" class="navbar-item">Create AWS S3 Bucket</router-link>
+                        <router-link to="/aws/news3user" class="navbar-item">Create AWS S3 Bucket User
                         </router-link>
-                        <router-link to="/aws/listec2instances" class="navbar-item">AWS EC2 Instanzen anzeigen
+                        <router-link to="/aws/listec2instances" class="navbar-item">Show AWS EC2 Instances
                         </router-link>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
                         OTC
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/otc/listecs" class="navbar-item">Elastic Cloud Server anzeigen</router-link>
-                        <router-link to="/otc/newecs" class="navbar-item">Elastic Cloud Server erstellen</router-link>
+                        <router-link to="/otc/listecs" class="navbar-item">Show Elastic Cloud Server</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Create Elastic Cloud Server</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
@@ -65,27 +65,27 @@
                         Sematext
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/sematext/applist" class="navbar-item">Logsene-Apps anzeigen</router-link>
-                        <router-link to="/sematext/newapp" class="navbar-item">Logsene-Apps erstellen</router-link>
-                        <router-link to="/sematext/changeplan" class="navbar-item">Logsene-Apps Plan & Limite ändern
+                        <router-link to="/sematext/applist" class="navbar-item">Show Logsene-Apps</router-link>
+                        <router-link to="/sematext/newapp" class="navbar-item">Create Logsene-Apps</router-link>
+                        <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps plan & limit
                         </router-link>
-                        <router-link to="/sematext/changebilling" class="navbar-item">Logsene-Apps Projekt &
-                            Kontierungsnummer
-                            ändern
+                        <router-link to="/sematext/changebilling" class="navbar-item">Update Logsene App project &
+                            accounting number
+                            
                         </router-link>
                     </div>
                 </div>
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        WZU-Dienste
+                        WZU Services
                     </a>
                     <div class="navbar-dropdown">
                         <router-link to="/wzu/artifactory" class="navbar-item">Artifactory</router-link>
-                        <router-link to="/wzu/bitbucket" class="navbar-item">Bitbucket Projekt</router-link>
+                        <router-link to="/wzu/bitbucket" class="navbar-item">Bitbucket Project</router-link>
                         <router-link to="/wzu/bitbucketrepo" class="navbar-item">Bitbucket Repository</router-link>
                         <router-link to="/wzu/confluence" class="navbar-item">Confluence</router-link>
-                        <router-link to="/wzu/devproxy" class="navbar-item">DevProxy-Token erstellen</router-link>
+                        <router-link to="/wzu/devproxy" class="navbar-item">Create DevProxy-Token</router-link>
                         <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
                         <router-link to="/wzu/jira" class="navbar-item">JIRA</router-link>
                     </div>
@@ -93,14 +93,14 @@
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        WZU-Gruppenmanagement
+                        WZU-Groupmanagement
                     </a>
                     <div class="navbar-dropdown">
-                        <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">AD Gruppe erstellen</router-link>
-                        <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD Gruppen Admin</router-link>
-                        <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD Gruppen User</router-link>-->
-                        <router-link to="/wzu/alm" class="navbar-item">ALM User Berechtigung</router-link>
-                        <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User Berechtigung</router-link>
+                        <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">Create AD group</router-link>
+                        <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD group admin</router-link>
+                        <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD group User</router-link>-->
+                        <router-link to="/wzu/alm" class="navbar-item">ALM User permissions</router-link>
+                        <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User permissions</router-link>
                     </div>
                 </div>
 
@@ -117,7 +117,7 @@
             <div class="navbar-end">
                 <a v-if="user" class="navbar-item">
                     <b-icon icon="face"></b-icon>
-                    &nbsp; Hallo {{ user.firstname }}!
+                    &nbsp; Hello {{ user.firstname }}!
                 </a>
             </div>
         </div>

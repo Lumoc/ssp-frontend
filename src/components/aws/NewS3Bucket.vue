@@ -3,15 +3,15 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i> AWS S3 Bucket erstellen</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Create AWS S3 Bucket</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen AWS S3 Bucket erstellen. Alle Bestellungen werden geloggt & verrechnet.</h2>
+                    Here you can create an AWS S3 bucket. All orders will be logged and charged.</h2>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="newS3Bucket">
-            <b-field label="Projekt-Name"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
                 <b-input v-model.trim="project"
@@ -21,7 +21,7 @@
                 </b-input>
             </b-field>
 
-            <b-field label="Bucket-Name"
+            <b-field label="Bucket Name"
                      :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
                      :message="errors.first('Bucket-Name')">
                 <b-input type="text"
@@ -31,12 +31,12 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Der Name des S3-Buckets wird mit deinen Angaben wie folgt zusammengestellt:
+                The bucket name will be constructed as follows:
                 <br/>sbb-[BucketName]-prod/nonprod
-                <br/><br/>Beispiel: sbb-my-bucket-prod oder sbb-my-app-prod
+                <br/><br/>Example: sbb-my-bucket-prod or sbb-my-app-prod
             </b-message>
 
-            <b-field label="Kontierungsnummer"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input type="text"
@@ -51,7 +51,7 @@
                 <b-radio-button v-model="stage"
                                 native-value="dev"
                                 type="is-success">
-                    <span>Entwicklung</span>
+                    <span>Development</span>
                 </b-radio-button>
                 <b-radio-button v-model="stage"
                                 native-value="test"
@@ -66,13 +66,13 @@
                 <b-radio-button v-model="stage"
                                 native-value="prod"
                                 type="is-info">
-                    <span>Produktion</span>
+                    <span>Production</span>
                 </b-radio-button>
             </b-field>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">S3 Bucket erstellen
+                    class="button is-primary">Create S3 Bucket
             </button>
         </form>
     </div>

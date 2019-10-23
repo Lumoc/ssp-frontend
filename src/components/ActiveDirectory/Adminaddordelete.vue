@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Gruppen Admin Management</h1>
+                    <h1 class="title"><i class="material-icons">edit</i>Group Admin Management</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen Gruppenadmin hinzufügen oder entfernen</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+                    You can add or remove a group admin here.</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to get to the WZU Self service portal documentation. </a></h3>
             </div>
         </div>
         <br>
@@ -16,15 +16,15 @@
                 <b-radio-button v-model="type"
                                 native-value="hinzufügen"
                                 type="is-success">
-                    <span>Hinzufügen</span>
+                    <span>Add</span>
                 </b-radio-button>
                 <b-radio-button v-model="type"
                                 native-value="löschen"
                                 type="is-success">
-                    <span>löschen</span>
+                    <span>Remove</span>
                 </b-radio-button>
             </b-field>
-            <b-field label="Gruppen Name"
+            <b-field label="Group Name"
                      :type="errors.has('Gruppen Name') ? 'is-danger' : ''"
                      :message="errors.first('Gruppen Name')">
                 <b-input v-model.trim="groupname"
@@ -43,7 +43,7 @@
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Admin updaten
+                    class="button is-primary">Update admin
             </button>
         </form>
     </div>

@@ -3,9 +3,9 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Show Elastic Cloud Server</h1>
                 </div>
-                <h2 class="subtitle">Hier werden deine Elastic Cloud Server aus OTC angezeigt.</h2>
+                <h2 class="subtitle">Your Elastic Cloud Servers will be listed here.</h2>
             </div>
         </div>
         <br>
@@ -23,7 +23,7 @@
         </b-dropdown>
 
         <button class="button is-danger" @click="listECServers()" v-bind:class="{'is-loading': loading}">
-            <span>Aktualisieren</span>
+            <span>Update</span>
         </button>
         
         <br><br>
@@ -33,7 +33,7 @@
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="owner" label="Besitzer" sortable>
+                <b-table-column field="owner" label="Owner" sortable>
                     {{ props.row.owner }}
                 </b-table-column>
                 <b-table-column field="status" label="Status" sortable>
@@ -60,7 +60,7 @@
                                 {{ props.row.imageName }}
                             </td></tr>                            
                             <tr><td>
-                                IP Adressen:
+                                IP address:
                             </td><td>
                                 <ul id="ips">
                                     <li v-for="ip in props.row.ipv4" v-bind:key="ip">
@@ -69,7 +69,7 @@
                                 </ul>
                             </td></tr>
                             <tr><td>
-                                Erstellt:
+                                Created:
                             </td><td>
                                 {{ new Date(props.row.created).toLocaleString("de-CH") }}
                             </td></tr>
@@ -79,7 +79,7 @@
                                 {{ props.row.megaId }}
                             </td></tr>
                             <tr><td>
-                                Kontierungsnummer:
+                                Accounting number:
                             </td><td>
                                 {{ props.row.billing }}
                             </td></tr>
@@ -88,7 +88,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                Solltest du ECS Instanzen besitzen, werden diese hier angezeigt.
+                If you have ECS instances they will be listed here.
             </div>
         </b-table>
     </div>
@@ -134,7 +134,7 @@
             }, stopECServers: function() {
                 this.$dialog.confirm({
                     title: 'Server Stoppen',
-                    message: 'Die ausgewählten Server wirklich stoppen?',
+                    message: 'Do you really want the selected servers to be stopped?',
                     confirmText: 'Stoppen',
                     type: 'is-danger',
                     hasIcon: true,
@@ -152,7 +152,7 @@
             }, startECServers: function() {
                 this.$dialog.confirm({
                     title: 'Server Starten',
-                    message: 'Die ausgewählten Server wirklich starten?',
+                    message: 'Do you really want the selected server to be started?',
                     confirmText: 'Storten',
                     type: 'is-danger',
                     hasIcon: true,
@@ -170,7 +170,7 @@
             }, rebootECServers: function() {
                 this.$dialog.confirm({
                     title: 'Server Neustorten',
-                    message: 'Die ausgewählten Server wirklich neustarten?',
+                    message: 'Do you really want the selected servers to be restarted?',
                     confirmText: 'Neustorten',
                     type: 'is-danger',
                     hasIcon: true,
@@ -188,7 +188,7 @@
             }, deleteECServers: function() {
                 this.$dialog.confirm({
                     title: 'Server Löschen',
-                    message: 'Die ausgewählten Server wirklich löschen?',
+                    message: 'Do you really want the selected server to be deleted?',
                     confirmText: 'Löschen',
                     type: 'is-danger',
                     hasIcon: true,
@@ -222,4 +222,4 @@
             }
         }
     };
-</script>
+</scripa>

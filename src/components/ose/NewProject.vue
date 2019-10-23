@@ -3,16 +3,16 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">speaker_notes</i> OpenShift Projekt anlegen</h1>
+                    <h1 class="title"><i class="material-icons">speaker_notes</i> Create OpenShift Project</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du ein OpenShift Projekt erstellen</h2>
+                    Here you can create a new OpenShift project</h2>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="newProject">
             <cluster-select v-model="clusterid" feature="newprojects"></cluster-select>
-            <b-field label="OpenShift Projekt"
+            <b-field label="OpenShift Project"
                      :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt-Name')">
                 <b-input v-model.trim="project"
@@ -23,13 +23,13 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Projekt-Name darf nur Kleinbuchstaben, Zahlen und - enthalten</br>
-                Produktive Projekte:</br>
-                - Bitte folgende Hinweise beachten: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Produktions-Kriterien</a></br>
-                - Keine produktiven Projekte auf Test04</br>
+                The project name can only contain lower case letters, numbers and "-"</br>
+                Production projects:</br>
+                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
+                - No productive projects on Test04</br>
             </b-message>
 
-            <b-field label="Kontierungsnummer"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -38,8 +38,8 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-            Kostenstelle (z.B. 77606105), Innenauftrag (70029490) oder PSP-Element inkl. Phasen-Nummer (1157803.4-10.1)
-            Bitte keine Angaben ohne Gewähr, nur aktuelle Daten angeben und ggf. ändern unter: <a href="#/ose/project" target="_blank">Projekt Informationen ändern</a>
+            Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)
+            Please only fill in correct information. This can be changed later at: <a href="#/ose/project" target="_blank">Change project information</a>
             </b-message>
 
             <b-field label="Mega ID"
@@ -51,12 +51,12 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Nützliche Links zu Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">Alle Anwendungen</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Übersicht (zB Erfassungsformular Anwendung)</a>
+                Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
             </b-message>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Neues Projekt erstellen
+                    class="button is-primary">Create new project
             </button>
         </form>
     </div>
