@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cached</i>Adjust Project Quotas </h1>
+                    <h1 class="title"><i class="material-icons">cached</i> Adjust Project Quotas </h1>
                 </div>
                 <h2 class="subtitle">
                     You can adjust the CPU / memory quotas here. All changes are logged and will be billed.</h2>

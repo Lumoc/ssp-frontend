@@ -5,10 +5,10 @@
             <div class="container">
                 <h1 class="title">
                     <i class="material-icons">opacity</i>
-                    Cloud Selfservice Portal
+                     Cloud Selfservice Portal
                 </h1>
             </div>
-            <h2 class="subtitle">Welcome to the Cloud Self-Service Portal</h2>
+            <h2 class="subtitle"> Welcome to the Cloud Self-Service Portal</h2>
         </div>
     </div>
     <p>

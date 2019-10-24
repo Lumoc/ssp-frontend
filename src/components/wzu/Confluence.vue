@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Confluence Space</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> Confluence Space</h1>
                 </div>
                 <h2 class="subtitle">
                     You can create a Confluence Space here.</h2>

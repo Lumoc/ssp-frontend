@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i>Create Persistent Volume</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Create Persistent Volume</h1>
                 </div>
                 <h2 class="subtitle">
                     Here you can create a persistent volume</h2>
