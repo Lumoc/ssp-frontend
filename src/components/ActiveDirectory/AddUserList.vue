@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Group Admin Management</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> Group Admin Management</h1>
                 </div>
                 <h2 class="subtitle">
 			Here you can add or remove a group admin</h2>

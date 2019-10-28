@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Artifactory Repository</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> Artifactory Repository</h1>
                 </div>
                 <h2 class="subtitle">
                     Click here to create an Artifactory repository</h2>

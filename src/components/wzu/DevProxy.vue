@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Developer Proxy</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> Developer Proxy</h1>
                 </div>
                 <h2 class="subtitle">You can create a API token for the DevProxy here..</h2>
                 <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404">Click here to see the WZU self-service portal documentation.</a></h3>

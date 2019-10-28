@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i>List AWS EC2 Instances</h1>
+                    <h1 class="title"><i class="material-icons">list</i> List AWS EC2 Instances</h1>
                 </div>
                 <h2 class="subtitle">
                     All your AWS EC2 instances will be displayed here.</h2>
