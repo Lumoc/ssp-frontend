@@ -275,7 +275,7 @@
                   unifiedos_owner_email: '',
                   unifiedos_mega_id: '',
                   unifiedos_service_level: 'best_effort',
-                  unifiedos_availability_zone: Math.floor(Math.random() * 2) + 1, // returns a random integer from 1 to 2
+                  unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
 
                   unifiedos_root_disk_size: 10,
                   provision_otc_default_volume_type: 'SATA',

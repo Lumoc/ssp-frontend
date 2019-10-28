@@ -11,9 +11,9 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Show Elastic Cloud Server</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Your UnifiedOS Servers</h1>
                 </div>
-                <h2 class="subtitle">Your Elastic Cloud Servers will be listed here.</h2>
+                <h2 class="subtitle">Your UnifiedOS servers will be listed here.</h2>
             </div>
         </div>
         <br>
@@ -103,7 +103,7 @@
                 If you have ECS instances they will be listed here.
             </div>
         </b-table>
-        VMs are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>
+        Servers are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>
     </div>
 </template>
 <script>
