@@ -11,9 +11,9 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Elastic Cloud Server anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Show Elastic Cloud Server</h1>
                 </div>
-                <h2 class="subtitle">Hier werden deine Elastic Cloud Server aus OTC angezeigt.</h2>
+                <h2 class="subtitle">Your Elastic Cloud Servers will be listed here.</h2>
             </div>
         </div>
         <br>
@@ -30,7 +30,7 @@
                 <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
             </b-dropdown>
 
-            <b-button type="is-danger" @click="listECServers()" :loading="loading">Aktualisieren</b-button>
+            <b-button type="is-danger" @click="listECServers()" :loading="loading">Update</b-button>
             <b-taginput
                 expanded
                 v-model="tags"
@@ -74,7 +74,7 @@
                                 {{ props.row.imageName }}
                             </td></tr>
                             <tr><td>
-                                IP Adressen:
+                                IP address:
                             </td><td>
                                 <ul id="ips">
                                     <li v-for="ip in props.row.ipv4" v-bind:key="ip">
@@ -83,7 +83,7 @@
                                 </ul>
                             </td></tr>
                             <tr><td>
-                                Erstellt:
+                                Created:
                             </td><td>
                                 {{ moment(props.row.created).format('LLL') }}
                             </td></tr>
@@ -100,7 +100,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                Solltest du ECS Instanzen besitzen, werden diese hier angezeigt.
+                If you have ECS instances they will be listed here.
             </div>
         </b-table>
         VMs are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>

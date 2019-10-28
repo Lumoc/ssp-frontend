@@ -6,14 +6,14 @@
                     <h1 class="title"><i class="material-icons">edit</i>ALM User</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du einen ALM User zu einem Projekt hinzufügen.</h2>
-                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Hier klicken um zur WZU SSP Doku zu gelangen.</a></h3>
+		    Here you can add a new ALM user to a project.</h2>
+                <h3 class="has-text-link"><a href="https://confluence.sbb.ch/pages/viewpage.action?pageId=1072072404"> Click here to see the WZU self-service portal documentation.</a></h3>
             </div>
         </div>
         <br>
         <form v-on:submit.prevent="ALMUser">
 
-            <b-field label="Projekt Name"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="projectname"
@@ -23,7 +23,7 @@
                 </b-input>
             </b-field>
 
-            <label class="label">Projekt Funktion</label>
+            <label class="label">Project Use</label>
             <b-field>
                 <b-radio-button v-model="projectfunction"
                                 native-value="SBB_Project_Admin"
@@ -38,7 +38,7 @@
                 <b-radio-button v-model="projectfunction"
                                 native-value="SBB_Project_Tester"
                                 type="is-success">
-                    <span>SBB Project Tester</span>
+                    <span>SBB Project tester</span>
                 </b-radio-button>
                 <b-radio-button v-model="projectfunction"
                                 native-value="SBB_Viewer"
@@ -48,7 +48,7 @@
             </b-field>
 
 
-            <label class="label">Domain Name</label>
+            <label class="label">Domainname</label>
             <b-field>
                 <b-radio-button v-model="domainname"
                                 native-value="ANWENDUNGEN_TF"
@@ -72,7 +72,7 @@
                 </b-radio-button>
             </b-field>
 
-            <b-field label="Bestellung für anderen User"
+            <b-field label="Order for another user"
                      :type="errors.has('Bestellung für anderen User') ? 'is-danger' : ''"
                      :message="errors.first('Bestellung für anderen User')">
                 <b-input v-model.trim="almuser"
@@ -83,7 +83,7 @@
 
             <button v-on:click="addToBackendALM" :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">berechtigen
+                    class="button is-primary">give permissions
             </button>
         </form>
     </div>
@@ -95,11 +95,11 @@
     const dictionary = {
         custom: {
 
-            "Projekt Name": {
-                required: "Bitte gib einen Projekt Key an."
+            "Project name": {
+                required: "Please provide a project key."
             },
-            "Bestellung für anderen User":{
-                regex: "Bitte gib eine valide U-, E- oder Ue-Nummer an."
+            "Order for other users":{
+                regex: "Please provide a valid U-, E- or Ue- number."
             }
         }
     };

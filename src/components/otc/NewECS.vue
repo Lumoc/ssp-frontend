@@ -117,7 +117,7 @@
                 </b-select>
             </b-field>
             <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
-                Das gewählte Image benötigt mindestens {{ image.minRAMMegabytes/1024 }}GB RAM.
+                The chossen image needs a minimum of {{ image.minRAMMegabytes/1024 }}GB RAM.
             </b-message>
 
             <b-field label="Disk Volume Storage Type">
@@ -171,7 +171,7 @@
                 </b-field>
 
                 <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.unifiedos_root_disk_size">
-                    Das gewählte Image benötigt eine mindestens {{ image.minDiskGigabytes }}GB grosse Root Disk.
+                    The choosen image needs a minimum size of {{ image.minDiskGigabytes }}GB for the Root Disc.
                 </b-message>
             </template>
 
@@ -187,7 +187,6 @@
                 - RAM: CHF {{ computedCosts.ram }}<br>
                 - Storage: CHF {{ computedCosts.volume }}
             </b-message>
-
 
             <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 

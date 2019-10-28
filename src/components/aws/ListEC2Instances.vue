@@ -3,19 +3,19 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i> AWS EC2 Instanzen anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">list</i>List AWS EC2 Instances</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier werden alle deine AWS EC2 Instanzen angezeigt.</h2>
+                    All your AWS EC2 instances will be displayed here.</h2>
             </div>
         </div>
         <br>
         <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed>
             <template slot-scope="props">
-                <b-table-column field="name" label="Name">
+                <b-table-column field="name" label="name">
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="account" label="SBB AWS Account">
+                <b-table-column field="account" label="SBB AWS account">
                     {{ props.row.account }}
                 </b-table-column>
                 <b-table-column field="snapshots" label="Snapshots">
@@ -76,7 +76,7 @@
                 </div>
             </template>
             <div slot="empty" class="has-text-centered">
-                Hier werden deine Instanzen angezeigt, wenn du welche hast.
+                Your instances will be displayed here.
             </div>
         </b-table>
         <!-- use the modal component, pass in the prop -->
@@ -91,10 +91,10 @@
                             :default-sort="['startTime', 'desc']"
                             narrowed>
                         <template slot-scope="props">
-                            <b-table-column field="description" label="Beschreibung" sortable>
+                            <b-table-column field="description" label="Description" sortable>
                                 {{ props.row.Description }}
                             </b-table-column>
-                            <b-table-column field="startTime" label="Datum" sortable>
+                            <b-table-column field="startTime" label="Date" sortable>
                                 <b-tooltip :label="moment(props.row.StartTime).calendar()">
                                 {{ moment(props.row.StartTime).fromNow() }}
                                 </b-tooltip>
@@ -102,14 +102,13 @@
                             <b-table-column field="disk" label="Disk" sortable>
                                 {{ getTag(props.row, "devicename") }}
                             </b-table-column>
-                            <b-table-column field="delete" label="Löschen">
+                            <b-table-column field="delete" label="Delete">
                                 <a @click="deleteSnapshot(props.row)">
-                                x
                                 </a>
                             </b-table-column>
                         </template>
                         <div slot="empty" class="has-text-centered">
-                            Keine Snapshots vorhanden
+                            There are no snapshots
                         </div>
                     </b-table>
                 </div>
@@ -120,8 +119,8 @@
                             {{ volume.deviceName }}
                         </option>
                     </b-select>
-                    <b-input v-model="snapshotDescription" name="description" placeholder="Beschreibung"></b-input>
-                    <button class="button" @click="createSnapshot(modalData)">Snapshot erstellen</button>
+                    <b-input v-model="snapshotDescription" name="description" placeholder="Description"></b-input>
+                    <button class="button" @click="createSnapshot(modalData)">Create snapshot</button>
                 </footer>
             </div>
         </b-modal>
@@ -173,7 +172,7 @@
       createSnapshot: function(row) {
         if (this.snapshotDescription == "" || this.snapshotVolume == "") {
             this.$toast.open({
-                message: 'Bitte fülle alle Felder aus',
+                message: 'Please fill out all the inputs',
                 type: 'is-danger',
                 duration: 7500
             })
@@ -203,7 +202,7 @@
         console.log("creating snapshot for instance: "+row.instanceId)
       },
       deleteSnapshot: function(row) {
-        if (confirm("Wollen Sie diesen Snapshot wirklich löschen?\n" + row.Description + " ("+row.SnapshotId+")")) {
+        if (confirm("Do you really want to remove this snapshot?\n" + row.Description + " ("+row.SnapshotId+")")) {
             this.snapshotLoading = true;
             this.$http.delete(this.$store.state.backendURL + '/api/aws/snapshots/' + this.modalData.account + '/' + row.SnapshotId).then((res) => {
                 // remove snapshot from list
@@ -232,7 +231,7 @@
         // use running as conditional! the 'else' case should not be stop
         nextState = (row.state == 'running') ? 'stop' : 'start';
 
-        if (nextState == 'start' || confirm("Wollen Sie diese Instanz wirklich stoppen?\n" + row.name)) {
+        if (nextState == 'start' || confirm("Do you really want to stop this instance?\n" + row.name)) {
           // change state so that user interface is responsive
           row.state = (row.state == 'running') ? 'stopping' : 'pending';
           this.$http.post(this.$store.state.backendURL + '/api/aws/ec2/' + row.instanceId + '/' + nextState).then((res) => {

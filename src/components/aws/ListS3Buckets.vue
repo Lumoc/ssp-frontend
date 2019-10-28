@@ -3,10 +3,10 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">list</i> AWS S3 Bucket anzeigen</h1>
+                    <h1 class="title"><i class="material-icons">list</i>List AWS S3 Buckets</h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier werden alle deine AWS S3 Buckets angezeigt.</h2>
+                    All your AWS S3 buckets will be displayed here</h2>
             </div>
         </div>
         <br>
@@ -15,7 +15,7 @@
                  :narrowed="true">
 
             <template slot-scope="props">
-                <b-table-column field="name" label="Bucket-Name">
+                <b-table-column field="name" label="Bucket Name">
                     {{ props.row.name }}
                 </b-table-column>
                 <b-table-column field="account" label="SBB AWS Account">
@@ -24,7 +24,7 @@
             </template>
 
             <div slot="empty" class="has-text-centered">
-                Hier werden deine Buckets angezeigt wenn du welche hast
+                You don't seem to have any buckets
             </div>
 
         </b-table>

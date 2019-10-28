@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Projekt-Informationen anzeigen/ändern
+                    <h1 class="title"><i class="material-icons">attach_money</i> Display/Update Project Details
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    Hier kannst du die Informationen deines OpenShift Projekts anzeigen und anpassen</h2>
+                    You can show or adjust the details of your project here</h2>
             </div>
         </div>
         <br>
@@ -16,10 +16,10 @@
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation"></project-select>
 
             <b-message type="is-info">
-                Alle unteren Felder werden mit aktuellen Infos geladen, sobald ein Projekt ausgewählt wird.
+                The details will appear below once a project is selected.
             </b-message>
 
-            <b-field label="Kontierungsnummer"
+            <b-field label="Accounting Number"
                      :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
                      :message="errors.first('Kontierungsnummer')">
                 <b-input v-model.trim="billing"
@@ -39,7 +39,7 @@
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
-                    class="button is-primary">Kontierungsinformation anpassen
+                    class="button is-primary">Change account management
             </button>
         </form>
     </div>

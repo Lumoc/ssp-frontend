@@ -38,9 +38,6 @@ const routes = [
         path: '/ose/volume/grow', component: LocalComponents.GrowVolume
     },
     {
-        path: '/ddc/billing', component: LocalComponents.DDCBilling
-    },
-    {
         path: '/aws/lists3buckets', component: LocalComponents.ListS3Buckets
     },
     {

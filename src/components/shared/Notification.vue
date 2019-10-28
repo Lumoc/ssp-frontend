@@ -1,6 +1,6 @@
 <template>
     <b-message v-if="notification && notification.type"
-               :title="notification.type === 'success' ? 'Erfolgreich' : 'Fehlgeschlagen'"
+               :title="notification.type === 'success' ? 'Success' : 'Failed'"
                :type="'is-' + notification.type"
                :closable="false">
         <span v-html="notification.message"></span>
