@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>ALM User</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> ALM User</h1>
                 </div>
                 <h2 class="subtitle">
 		    Here you can add a new ALM user to a project.</h2>
@@ -13,7 +13,7 @@
         <br>
         <form v-on:submit.prevent="ALMUser">
 
-            <b-field label="Project Name"
+            <b-field label="Project name"
                      :type="errors.has('Projekt Name') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Name')">
                 <b-input v-model.trim="projectname"

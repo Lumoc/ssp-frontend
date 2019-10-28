@@ -19,13 +19,13 @@
                         OpenShift
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/ose/editquotas" class="navbar-item">Adjust quotas</router-link>
-                        <router-link to="/ose/newproject" class="navbar-item">Create project</router-link>
-                        <router-link to="/ose/newtestproject" class="navbar-item">Create trial project</router-link>
-                        <router-link to="/ose/adminlist" class="navbar-item">Show project admins</router-link>
-                        <router-link to="/ose/project" class="navbar-item">Show/adjust project informations</router-link>
-                        <router-link to="/ose/newserviceaccount" class="navbar-item">Create service account</router-link>
-                        <router-link to="/ose/newpullsecret" class="navbar-item">Create docker pull secret</router-link>
+                        <router-link to="/ose/editquotas" class="navbar-item">Adjust Project Quotas</router-link>
+                        <router-link to="/ose/newproject" class="navbar-item">Create Project</router-link>
+                        <router-link to="/ose/newtestproject" class="navbar-item">Create Trial Project</router-link>
+                        <router-link to="/ose/adminlist" class="navbar-item">Show Project Admins</router-link>
+                        <router-link to="/ose/project" class="navbar-item">Display/Update Project Details</router-link>
+                        <router-link to="/ose/newserviceaccount" class="navbar-item">Create Service Account</router-link>
+                        <router-link to="/ose/newpullsecret" class="navbar-item">Create Docker Pull-Secret</router-link>
                         <hr class="navbar-divider">
                         <router-link to="/ose/volume/new" class="navbar-item">
                             Create persistent volume
@@ -43,11 +43,11 @@
                         AWS
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/aws/lists3buckets" class="navbar-item">Show AWS S3 Buckets</router-link>
+                        <router-link to="/aws/lists3buckets" class="navbar-item">List AWS S3 Buckets</router-link>
                         <router-link to="/aws/news3bucket" class="navbar-item">Create AWS S3 Bucket</router-link>
                         <router-link to="/aws/news3user" class="navbar-item">Create AWS S3 Bucket User
                         </router-link>
-                        <router-link to="/aws/listec2instances" class="navbar-item">Show AWS EC2 Instances
+                        <router-link to="/aws/listec2instances" class="navbar-item">List AWS EC2 Instances
                         </router-link>
                     </div>
                 </div>
@@ -67,11 +67,10 @@
                     <div class="navbar-dropdown">
                         <router-link to="/sematext/applist" class="navbar-item">Show Logsene-Apps</router-link>
                         <router-link to="/sematext/newapp" class="navbar-item">Create Logsene-Apps</router-link>
-                        <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps plan & limit
+                        <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps Daily Volume & Limit
                         </router-link>
-                        <router-link to="/sematext/changebilling" class="navbar-item">Update Logsene App project &
-                            accounting number
-
+                        <router-link to="/sematext/changebilling" class="navbar-item">Show/Adjust Logsene-Apps Project &
+                            Accounting Number
                         </router-link>
                     </div>
                 </div>
@@ -82,13 +81,13 @@
                         WZU Services
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/wzu/artifactory" class="navbar-item">Artifactory</router-link>
+                        <router-link to="/wzu/artifactory" class="navbar-item">Artifactory Repository</router-link>
                         <router-link to="/wzu/bitbucket" class="navbar-item">Bitbucket Project</router-link>
                         <router-link to="/wzu/bitbucketrepo" class="navbar-item">Bitbucket Repository</router-link>
-                        <router-link to="/wzu/confluence" class="navbar-item">Confluence</router-link>
+                        <router-link to="/wzu/confluence" class="navbar-item">Confluence Space</router-link>
                         <router-link to="/wzu/devproxy" class="navbar-item">Create DevProxy-Token</router-link>
-                        <router-link to="/wzu/jenkinscredentials" class="navbar-item">Jenkins Credentials</router-link>
-                        <router-link to="/wzu/jira" class="navbar-item">JIRA</router-link>
+                        <router-link to="/wzu/jenkinscredentials" class="navbar-item">Create Jenkins Credentials</router-link>
+                        <router-link to="/wzu/jira" class="navbar-item">JIRA Project</router-link>
                     </div>
                 </div>
 
@@ -110,7 +109,7 @@
                         Kafka
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/kafka/listtopics" class="navbar-item">List Topics</router-link>
+                        <router-link to="/kafka/listtopics" class="navbar-item">Topic List</router-link>
                     </div>
                 </div>
             </div>

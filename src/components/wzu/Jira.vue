@@ -3,7 +3,7 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">edit</i>Jira Project</h1>
+                    <h1 class="title"><i class="material-icons">edit</i> Jira Project</h1>
                 </div>
                 <h2 class="subtitle">
                     You can createa a Jira project on issues.sbb here</h2>
