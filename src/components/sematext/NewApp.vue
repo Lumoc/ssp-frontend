@@ -3,10 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene App
+                    <h1 class="title"><i class="material-icons">timeline</i>Create a Sematext Logsene App</h1>
                 </div>
                 <h2 class="subtitle">
-                    You can create a Sematext Logsene app here</h2>
+                    You can create a Sematext Logsene app here
+                </h2>
             </div>
         </div>
         <br>
@@ -26,8 +27,8 @@
                  Sematext plans: <a href="https://confluence.sbb.ch/x/AisiMg">Costs Log-Management</a><br/>
                 - The "Daily Volume" should be just below your average expected log amount<br/>
                 - The "Daily Volume" (capacity) is cheaper, but is always billed, even if you do not use it<br/>
-		- Your log usage should be between the "Daily Volume" and the "Daily Volume Limit"<br/>
-		- Sematext will reject logs if the usage increases above the "Daily Volume Limit"<br/>
+                - Your log usage should be between the "Daily Volume" and the "Daily Volume Limit"<br/>
+                - Sematext will reject logs if the usage increases above the "Daily Volume Limit"
             </b-message>
 
             <b-field label="Logsene-Plan"
