@@ -1,7 +1,5 @@
 <template>
-<b-field label="OpenShift Project"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Project-name')">
+<b-field label="OpenShift Project">
     <b-autocomplete
         v-model="projectData"
         :data="filteredDataArray"
@@ -10,7 +8,9 @@
         name="Projekt-Name"
         ref="autofocus"
         placeholder="project-name"
-        v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }">
+        required
+        title="Please enter a valid project name"
+        pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$">
         <template slot="empty">No projects found </template>
     </b-autocomplete>
 </b-field>

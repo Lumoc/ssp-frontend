@@ -11,12 +11,9 @@
         </div>
         <br>
         <form v-on:submit.prevent="newS3User">
-            <b-field label="Name of the new user"
-                     :type="errors.has('Name vom neuen Benutzer') ? 'is-danger' : ''"
-                     :message="errors.first('Name vom neuen Benutzer')">
+            <b-field label="Name of the new user">
                 <b-input type="text"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\-]+$/} }"
-                         name="Name vom neuen Benutzer"
+                         required pattern="^[a-zA-Z0-9\-]+$"
                          ref="autofocus"
                          v-model.number="username">
                 </b-input>
@@ -27,10 +24,7 @@
                 <br/><br/>Example: sbb-my-bucket-prod-user or sbb-my-app-prod-admin
             </b-message>
 
-            <b-field label="Bucket Name"
-                     :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Bucket-Name')">
-
+            <b-field label="Bucket Name">
                 <b-select placeholder="Choose your bucket"
                           :loading="loading"
                           v-model="bucket"
@@ -58,7 +52,7 @@
                 </b-radio-button>
             </b-field>
 
-            <button :disabled="errors.any() || loading"
+            <button :disabled="loading"
                     v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create S3 user
             </button>
@@ -91,19 +85,15 @@
                 });
             },
             newS3User: function () {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+                this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/aws/s3/' + this.bucket + '/user', {
-                            username: this.username,
-                            isReadonly: this.isReadonly === 'true'
-                        }).then(() => {
-                            this.loading = false;
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
+                this.$http.post(this.$store.state.backendURL + '/api/aws/s3/' + this.bucket + '/user', {
+                    username: this.username,
+                    isReadonly: this.isReadonly === 'true'
+                }).then(() => {
+                    this.loading = false;
+                }, () => {
+                    this.loading = false;
                 });
             }
         }

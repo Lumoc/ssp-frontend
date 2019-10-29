@@ -19,26 +19,19 @@
                 The details will appear below once a project is selected.
             </b-message>
 
-            <b-field label="Accounting Number"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
-                <b-input v-model.trim="billing"
-                         name="Kontierungsnummer"
-                         v-validate="'required'">
-                </b-input>
+            <b-field label="Accounting Number">
+                <b-input v-model.trim="billing" required></b-input>
             </b-field>
 
-            <b-field label="Mega ID"
-                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
-                     :message="errors.first('Mega ID')">
+            <b-field label="Mega ID">
                 <b-input v-model.trim="megaid"
-                         name="Mega ID"
-                         v-validate.rules="{ required: true, regex: /^[A-Z0-9]{16}$/}">
+                         required pattern="^[a-zA-Z0-9]{16}$"
+                         title="Please enter a valid Mega ID"
+                         validation-message="Please enter a valid Mega ID">
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Change account management
             </button>
         </form>
@@ -64,21 +57,17 @@
     },
     methods: {
       updateInformation: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/project/info', {
-              clusterid: this.clusterid,
-              project: this.project,
-              billing: this.billing,
-              megaid: this.megaid,
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/ose/project/info', {
+          clusterid: this.clusterid,
+          project: this.project,
+          billing: this.billing,
+          megaid: this.megaid,
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       },
       getExistingInformation: function(project) {

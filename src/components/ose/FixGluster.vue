@@ -15,8 +15,7 @@
             <div v-if="gluster">
                 <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-                <button :disabled="errors.any()"
-                        v-bind:class="{'is-loading': loading}"
+                <button v-bind:class="{'is-loading': loading}"
                         class="button is-primary">Create GlusterFS object
                 </button>
             </div>
@@ -56,20 +55,16 @@
     },
     methods: {
       fixGlusterObjects: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+          this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/volume/gluster/fix', {
-              clusterid: this.clusterid,
-              project: this.project
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
-        });
+          this.$http.post(this.$store.state.backendURL + '/api/ose/volume/gluster/fix', {
+            clusterid: this.clusterid,
+            project: this.project
+          }).then(() => {
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+          });
       }
     }
   };

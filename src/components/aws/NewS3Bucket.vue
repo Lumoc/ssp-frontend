@@ -11,22 +11,16 @@
         </div>
         <br>
         <form v-on:submit.prevent="newS3Bucket">
-            <b-field label="Project Name"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
+            <b-field label="Project Name">
                 <b-input v-model.trim="project"
-                         name="Projekt-Name"
                          ref="autofocus"
-                         v-validate="'required'">
+                         required>
                 </b-input>
             </b-field>
 
-            <b-field label="Bucket Name"
-                     :type="errors.has('Bucket-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Bucket-Name')">
+            <b-field label="Bucket Name">
                 <b-input type="text"
-                         v-validate="{ rules: { required: true, regex: /^[a-zA-Z0-9\-]+$/} }"
-                         name="Bucket-Name"
+                         required pattern="^[a-zA-Z0-9\-]+$"
                          v-model.number="bucketname">
                 </b-input>
             </b-field>
@@ -36,13 +30,10 @@
                 <br/><br/>Example: sbb-my-bucket-prod or sbb-my-app-prod
             </b-message>
 
-            <b-field label="Accounting Number"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
+            <b-field label="Accounting Number">
                 <b-input type="text"
                          v-model.number="billing"
-                         v-validate="{ rules: { required: true, max: 128, regex: /^[a-zA-Z0-9+\-=._:/]+$/} }"
-                         name="Kontierungsnummer">
+                         required pattern="^[a-zA-Z0-9+\-=._:/]+$">
                 </b-input>
             </b-field>
 
@@ -70,8 +61,7 @@
                 </b-radio-button>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create S3 Bucket
             </button>
         </form>
@@ -91,21 +81,17 @@
     },
     methods: {
       newS3Bucket: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/aws/s3', {
-              project: this.project,
-              bucketname: this.bucketname,
-              billing: '' + this.billing,
-              stage: '' + this.stage
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/aws/s3', {
+          project: this.project,
+          bucketname: this.bucketname,
+          billing: '' + this.billing,
+          stage: '' + this.stage
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     }
