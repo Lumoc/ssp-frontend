@@ -24,7 +24,7 @@
                 <b-table-column field="planName" label="Logsene Plan">
                     {{ props.row.planName }}
                 </b-table-column>
-                <b-table-column field="isFree" label="Gratis?">
+                <b-table-column field="isFree" label="Free?">
                     <b-icon
                             :icon="props.row.isFree ? 'checkbox-marked' : 'close-box'"
                             :type="props.row.isFree ? 'is-success' : 'is-danger'">
@@ -33,10 +33,10 @@
                 <b-table-column field="pricePerMonth" label="Costs per Month">
                     {{ props.row.pricePerMonth }}$
                 </b-table-column>
-                <b-table-column field="billingInfo" label="Accounting number">
+                <b-table-column field="billingInfo" label="Accounting Number">
                     {{ props.row.billingInfo }}
                 </b-table-column>
-                <b-table-column field="userRole" label="Your role">
+                <b-table-column field="userRole" label="Your Role">
                     {{ props.row.userRole }}
                 </b-table-column>
             </template>
