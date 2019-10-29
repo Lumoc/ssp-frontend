@@ -3,11 +3,11 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">attach_money</i> Show/Adjust Sematext Logsene Accounting Number
+                    <h1 class="title"><i class="material-icons">attach_money</i> Change Sematext Logsene Accounting Number
                     </h1>
                 </div>
                 <h2 class="subtitle">
-                    You can show or adjust your Sematext Logsene app accounting number here</h2>
+                    You can adjust your Sematext Logsene app accounting number here</h2>
             </div>
         </div>
         <br>

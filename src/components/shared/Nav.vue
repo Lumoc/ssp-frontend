@@ -28,13 +28,13 @@
                         <router-link to="/ose/newpullsecret" class="navbar-item">Create Docker Pull-Secret</router-link>
                         <hr class="navbar-divider">
                         <router-link to="/ose/volume/new" class="navbar-item">
-                            Create persistent volume
+                            Create Persistent Volume
                         </router-link>
                         <router-link to="/ose/volume/grow" class="navbar-item">
-                            Expand persistent volume
+                            Expand Persistent Volume
                         </router-link>
                         <router-link to="/ose/volume/fixgluster" class="navbar-item">
-                            Generate new GlusterFS Objects
+                            Recreate GlusterFS Configuration
                         </router-link>
                     </div>
                 </div>
@@ -65,11 +65,11 @@
                         Sematext
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/sematext/applist" class="navbar-item">Show Logsene-Apps</router-link>
-                        <router-link to="/sematext/newapp" class="navbar-item">Create Logsene-Apps</router-link>
-                        <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene-Apps Daily Volume & Limit
+                        <router-link to="/sematext/applist" class="navbar-item">Show Logsene Apps</router-link>
+                        <router-link to="/sematext/newapp" class="navbar-item">Create Logsene App</router-link>
+                        <router-link to="/sematext/changeplan" class="navbar-item">Change Logsene App Daily Volume & Limit
                         </router-link>
-                        <router-link to="/sematext/changebilling" class="navbar-item">Show/Adjust Logsene-Apps Project &
+                        <router-link to="/sematext/changebilling" class="navbar-item">Change Logsene App Project &
                             Accounting Number
                         </router-link>
                     </div>
