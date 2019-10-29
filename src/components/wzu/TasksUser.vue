@@ -43,7 +43,7 @@
     };
 
     // Override and merge the dictionaries
-    Validator.localize('de', dictionary);
+    Validator.localize('en', dictionary);
 
     export default {
         data() {
