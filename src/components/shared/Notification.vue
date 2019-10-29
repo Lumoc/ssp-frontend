@@ -9,6 +9,7 @@
 <template>
     <b-notification v-if="notification && notification.type"
                has-icon
+               @close="resetState"
                :type="'is-' + notification.type">
         <span v-html="notification.message"></span>
     </b-notification>
@@ -19,6 +20,11 @@
     computed: {
       notification() {
         return this.$store.state.notification;
+      }
+    },
+    methods: {
+      resetState() {
+        this.$store.state.notification = "";
       }
     }
   };
