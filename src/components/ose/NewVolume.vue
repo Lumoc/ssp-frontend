@@ -15,13 +15,10 @@
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
             <template v-if="technology == 'nfs'">
-                <b-field label="Size"
-                        :type="errors.has('Grösse') ? 'is-danger' : ''"
-                        :message="errors.first('Grösse')">
+                <b-field label="Size">
                     <b-input v-model.trim="size"
                             placeholder="1G"
-                            name="Grösse"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+[G]$/}}">
+                            required pattern="^[0-9]+[G]$">
                     </b-input>
                 </b-field>
                 <b-message type="is-info">
@@ -29,13 +26,10 @@
                 </b-message>
             </template>
             <template v-else>
-                <b-field label="Size"
-                        :type="errors.has('Grösse') ? 'is-danger' : ''"
-                        :message="errors.first('Grösse')">
+                <b-field label="Size">
                     <b-input v-model.trim="size"
                             placeholder="500M"
-                            name="Grösse"
-                            v-validate="{ rules: { required: true, regex: /^[0-9]+[GM]$/}}">
+                            required pattern="^[0-9]+[GM]$">
                     </b-input>
                 </b-field>
 
@@ -45,19 +39,17 @@
 
             </template>
 
-            <b-field label="Name of the Persistent Volume Claim"
-                     :type="errors.has('PVC-Name') ? 'is-danger' : ''"
-                     :message="errors.first('PVC-Name')">
+            <b-field label="Name of the Persistent Volume Claim">
                 <b-input v-model.trim="pvcName"
                          name="PVC-Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }">
+                         required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$">
                 </b-input>
             </b-field>
             <b-message type="is-info">
                 The name of the persistent volume claim can only contain lower case letters, numbers or "-"
             </b-message>
 
-            <label class="label>Access Mode</label>
+            <label class="label">Access Mode</label>
             <b-field>
                 <b-radio-button v-model="mode"
                                 native-value="ReadWriteOnce"
@@ -82,8 +74,7 @@
             </b-message>
             <br>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create a persistent volume
             </button>
             <div v-if="progress">
@@ -138,26 +129,22 @@
     },
     methods: {
       createVolume: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
-            this.$http.post(this.$store.state.backendURL + '/api/ose/volume', {
-              clusterid: this.clusterid,
-              project: this.project,
-              size: this.size,
-              pvcName: this.pvcName,
-              mode: this.mode,
-              technology: this.technology
-            }).then((res) => {
-              if (res.body.data.JobId) {
-                this.pollJob(this.clusterid, res.body.data.JobId)
-              } else {
-                this.loading = false;
-              }
-            }, () => {
-              this.loading = false;
-            });
+        this.loading = true;
+        this.$http.post(this.$store.state.backendURL + '/api/ose/volume', {
+          clusterid: this.clusterid,
+          project: this.project,
+          size: this.size,
+          pvcName: this.pvcName,
+          mode: this.mode,
+          technology: this.technology
+        }).then((res) => {
+          if (res.body.data.JobId) {
+            this.pollJob(this.clusterid, res.body.data.JobId)
+          } else {
+            this.loading = false;
           }
+        }, () => {
+          this.loading = false;
         });
       },
       pollJob: function(clusterid, job) {

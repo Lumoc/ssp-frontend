@@ -12,10 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateSematextPlanAndLimits">
-            <b-field label="Logsene App"
-                     :type="errors.has('Logsene-App') ? 'is-danger' : ''"
-                     :message="errors.first('Logsene-App')">
-
+            <b-field label="Logsene App">
                 <b-select placeholder="Choose your app"
                           :loading="loading"
                           v-model="appId"
@@ -37,10 +34,7 @@
                 - Sematext will reject logs if the usage increases above the "Daily Volume Limit"<br/>
             </b-message>
 
-            <b-field label="New Logsene Plan"
-                     :type="errors.has('Neuer Logsene-Plan') ? 'is-danger' : ''"
-                     :message="errors.first('Neuer Logsene-Plan')">
-
+            <b-field label="New Logsene Plan">
                 <b-select placeholder="Choose your Sematext plan"
                           :loading="loading"
                           v-model="planId"
@@ -50,22 +44,22 @@
                             v-for="plan in plans"
                             :value="plan.planId"
                             :key="plan.name">
-                        {{ plan.name }}, {{ plan.pricePerMonth }}$, Default MB: {{ plan.defaultDailyMaxLimitSizeMb }}
+                        {{ plan.name }}, {{ plan.pricePerMonth }}$, Limit: {{ plan.defaultDailyMaxLimitSizeMb }}MB
                     </option>
                 </b-select>
             </b-field>
 
-            <b-field label="Daily Volume Limit"
-                     :type="errors.has('Limite') ? 'is-danger' : ''"
-                     :message="errors.first('Limite')">
-                <b-input v-model.trim="limit"
-                         name="Limite"
-                         v-validate="'required'">
-                </b-input>
+            <b-field label="Daily Volume Limit">
+                <b-field>
+                    <b-input v-model.trim="limit" required>
+                    </b-input>
+                    <p class="control">
+                        <span class="button is-static">MB</span>
+                    </p>
+                </b-field>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Save selected
             </button>
         </form>
@@ -117,20 +111,16 @@
                 });
             },
             updateSematextPlanAndLimits: function () {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+                this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene/' + this.appId + '/plan', {
-                            planId: this.planId,
-                            limit: parseInt(this.limit)
-                        }).then(() => {
-                            this.loading = false;
-                            this.getUsersApps();
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
+                this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene/' + this.appId + '/plan', {
+                    planId: this.planId,
+                    limit: parseInt(this.limit)
+                }).then(() => {
+                    this.loading = false;
+                    this.getUsersApps();
+                }, () => {
+                    this.loading = false;
                 });
             }
         }

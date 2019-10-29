@@ -22,11 +22,11 @@ Vue.use(VueRouter);
 Vue.use(Buefy);
 Vue.use(VueResource);
 
-Moment.locale('de')
+Moment.locale('en')
 Moment.tz.setDefault("Europe/Zurich")
 Vue.prototype.moment = Moment
 
-Validator.localize('de', VeeValidateGerman);
+Validator.localize('en', VeeValidateGerman);
 Vue.use(VeeValidate);
 
 // Support endsWith on old browsers

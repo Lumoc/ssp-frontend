@@ -104,7 +104,7 @@
         }
     };
 
-    Validator.localize('de', dictionary);
+    Validator.localize('en', dictionary);
     export default {
         data() {
             return {
