@@ -44,21 +44,26 @@
                             v-for="plan in plans"
                             :value="plan.planId"
                             :key="plan.name">
-                        {{ plan.name }}, {{ plan.pricePerMonth }}$, Default MB: {{ plan.defaultDailyMaxLimitSizeMb }}
+                        {{ plan.name }}, {{ plan.pricePerMonth }}$, Default limit: {{ plan.defaultDailyMaxLimitSizeMb }}MB
                     </option>
                 </b-select>
             </b-field>
 
-            <b-field label="Daily MB Limit"
+            <b-field label="Daily Volume Limit"
                      :type="errors.has('Limite') ? 'is-danger' : ''"
                      :message="errors.first('Limite')">
-                <b-input v-model.trim="limit"
-                         name="Limite"
-                         v-validate="'required'">
-                </b-input>
+                <b-field>
+                    <b-input v-model.trim="limit"
+                            name="Limite"
+                            v-validate="'required'">
+                    </b-input>
+                    <p class="control">
+                        <span class="button is-static">MB</span>
+                    </p>
+                </b-field>
             </b-field>
 
-            <b-field label="Name of the project"
+            <b-field label="Project Name"
                      :type="errors.has('Projekt') ? 'is-danger' : ''"
                      :message="errors.first('Projekt')">
                 <b-input v-model.trim="project"
