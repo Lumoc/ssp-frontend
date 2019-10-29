@@ -21,28 +21,25 @@
         </article>
         <form v-on:submit.prevent="newTestProject">
             <cluster-select v-model="clusterid" feature="testprojects"></cluster-select>
-            <b-field>
-                <label class="label">Trial Project Name</label>
-            </b-field>
-            <b-field class="has-addons" :type="errors.has('Testprojekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Testprojekt-Name')">
-                <p class="control">
-                    <span class="button is-static">{{ username }}-</span>
-                </p>
-                <p class="control">
+            <b-field label="Trial Project Name">
+                <b-field>
+                    <p class="control">
+                        <span class="button is-static">{{ username }}-</span>
+                    </p>
                     <b-input v-model.trim="testprojectname" name="Trial project name"
-                             v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
-                             ref="autofocus"
-                             placeholder="testprojekt">
+                            required
+                            pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
+                            ref="autofocus"
+                            placeholder="testprojekt">
                     </b-input>
-                </p>
+                </b-field>
             </b-field>
 
             <b-message type="is-info">
                 The project name can only contain lower case letters, numbers or "-"
             </b-message>
 
-            <button :disabled="errors.any()" v-bind:class="{'is-loading': loading}" class="button is-primary">
+            <button v-bind:class="{'is-loading': loading}" class="button is-primary">
                 Create new trial project
             </button>
         </form>
@@ -69,19 +66,15 @@
     },
     methods: {
       newTestProject: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/testproject', {
-              clusterid: this.clusterid,
-              project: this.testprojectname
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/ose/testproject', {
+          clusterid: this.clusterid,
+          project: this.testprojectname
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     }

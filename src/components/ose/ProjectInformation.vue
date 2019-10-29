@@ -31,8 +31,7 @@
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Change account management
             </button>
         </form>

@@ -14,23 +14,18 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="Username"
-                     :type="errors.has('Username') ? 'is-danger' : ''"
-                     :message="errors.first('Username')">
-                <b-input v-model.trim="username" name="username"></b-input>
+            <b-field label="Username">
+                <b-input v-model.trim="username" required></b-input>
             </b-field>
 
-            <b-field label="Password"
-                     :type="errors.has('Password') ? 'is-danger' : ''"
-                     :message="errors.first('Password')">
-                <b-input v-model.trim="password" name="password" type="password" password-reveal></b-input>
+            <b-field label="Password">
+                <b-input v-model.trim="password" type="password" password-reveal required></b-input>
             </b-field>
             <b-message type="is-info">
                 "Username" and "Password" from the email, that was sent after you created an Artifactory Docker-Repository. <a target="_blank" href="https://confluence.sbb.ch/x/jwf5Q">More infos</a>
 	    </b-message>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create secret
             </button>
         </form>
@@ -56,21 +51,17 @@
     },
     methods: {
         createPullSecret: function () {
-            this.$validator.validateAll().then((result) => {
-                if (result) {
-                    this.loading = true;
+            this.loading = true;
 
-                    this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
-                        clusterid: this.clusterid,
-                        project: this.project,
-                        username: this.username,
-                        password: this.password
-                    }).then(() => {
-                        this.loading = false;
-                    }, () => {
-                        this.loading = false;
-                    });
-                }
+            this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
+                clusterid: this.clusterid,
+                project: this.project,
+                username: this.username,
+                password: this.password
+            }).then(() => {
+                this.loading = false;
+            }, () => {
+                this.loading = false;
             });
         }
     }

@@ -15,7 +15,7 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <button :disabled="errors.any()" v-bind:class="{'is-loading': loading}" class="button is-primary">
+            <button v-bind:class="{'is-loading': loading}" class="button is-primary">
                 Show list of admins
             </button>
         </form>
@@ -62,23 +62,18 @@
     },
     methods: {
       getAdminList: function() {
-            console.log(this.project)
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
-            this.$http.get(this.$store.state.backendURL + '/api/ose/project/admins', {
-                params: {
-                  clusterid: this.clusterid,
-                  project: this.project
-                }
-            }).then((res) => {
-              this.loading = false;
-              this.data = res.body.admins;
-            }, () => {
-              this.loading = false;
-            });
-          }
-        });
+          this.loading = true;
+          this.$http.get(this.$store.state.backendURL + '/api/ose/project/admins', {
+              params: {
+                clusterid: this.clusterid,
+                project: this.project
+              }
+          }).then((res) => {
+            this.loading = false;
+            this.data = res.body.admins;
+          }, () => {
+            this.loading = false;
+          });
       }
     }
   };

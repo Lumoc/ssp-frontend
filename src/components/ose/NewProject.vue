@@ -12,12 +12,9 @@
         <br>
         <form v-on:submit.prevent="newProject">
             <cluster-select v-model="clusterid" feature="newprojects"></cluster-select>
-            <b-field label="OpenShift Project"
-                     :type="errors.has('Projekt-Name') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt-Name')">
+            <b-field label="OpenShift Project">
                 <b-input v-model.trim="project"
-                         name="Projekt-Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
+                         required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
                          ref="autofocus"
                          placeholder="projekt-name">
                 </b-input>
@@ -29,12 +26,10 @@
                 - No productive projects on Test04</br>
             </b-message>
 
-            <b-field label="Accounting Number"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
+            <b-field label="Accounting Number">
                 <b-input v-model.trim="billing"
                          name="Kontierungsnummer"
-                         v-validate="'required'">
+                         required>
                 </b-input>
             </b-field>
             <b-message type="is-info">
@@ -42,20 +37,16 @@
             Please only fill in correct information. This can be changed later at: <a href="#/ose/project" target="_blank">Change project information</a>
             </b-message>
 
-            <b-field label="Mega ID"
-                     :type="errors.has('Mega ID') ? 'is-danger' : ''"
-                     :message="errors.first('Mega ID')">
+            <b-field label="Mega ID">
                 <b-input v-model.trim="megaId"
-                         name="Mega ID"
-                         v-validate.rules="{ required: true, regex: /^[A-Z0-9]{16}$/}">
+                         required pattern="^[A-Z0-9]{16}$">
                 </b-input>
             </b-field>
             <b-message type="is-info">
                 Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
             </b-message>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create new project
             </button>
         </form>
@@ -79,21 +70,17 @@
     },
     methods: {
       newProject: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
-              clusterid: this.clusterid,
-              project: this.project,
-              billing: this.billing,
-              megaId: this.megaId
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
+          clusterid: this.clusterid,
+          project: this.project,
+          billing: this.billing,
+          megaId: this.megaId
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     }

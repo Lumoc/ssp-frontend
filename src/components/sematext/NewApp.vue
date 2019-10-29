@@ -12,12 +12,9 @@
         </div>
         <br>
         <form v-on:submit.prevent="newLogseneApp">
-            <b-field label="App Name"
-                     :type="errors.has('App-Name') ? 'is-danger' : ''"
-                     :message="errors.first('App-Name')">
+            <b-field label="App Name">
                 <b-input v-model.trim="appName"
-                         name="App-Name"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }"
+                         required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
                          ref="autofocus"
                          placeholder="projekt">
                 </b-input>
@@ -31,10 +28,7 @@
                 - Sematext will reject logs if the usage increases above the "Daily Volume Limit"
             </b-message>
 
-            <b-field label="Logsene-Plan"
-                     :type="errors.has('Logsene-Plan') ? 'is-danger' : ''"
-                     :message="errors.first('Logsene-Plan')">
-
+            <b-field label="Logsene-Plan">
                 <b-select placeholder="Choose your new Sematext Logsene plan"
                           :loading="loading"
                           v-model="planId"
@@ -49,13 +43,9 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Daily Volume Limit"
-                     :type="errors.has('Limite') ? 'is-danger' : ''"
-                     :message="errors.first('Limite')">
+            <b-field label="Daily Volume Limit">
                 <b-field>
-                    <b-input v-model.trim="limit"
-                            name="Limite"
-                            v-validate="'required'">
+                    <b-input v-model.trim="limit" required>
                     </b-input>
                     <p class="control">
                         <span class="button is-static">MB</span>
@@ -63,32 +53,22 @@
                 </b-field>
             </b-field>
 
-            <b-field label="Project Name"
-                     :type="errors.has('Projekt') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt')">
-                <b-input v-model.trim="project"
-                         name="Projekt"
-                         v-validate="'required'">
+            <b-field label="Project Name">
+                <b-input v-model.trim="project" required>
                 </b-input>
             </b-field>
 
-            <b-field label="New Accounting Number"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
-                <b-input v-model.trim="billing"
-                         name="Kontierungsnummer"
-                         v-validate="'required'">
+            <b-field label="New Accounting Number">
+                <b-input v-model.trim="billing" required>
                 </b-input>
             </b-field>
 
             <b-field label="Discount Code">
-                <b-input v-model.trim="discountcode"
-                         name="Discountcode">
+                <b-input v-model.trim="discountcode">
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Logsene App erstellen
             </button>
         </form>
@@ -142,23 +122,19 @@
                 });
             },
             newLogseneApp: function() {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+                this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene', {
-                            appName: this.appName,
-                            billing: this.billing,
-                            planId: this.planId,
-                            limit: parseInt(this.limit),
-                            discountCode: this.discountcode,
-                            project: this.project
-                        }).then(() => {
-                            this.loading = false;
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
+                this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene', {
+                    appName: this.appName,
+                    billing: this.billing,
+                    planId: this.planId,
+                    limit: parseInt(this.limit),
+                    discountCode: this.discountcode,
+                    project: this.project
+                }).then(() => {
+                    this.loading = false;
+                }, () => {
+                    this.loading = false;
                 });
             }
      	}

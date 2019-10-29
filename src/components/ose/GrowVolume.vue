@@ -16,33 +16,26 @@
 
         <form v-on:submit.prevent="growVolume">
             <cluster-select v-model="clusterid"></cluster-select>
-            <b-field label="Persistent Volume Name"
-                     :type="errors.has('PV-Name') ? 'is-danger' : ''"
-                     :message="errors.first('PV-Name')">
+            <b-field label="Persistent Volume Name">
                 <b-input v-model.trim="pvName"
-                         name="PV-Name"
-                         v-validate="'required'">
+                         required>
                 </b-input>
             </b-field>
             <b-message type="is-info">
                 Not the name of the Persistent Volume Claim (PVC) itself, but the label written in the OpenShift console under "Storage" > column "Status" > <strong>fat</strong>
             </b-message>
 
-            <b-field label="New Size"
-                     :type="errors.has('Grösse') ? 'is-danger' : ''"
-                     :message="errors.first('Grösse')">
+            <b-field label="New Size">
                 <b-input v-model.trim="newSize"
                          placeholder="100M"
-                         name="Grösse"
-                         v-validate="{ rules: { required: true, regex: /^[0-9]+[GM]$/}}">
+                         required pattern="^[0-9]+[GM]$">
                 </b-input>
             </b-field>
             <b-message type="is-info">
                 The volume is being resized to the provided size. Shrinking is not possible.e.g 100M or 5G
             </b-message>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Expand persistent volume
             </button>
         </form>
@@ -66,21 +59,17 @@
     },
     methods: {
       growVolume: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/volume/grow', {
-              clusterid: this.clusterid,
-              project: this.project,
-              newSize: this.newSize,
-              pvName: this.pvName
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/ose/volume/grow', {
+          clusterid: this.clusterid,
+          project: this.project,
+          newSize: this.newSize,
+          pvName: this.pvName
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     }

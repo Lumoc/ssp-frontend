@@ -14,30 +14,23 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="New CPU Quota [cores]"
-                     :type="errors.has('CPU') ? 'is-danger' : ''"
-                     :message="errors.first('CPU')">
+            <b-field label="New CPU Quota [cores]">
                 <b-input type="number"
-                         v-validate="'required'"
-                         name="CPU"
+                         required
                          v-model.number="cpu"
                          min="1">
                 </b-input>
             </b-field>
 
-            <b-field label="New Memory Quota [GB]"
-                     :type="errors.has('Memory') ? 'is-danger' : ''"
-                     :message="errors.first('Memory')">
+            <b-field label="New Memory Quota [GB]">
                 <b-input type="number"
                          v-model.number="memory"
-                         v-validate="'required'"
-                         name="Memory"
+                         required
                          min="2">
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Adjust quotas
             </button>
         </form>
@@ -63,21 +56,17 @@
     },
     methods: {
       editQuotas: function() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.loading = true;
+        this.loading = true;
 
-            this.$http.post(this.$store.state.backendURL + '/api/ose/quotas', {
-              clusterid: this.clusterid,
-              project: this.project,
-              cpu: this.cpu,
-              memory: this.memory
-            }).then(() => {
-              this.loading = false;
-            }, () => {
-              this.loading = false;
-            });
-          }
+        this.$http.post(this.$store.state.backendURL + '/api/ose/quotas', {
+          clusterid: this.clusterid,
+          project: this.project,
+          cpu: this.cpu,
+          memory: this.memory
+        }).then(() => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     }

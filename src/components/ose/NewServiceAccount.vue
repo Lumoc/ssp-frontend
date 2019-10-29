@@ -14,12 +14,9 @@
             <cluster-select v-model="clusterid"></cluster-select>
             <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
 
-            <b-field label="Service-Account Name"
-                     :type="errors.has('Service-Account') ? 'is-danger' : ''"
-                     :message="errors.first('Service-Account')">
+            <b-field label="Service-Account Name">
                 <b-input v-model.trim="serviceAccount"
-                         name="Service-Account"
-                         v-validate="{ rules: { required: true, regex: /^[a-z0-9]([-a-z0-9]*[a-z0-9])$/} }">
+                         required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$">
                 </b-input>
             </b-field>
             <b-message type="is-info">
@@ -32,16 +29,12 @@
                 </b-checkbox>
             </b-field>
             <b-field v-if="createJenkinsCredential"
-                    label="Jenkins Bitbucket/Team Job Name"
-                     :type="errors.has('Jenkins Bitbucket/Team Job Name') ? 'is-danger' : ''"
-                     :message="errors.first('Jenkins Bitbucket/Team Job Name')">
-                <b-input v-model.trim="organizationKey"
-                         name="Jenkins Organization-Key" required>
+                    label="Jenkins Bitbucket/Team Job Name">
+                <b-input v-model.trim="organizationKey" required>
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create service account
             </button>
         </form>
@@ -70,22 +63,18 @@
     },
     methods: {
         createServiceAccount: function () {
-            this.$validator.validateAll().then((result) => {
-                if (result) {
-                    this.loading = true;
+             this.loading = true;
 
-                    this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
-                        clusterid: this.clusterid,
-                        project: this.project,
-                        organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
-                        serviceAccount: this.serviceAccount
-                    }).then(() => {
-                        this.loading = false;
-                    }, () => {
-                        this.loading = false;
-                    });
-                 }
-            });
+             this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
+                 clusterid: this.clusterid,
+                 project: this.project,
+                 organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
+                 serviceAccount: this.serviceAccount
+             }).then(() => {
+                 this.loading = false;
+             }, () => {
+                 this.loading = false;
+             });
          }
       }
    };

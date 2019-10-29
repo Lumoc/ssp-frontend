@@ -12,10 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateSematextBilling">
-            <b-field label="Logsene-App"
-                     :type="errors.has('Logsene-App') ? 'is-danger' : ''"
-                     :message="errors.first('Logsene-App')">
-
+            <b-field label="Logsene-App">
                 <b-select placeholder="Choose your app"
                           :loading="loading"
                           v-model="appId"
@@ -29,26 +26,19 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Project Name"
-                     :type="errors.has('Projekt') ? 'is-danger' : ''"
-                     :message="errors.first('Projekt')">
+            <b-field label="Project Name">
                 <b-input v-model.trim="project"
                          name="Projekt"
-                         v-validate="'required'">
+                         required>
                 </b-input>
             </b-field>
 
-            <b-field label="New Accounting Number"
-                     :type="errors.has('Kontierungsnummer') ? 'is-danger' : ''"
-                     :message="errors.first('Kontierungsnummer')">
-                <b-input v-model.trim="billing"
-                         name="Kontierungsnummer"
-                         v-validate="'required'">
+            <b-field label="New Accounting Number">
+                <b-input v-model.trim="billing" required>
                 </b-input>
             </b-field>
 
-            <button :disabled="errors.any()"
-                    v-bind:class="{'is-loading': loading}"
+            <button v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Change accounting number
             </button>
         </form>
@@ -80,20 +70,16 @@
                 });
             },
             updateSematextBilling: function () {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.loading = true;
+                this.loading = true;
 
-                        this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene/' + this.appId, {
-                            project: this.project,
-                            billing: this.billing
-                        }).then(() => {
-                            this.loading = false;
-                            this.getUsersApps();
-                        }, () => {
-                            this.loading = false;
-                        });
-                    }
+                this.$http.post(this.$store.state.backendURL + '/api/sematext/logsene/' + this.appId, {
+                    project: this.project,
+                    billing: this.billing
+                }).then(() => {
+                    this.loading = false;
+                    this.getUsersApps();
+                }, () => {
+                    this.loading = false;
                 });
             }
         }
