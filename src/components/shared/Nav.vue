@@ -98,7 +98,6 @@
                         <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">Create AD group</router-link>
                         <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD group admin</router-link>
                         <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD group User</router-link>-->
-                        <router-link to="/wzu/alm" class="navbar-item">ALM User permissions</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User permissions</router-link>
                     </div>
                 </div>
