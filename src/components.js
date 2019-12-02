@@ -36,7 +36,6 @@ import WZUBitbucket from './components/wzu/BitbucketProjekt.vue';
 import WZUBitbucketRepo from './components/wzu/BitbucketRepository.vue';
 import WZUArtifactory from './components/wzu/Artifactory.vue';
 import WZUJenkinsCredentials from './components/wzu/JenkinsCredentials.vue';
-import WZUALM from './components/wzu/ALM.vue';
 import TasksUser from './components/wzu/TasksUser.vue';
 import WZUDevProxy from './components/wzu/DevProxy.vue';
 
@@ -94,7 +93,6 @@ export const LocalComponents = {
     WZUBitbucketRepo,
     WZUArtifactory,
     WZUJenkinsCredentials,
-    WZUALM,
     TasksUser,
     WZUDevProxy,
     ADGroup,

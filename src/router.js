@@ -86,9 +86,6 @@ const routes = [
         path: '/wzu/jenkinscredentials', component: LocalComponents.WZUJenkinsCredentials
     },
     {
-        path: '/wzu/alm', component: LocalComponents.WZUALM
-    },
-    {
         path: '/wzu/tasksuser', component: LocalComponents.TasksUser
     },
     {
