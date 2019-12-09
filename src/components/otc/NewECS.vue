@@ -23,8 +23,8 @@
         <form v-on:submit.prevent="newECS">
             <b-field label="Project/Product Name">
                 <b-input type="text"
-                         pattern="^[a-zA-Z0-9\-]+$"
-                         validation-message="Project must be two characters long and only contain letters, numbers and dashes"
+                         pattern="^[a-z0-9\-]+$"
+                         validation-message="Project must be two characters long and only contain lowercase letters, numbers and dashes"
                          maxlength=6
                          minlength=2
                          required
@@ -243,7 +243,7 @@
             </b-field>
             <b-field>
                 <b-checkbox required>
-                    I confirm that my application meets the minimum operational requirements
+                    I confirm that my application meets the <a href="https://confluence.sbb.ch/x/W4JNPw" target="_blank">minimum operational requirements</a>
                 </b-checkbox>
             </b-field>
 
