@@ -114,10 +114,9 @@
                 </div>
             </div>
 
-            <div class="navbar-end">
-                <!--<router-link to="/tower/jobs" class="navbar-item"><b-tooltip position="is-bottom" label="Jobs"><b-icon icon="view-dashboard"></b-icon></b-tooltip></router-link>-->
-                <router-link to="/tower/jobs" class="navbar-item">Jobs</router-link>
-                <a v-if="user" class="navbar-item">
+            <div v-if="user" class="navbar-end">
+                <router-link v-if="features.otc.enabled" to="/tower/jobs" class="navbar-item">Jobs</router-link>
+                <a class="navbar-item">
                     <b-icon icon="face"></b-icon>
                     &nbsp; Hello {{ user.firstname }}!
                 </a>

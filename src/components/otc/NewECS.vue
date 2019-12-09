@@ -241,6 +241,11 @@
                          required>
                 </b-input>
             </b-field>
+            <b-field>
+                <b-checkbox required>
+                    I confirm that my application meets the minimum operational requirements
+                </b-checkbox>
+            </b-field>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
