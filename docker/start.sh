@@ -15,7 +15,7 @@ if [ -n "$SSO_REALM_URL" ]; then
     sed -i "s#https://sso.sbb.ch/auth#$SSO_REALM_URL#g" /usr/share/nginx/html/main.*.js
 fi
 if [ -n "$SSO_CLIENT_ID" ]; then
-    sed -i "s#client-ssp-dev#$SSO_CLIENT_ID#g" /usr/share/nginx/html/main.*.js
+    sed -i "s#d0b48c57#$SSO_CLIENT_ID#g" /usr/share/nginx/html/main.*.js
 fi
 if [ -n "$SSO_IDP_HINT" ]; then
     sed -i "s#adfs_sbb_prod#$SSO_IDP_HINT#g" /usr/share/nginx/html/main.*.js
