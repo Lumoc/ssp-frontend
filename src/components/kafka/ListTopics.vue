@@ -73,7 +73,7 @@
         methods: {
             getKafkaAutomation: function() {
                 this.$http.get(this.$store.state.backendURL + "/api/kafka/backend").then((res) => {
-                    this.kafkaAutomationUrl = res.body.url;
+                    this.kafkaAutomationUrl = res.body.backend_url;
                     this.loadEnvironments()
                 });
             },
