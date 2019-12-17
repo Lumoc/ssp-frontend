@@ -9,12 +9,12 @@
             </div>
         </div>
         <br>
-        <b-select v-model="selectedBackendUrl">
+        <b-select v-model="selectedEnvironmentId">
             <option
-                v-for="option in backends"
-                :value="option.url"
-                :key="option.name">
-                Environment: {{ option.name }}
+                v-for="option in environments"
+                :value="option.environmentId"
+                :key="option.environmentId">
+                Environment: {{ option.environmentId }}
             </option>
         </b-select>
         <br>
@@ -54,31 +54,40 @@
         data() {
             return {
                 data: [],
-                backends: [],
+                kafkaAutomationUrl: '',
+                environments: [],
                 loading: false,
-                selectedBackendUrl: ''
+                selectedEnvironmentId: ''
             };
         },
         watch: {
-            selectedBackendUrl(url) {
+            selectedEnvironmentId(url) {
                 if (url.length > 0) {
                     this.listTopics();
                 }
             }
         },
         mounted: function() {
-            this.getBackends();
+            this.getKafkaAutomation();
         },
         methods: {
-            getBackends: function() {
-                this.$http.get(this.$store.state.backendURL + "/api/kafka/backends").then((res) => {
-                    this.backends = res.body;
-                    this.selectedBackendUrl = this.backends[0].url;
+            getKafkaAutomation: function() {
+                this.$http.get(this.$store.state.backendURL + "/api/kafka/backend").then((res) => {
+                    this.kafkaAutomationUrl = res.body.backend_url;
+                    this.loadEnvironments()
                 });
             },
+
+            loadEnvironments: function() {
+                this.$http.get(this.kafkaAutomationUrl + "/api/environments/").then((res) => {
+                    this.environments = res.body;
+                    this.selectedEnvironmentId = this.environments[0].environmentId;
+                });
+            },
+
             listTopics: function() {
                 this.loading = true;
-                this.$http.get(this.selectedBackendUrl + "api/topics/", null, {
+                this.$http.get(this.kafkaAutomationUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null, {
                     headers: {
                         Accept: "*/*"
                     }

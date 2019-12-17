@@ -5,7 +5,7 @@ export const state = {
   wzuURL: 'http://localhost:8001',
   ssoRealmName: 'SBB_Public',
   ssoRealmURL: 'https://sso.sbb.ch/auth',
-  ssoClientID: 'client-ssp-dev',
+  ssoClientID: 'd0b48c57',
   ssoIdpHint: 'adfs_sbb_prod',
   user: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null'),
   notification: {}
