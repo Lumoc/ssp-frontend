@@ -9,6 +9,7 @@
             </div>
         </div>
         <br>
+        <h2 class="subtitle">Environments</h2>
         <b-field>
             <b-radio-button v-for="option in environments" v-bind:key="option.environmentId" v-model="selectedEnvironmentId"
                 :native-value="option.environmentId">

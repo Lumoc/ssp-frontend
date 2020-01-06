@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2 class="subtitle">Apps</h2>
         <b-field>
             <b-loading :is-full-page="false" :active.sync="loading"></b-loading>
             <b-radio-button v-for="option in apps" v-bind:key="option" v-model="app"
