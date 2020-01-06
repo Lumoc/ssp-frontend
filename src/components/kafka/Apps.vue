@@ -45,8 +45,7 @@
                         <table>
                             <div class="column">
                                 <table>
-                                    <tr v-for="scope in props.row.scopes" v-bind:key="scope">
-                                        
+                                    <tr v-for="scope in props.row.scopes" v-bind:key="scope">                                        
                                         <td>{{ scope }}</td>
                                     </tr>
                                 </table>
