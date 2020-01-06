@@ -9,6 +9,7 @@
         </b-field>
 
         <br>
+        <h2 class="subtitle">Admins</h2>
         <b-table :data="users" v-bind:class="{'is-loading': usersLoading}" narrowed>
             <template slot-scope="props">
                 <b-table-column field="firstName" label="First Name">
@@ -30,6 +31,7 @@
         </b-table>
 
         <br>
+        <h2 class="subtitle">Clients</h2>
         <b-table :data="clients" v-bind:class="{'is-loading': clientsLoading}" detailed narrowed>
             <template slot-scope="props">            
                 <b-table-column field="clientId" label="Client ID">
