@@ -9,14 +9,12 @@
             </div>
         </div>
         <br>
-        <b-select v-model="selectedEnvironmentId">
-            <option
-                v-for="option in environments"
-                :value="option.environmentId"
-                :key="option.environmentId">
-                Environment: {{ option.environmentId }}
-            </option>
-        </b-select>
+        <b-field>
+            <b-radio-button v-for="option in environments" v-bind:key="option.environmentId" v-model="selectedEnvironmentId"
+                :native-value="option.environmentId">
+                <span>{{ option.environmentFriendlyName }}</span>
+            </b-radio-button>
+        </b-field>
         <br>
         <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed>
             <template slot-scope="props">
@@ -33,13 +31,13 @@
                         <table>
                             <div class="column">
                                 <table>
-                                    <tr v-for="(value, name) in props.row.configs">
+                                    <tr v-for="(value, name) in props.row.configs" v-bind:key="name">
                                         <td>{{ name }}:</td>
                                         <td>{{ value }}</td>
                                     </tr>
                                 </table>
                             </div>
-                         </table>
+                        </table>
                     </div>
                 </div>
             </template>
@@ -54,40 +52,40 @@
         data() {
             return {
                 data: [],
-                kafkaAutomationUrl: '',
+                kafkaBackendUrl: '',
                 environments: [],
                 loading: false,
                 selectedEnvironmentId: ''
             };
         },
         watch: {
-            selectedEnvironmentId(url) {
-                if (url.length > 0) {
-                    this.listTopics();
+            selectedEnvironmentId: function() {
+                if (this.kafkaBackendUrl.length > 0) {
+                    this.fetchTopics();
                 }
             }
         },
         mounted: function() {
-            this.getKafkaAutomation();
+            this.fetchKafkaBackendUrl();
         },
         methods: {
-            getKafkaAutomation: function() {
+            fetchKafkaBackendUrl: function() {
                 this.$http.get(this.$store.state.backendURL + "/api/kafka/backend").then((res) => {
-                    this.kafkaAutomationUrl = res.body.backend_url;
-                    this.loadEnvironments()
+                    this.kafkaBackendUrl = res.body.backend_url;
+                    this.fetchEnvironments();
                 });
             },
 
-            loadEnvironments: function() {
-                this.$http.get(this.kafkaAutomationUrl + "/api/environments/").then((res) => {
+            fetchEnvironments: function() {
+                this.$http.get(this.kafkaBackendUrl + "/api/environments/").then((res) => {
                     this.environments = res.body;
                     this.selectedEnvironmentId = this.environments[0].environmentId;
                 });
             },
 
-            listTopics: function() {
+            fetchTopics: function() {
                 this.loading = true;
-                this.$http.get(this.kafkaAutomationUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null, {
+                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null, {
                     headers: {
                         Accept: "*/*"
                     }

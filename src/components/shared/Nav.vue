@@ -108,6 +108,7 @@
                         Kafka
                     </a>
                     <div class="navbar-dropdown">
+                        <router-link v-if="userIsKafkaServiceOwner()" to="/kafka/adminconsole" class="navbar-item">Admin Console</router-link>
                         <router-link to="/kafka/listtopics" class="navbar-item">Topic List</router-link>
                     </div>
                 </div>
@@ -117,7 +118,7 @@
                 <router-link v-if="features.otc.enabled" to="/tower/jobs" class="navbar-item">Jobs</router-link>
                 <a class="navbar-item">
                     <b-icon icon="face"></b-icon>
-                    &nbsp; Hello {{ user.firstname }}!
+                    &nbsp; Hello {{ user.firstName }}!
                 </a>
             </div>
         </div>
@@ -151,6 +152,11 @@
         },
         created: function () {
             this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
+        },
+        methods: {
+            userIsKafkaServiceOwner: function() {                
+                return this.$store.state.user.tokenParsed.resource_access["apim-kafka_automation_api-prod-aws"].roles.includes("service-owner");
+            }
         }
     }
 
