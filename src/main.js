@@ -66,6 +66,13 @@ Vue.http.interceptors.push(function (request, next) {
                     message: res.body.message
                 }
             });
+        } else if (res.status === 401) {
+            this.$store.commit('setNotification', {
+                notification: {
+                    type: 'danger',
+                    message: "Der Token ist abgelaufen. Bitte laden Sie die Seite neu."
+                }
+            });
         } else if (!res.ok) {
             this.$store.commit('setNotification', {
                 notification: {

@@ -44,6 +44,9 @@ import ADGroup from './components/ActiveDirectory/ADGroup.vue';
 import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
+import ListJobs from './components/tower/ListJobs.vue';
+import SingleJob from './components/tower/SingleJob.vue';
+
 // Kafka Components
 import ListTopics from './components/kafka/ListTopics.vue'
 
@@ -98,5 +101,7 @@ export const LocalComponents = {
     ADGroup,
     ADGroupAdmin,
     ADGroupUser,
+    ListJobs,
+    SingleJob,
     ListTopics
 };

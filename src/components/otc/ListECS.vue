@@ -1,40 +1,54 @@
+<style>
+    .groups {
+        color: #888;
+    }
+    .field.is-grouped > div, .field.is-grouped > button {
+        margin: 0 5px;
+    }
+</style>
 <template>
     <div>
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">cloud</i> Show Elastic Cloud Server</h1>
+                    <h1 class="title"><i class="material-icons">cloud</i> Your UnifiedOS Servers</h1>
                 </div>
-                <h2 class="subtitle">Your Elastic Cloud Servers will be listed here.</h2>
+                <h2 class="subtitle">Your UnifiedOS servers will be listed here.</h2>
             </div>
         </div>
         <br>
-       
-        <b-dropdown :disabled="!checkedRows.length"  class="media-left">
-            <button class="button is-danger" slot="trigger" v-bind:class="{'is-loading': loading}">
-                <span>Aktionen</span>
-                <b-icon icon="menu-down"></b-icon>
-            </button>            
 
-            <b-dropdown-item @click="stopECServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
-            <b-dropdown-item @click="startECServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
-            <b-dropdown-item @click="rebootECServers()">Neustart</b-dropdown-item>
-            <b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>
-        </b-dropdown>
+        <b-field grouped>
+            <b-dropdown :disabled="!checkedRows.length">
+                <b-button type="is-danger" slot="trigger" icon-right="menu-down" :loading="loading">
+                    Actions
+                </b-button>
 
-        <button class="button is-danger" @click="listECServers()" v-bind:class="{'is-loading': loading}">
-            <span>Update</span>
-        </button>
-        
-        <br><br>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" :checked-rows.sync="checkedRows" :narrowed="true" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id" 
-            :opened-detailed="getFirstId()">
+                <b-dropdown-item @click="stopECServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
+                <b-dropdown-item @click="startECServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
+                <b-dropdown-item @click="rebootECServers()">Reboot</b-dropdown-item>
+                <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
+            </b-dropdown>
+
+            <b-button type="is-danger" @click="listECServers()" :loading="loading">Update</b-button>
+            <b-taginput
+                expanded
+                v-model="tags"
+                :loading="loading"
+                :data="filteredMetadata"
+                autocomplete
+                :allow-new="false"
+                :open-on-focus="true"
+                icon="label"
+                placeholder="Filter by tag"
+                @typing="getFilteredMetadata"
+                @input="getFilteredData">
+            </b-taginput>
+        </b-field>
+        <b-table :data="filteredData" :loading="loading" :checked-rows.sync="checkedRows" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
-                </b-table-column>
-                <b-table-column field="owner" label="Owner" sortable>
-                    {{ props.row.owner }}
                 </b-table-column>
                 <b-table-column field="status" label="Status" sortable>
                     {{ props.row.status }}
@@ -58,7 +72,7 @@
                                 Image:
                             </td><td>
                                 {{ props.row.imageName }}
-                            </td></tr>                            
+                            </td></tr>
                             <tr><td>
                                 IP address:
                             </td><td>
@@ -71,18 +85,16 @@
                             <tr><td>
                                 Created:
                             </td><td>
-                                {{ new Date(props.row.created).toLocaleString("de-CH") }}
+                                {{ moment(props.row.created).format('LLL') }}
                             </td></tr>
-                            <tr><td>
-                                Mega ID:
-                            </td><td>
-                                {{ props.row.megaId }}
-                            </td></tr>
-                            <tr><td>
-                                Accounting number:
-                            </td><td>
-                                {{ props.row.billing }}
-                            </td></tr>
+                        </table>
+                    </div>
+                    <div class="column">
+                        <table>
+                            <tr v-for="(value, key) in props.row.metadata">
+                                <td>{{ key | replaceUnderscores }}:</td>
+                                <td>{{ value }}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -91,6 +103,7 @@
                 If you have ECS instances they will be listed here.
             </div>
         </b-table>
+        Servers are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>
     </div>
 </template>
 <script>
@@ -98,20 +111,67 @@
         data() {
             return {
                 data: [],
+                filteredData: [],
                 checkedRows: [],
-                loading: false
+                loading: false,
+                groups: '',
+                tags: [],
+                filteredMetadata: [],
+                metadata: [],
             };
         },
         mounted: function() {
             this.listECServers();
+            this.getADGroups();
+        },
+        filters: {
+            replaceUnderscores: function (value) {
+                if (!value) return ''
+                return value.replace("_", " ")
+            }
         },
         methods: {
+            getFilteredData: function() {
+                this.filteredData = this.data.filter(function(value) {
+                    let res = true
+                    for (let tag of this.tags) {
+                       var kv = tag.split("=")
+                       if (value.metadata[kv[0]] != kv[1]) {
+                            res = false
+                            break
+                        }
+                    }
+                    return res
+                }, this)
+            },
+            getMetadata: function() {
+                let result = new Set()
+                this.data.forEach(function(d) {
+                    for (var key in d.metadata) {
+                        result.add(key +"="+d.metadata[key])
+                    }
+                })
+                return [...result].sort()
+            },
+            getFilteredMetadata: function(text) {
+                this.filteredMetadata = this.metadata.filter((option) => {
+                    return option
+                        .toString()
+                        .toLowerCase()
+                        .indexOf(text.toLowerCase()) >= 0
+                })
+            },
             getFirstId: function() {
                 if (this.data.length > 0) {
                     return [this.data[0].id];
                 } else {
                     return [];
                 }
+            },
+            getCheckedServerNames: function() {
+                return this.checkedRows.map(function(row) {
+                    return row.name
+                })
             },
             getDeviceName: function(volume, serverId) {
                 var device = '';
@@ -124,22 +184,29 @@
             },
             listECServers: function() {
                 this.loading = true;
+                this.tags = [];
                 this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
-                    this.data = res.body.ecServers.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+                    this.data = res.body.ecServers;
+                    // filteredData is not computed and only updated when a tag is added or removed
+                    this.filteredData = this.data;
+                    this.metadata = this.getMetadata();
+                    // filteredMetadata is not computed and only updated when the user types something in the taginput
+                    this.filteredMetadata = this.metadata;
                     this.checkedRows = [];
                     this.loading = false;
                 }, () => {
                     this.loading = false;
                 });
             }, stopECServers: function() {
-                this.$dialog.confirm({
-                    title: 'Server Stoppen',
-                    message: 'Do you really want the selected servers to be stopped?',
-                    confirmText: 'Stoppen',
+                let message = "Do you really want to stop the following servers?<br><br>"
+                message += this.getCheckedServerNames().join('<br>')
+                this.$buefy.dialog.confirm({
+                    title: 'Shutdown Server',
+                    message: message,
+                    confirmText: 'Shutdown',
                     type: 'is-danger',
                     hasIcon: true,
-                    cancelText: 'Abbrechen',
-                    onConfirm: () => { 
+                    onConfirm: () => {
                         this.loading = true;
                         this.$http.post(this.$store.state.backendURL + '/api/otc/stopecs', { "ecServers" : this.checkedRows }
                         ).then((res) => {
@@ -150,14 +217,15 @@
                     }
                 })
             }, startECServers: function() {
-                this.$dialog.confirm({
-                    title: 'Server Starten',
-                    message: 'Do you really want the selected server to be started?',
-                    confirmText: 'Storten',
-                    type: 'is-danger',
+                let message = 'Do you really want to start the following servers?'
+                message += this.getCheckedServerNames().join('<br>')
+                this.$buefy.dialog.confirm({
+                    title: 'Start Servers',
+                    message: message,
+                    confirmText: 'Start',
+                    type: 'is-info',
                     hasIcon: true,
-                    cancelText: 'Abbrechen',
-                    onConfirm: () => { 
+                    onConfirm: () => {
                         this.loading = true;
                         this.$http.post(this.$store.state.backendURL + '/api/otc/startecs', { "ecServers" : this.checkedRows }
                         ).then((res) => {
@@ -168,14 +236,15 @@
                     }
                 })
             }, rebootECServers: function() {
-                this.$dialog.confirm({
-                    title: 'Server Neustorten',
-                    message: 'Do you really want the selected servers to be restarted?',
-                    confirmText: 'Neustorten',
+                let message = 'Do you really want to reboot the following servers?'
+                message += this.getCheckedServerNames().join('<br>')
+                this.$buefy.dialog.confirm({
+                    title: 'Reboot Servers',
+                    message: message,
+                    confirmText: 'Reboot',
                     type: 'is-danger',
                     hasIcon: true,
-                    cancelText: 'Abbrechen',
-                    onConfirm: () => { 
+                    onConfirm: () => {
                         this.loading = true;
                         this.$http.post(this.$store.state.backendURL + '/api/otc/rebootecs', { "ecServers" : this.checkedRows }
                         ).then((res) => {
@@ -186,13 +255,14 @@
                     }
                 })
             }, deleteECServers: function() {
-                this.$dialog.confirm({
-                    title: 'Server Löschen',
-                    message: 'Do you really want the selected server to be deleted?',
-                    confirmText: 'Löschen',
+                let message = 'Do you really want to delete the following servers?'
+                message += this.getCheckedServerNames().join('<br>')
+                this.$buefy.dialog.confirm({
+                    title: 'Delete Servers',
+                    message: message,
+                    confirmText: 'Delete',
                     type: 'is-danger',
                     hasIcon: true,
-                    cancelText: 'Abbrechen',
                     onConfirm: () => {
                         this.loading = true;
                         this.$http.post(this.$store.state.backendURL + '/api/otc/deleteecs', { "ecServers" : this.checkedRows }
@@ -219,7 +289,13 @@
                     }
                 });
                 return stopped
+            }, getADGroups: function() {
+                this.$http.get(this.$store.state.backendURL + '/api/ldap/groups', null).then((res) => {
+                    this.groups = res.body.sort().join(", ");
+                }, () => {
+                    // error
+                });
             }
         }
     };
-</scripa>
+</script>

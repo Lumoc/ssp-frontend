@@ -53,11 +53,11 @@
                 </div>
                 <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        OTC
+                        UOS
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/otc/listecs" class="navbar-item">Show Elastic Cloud Server</router-link>
-                        <router-link to="/otc/newecs" class="navbar-item">Create Elastic Cloud Server</router-link>
+                        <router-link to="/otc/listecs" class="navbar-item">Your UnifiedOS Servers</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Create a UnifiedOS Server</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
@@ -74,6 +74,7 @@
                         </router-link>
                     </div>
                 </div>
+
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -112,8 +113,9 @@
                 </div>
             </div>
 
-            <div class="navbar-end">
-                <a v-if="user" class="navbar-item">
+            <div v-if="user" class="navbar-end">
+                <router-link v-if="features.otc.enabled" to="/tower/jobs" class="navbar-item">Jobs</router-link>
+                <a class="navbar-item">
                     <b-icon icon="face"></b-icon>
                     &nbsp; Hello {{ user.firstname }}!
                 </a>

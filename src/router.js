@@ -101,6 +101,12 @@ const routes = [
         path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
     },
     {
+        path: '/tower/jobs', component: LocalComponents.ListJobs
+    },
+    {
+        path: '/tower/jobs/:jobID', component: LocalComponents.SingleJob, props: true
+    },
+    {
         path: '/kafka/listtopics', component: LocalComponents.ListTopics
     }
 ];
