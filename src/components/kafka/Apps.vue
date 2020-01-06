@@ -1,6 +1,7 @@
 <template>
     <div>
         <b-field>
+            <b-loading :is-full-page="false" :active.sync="loading"></b-loading>
             <b-radio-button v-for="option in apps" v-bind:key="option" v-model="app"
                 :native-value="option">
                 <span>{{ option }}</span>
@@ -9,7 +10,7 @@
 
         <br>
         <b-table :data="users" v-bind:class="{'is-loading': usersLoading}" narrowed>
-            <template slot-scope="props">            
+            <template slot-scope="props">
                 <b-table-column field="firstName" label="First Name">
                     {{ props.row.firstName }}
                 </b-table-column>
@@ -23,6 +24,9 @@
                     {{ props.row.email }}
                 </b-table-column>
             </template>
+            <div slot="empty" class="has-text-centered">
+                The users table is empty.
+            </div>
         </b-table>
 
         <br>
@@ -45,7 +49,7 @@
                         <table>
                             <div class="column">
                                 <table>
-                                    <tr v-for="scope in props.row.scopes" v-bind:key="scope">                                        
+                                    <tr v-for="scope in props.row.scopes" v-bind:key="scope">
                                         <td>{{ scope }}</td>
                                     </tr>
                                 </table>
@@ -54,6 +58,9 @@
                     </div>
                 </div>
             </template>
+            <div slot="empty" class="has-text-centered">
+                The clients table is empty.
+            </div>
         </b-table>
     </div>
 </template>
@@ -75,6 +82,12 @@
         watch: {
             selectedEnvironmentId: function() {
                 if (this.kafkaBackendUrl.length > 0) {
+
+                    this.clients = [];
+                    this.users = [];
+                    this.apps = [];
+                    this.app = [];
+
                     this.fetchApps();
                 }
             },
