@@ -18,12 +18,12 @@
         </b-field>
         <br>
         <h2 class="subtitle">Topics</h2>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed>
+        <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed default-sort="props.row.name">
             <template slot-scope="props">
-                <b-table-column field="name" label="Topic Name">
+                <b-table-column field="name" label="Topic Name" sortable>
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="partitions" label="Partitions">
+                <b-table-column field="partitions" label="Partitions" sortable>
                     {{ props.row.partitions }}
                 </b-table-column>
             </template>

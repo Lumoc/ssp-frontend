@@ -11,19 +11,24 @@
 
         <br>
         <h2 class="subtitle">Admins</h2>
+        <b-button type="is-primary" v-if="app.length > 0" @click="openNewAdminModal">New Admin</b-button>
+        <br><br>
         <b-table :data="users" v-bind:class="{'is-loading': usersLoading}" narrowed>
             <template slot-scope="props">
-                <b-table-column field="firstName" label="First Name">
+                <b-table-column field="firstName" label="First Name" sortable>
                     {{ props.row.firstName }}
                 </b-table-column>
-                <b-table-column field="lastName" label="Last Name">
+                <b-table-column field="lastName" label="Last Name" sortable>
                     {{ props.row.lastName }}
                 </b-table-column>                
-                <b-table-column field="username" label="Username">
+                <b-table-column field="username" label="Username" sortable>
                     {{ props.row.username }}
                 </b-table-column>
-                <b-table-column field="email" label="E-Mail">
+                <b-table-column field="email" label="E-Mail" sortable>
                     {{ props.row.email }}
+                </b-table-column>
+                <b-table-column field="delete" label="Delete" sortable>
+                    <b-button type="is-danger" @click="deleteAdmin(props.row.email)">Delete</b-button>
                 </b-table-column>
             </template>
             <div slot="empty" class="has-text-centered">
@@ -35,13 +40,13 @@
         <h2 class="subtitle">Clients</h2>
         <b-table :data="clients" v-bind:class="{'is-loading': clientsLoading}" detailed narrowed>
             <template slot-scope="props">            
-                <b-table-column field="clientId" label="Client ID">
+                <b-table-column field="clientId" label="Client ID" sortable>
                     {{ props.row.clientId }}
                 </b-table-column>
-                <b-table-column field="grantType" label="Grant Type">
+                <b-table-column field="grantType" label="Grant Type" sortable>
                     {{ props.row.grantType }}
                 </b-table-column>
-                <b-table-column field="description" label="Description">
+                <b-table-column field="description" label="Description" sortable>
                     {{ props.row.description }}
                 </b-table-column>
             </template>
@@ -70,7 +75,12 @@
 </template>
 
 <script>
+    import NewAdmin from './NewAdmin.vue';
+
     export default {
+        components: {
+            NewAdmin
+        },
         props: ["kafkaBackendUrl", "selectedEnvironmentId"],
         data() {
             return {
@@ -90,7 +100,7 @@
                     this.clients = [];
                     this.users = [];
                     this.apps = [];
-                    this.app = [];
+                    this.app = '';
 
                     this.fetchApps();
                 }
@@ -140,6 +150,44 @@
                     this.loading = false;
                 }, () => {
                     this.loading = false;
+                });
+            }, 
+            openNewAdminModal: function() {
+                let modalProps = {
+                    kafkaBackendUrl: this.kafkaBackendUrl,
+                    environmentId: this.selectedEnvironmentId,
+                    appName: this.app
+                }
+
+                const newAdminModal = this.$buefy.modal.open({
+                    parent: this,
+                    component: NewAdmin,
+                    hasModalCard: true,
+                    trapFocus: true,
+                    props: modalProps
+                });
+            },
+            deleteAdmin: function(email) {
+                this.$buefy.dialog.confirm({
+                    title: 'Warning: Deleting Admin',
+                    message: 'Are you sure you want to delete admin with e-mail ' + email + '?',
+                    cancelText: 'No, stop right now!',
+                    confirmText: 'Yes, delete this admin.',
+                    onConfirm: () => {
+                        this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + this.app + "/users/" + email, null, {
+                            headers: {
+                                Accept: "*/*"
+                            }
+                        }).then((res) => {
+                            this.$buefy.toast.open({
+                                duration: 5000,
+                                message: 'Admin with e-mail ' + email + ' deleted.',
+                                type: 'is-success'
+                            });
+
+                            this.fetchUsers(this.app);
+                        });
+                    }
                 });
             }
         }

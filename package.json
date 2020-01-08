@@ -9,7 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "buefy": "^0.8.4",
+    "buefy": "^0.8.9",
     "keycloak-js": "3.4.3",
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.21",

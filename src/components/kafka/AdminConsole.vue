@@ -46,7 +46,6 @@
                     this.fetchEnvironments();
                 });
             },
-
             fetchEnvironments: function() {
                 this.$http.get(this.kafkaBackendUrl + "/api/environments/").then((res) => {
                     this.environments = res.body;
