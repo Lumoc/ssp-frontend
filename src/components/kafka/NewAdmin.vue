@@ -42,7 +42,7 @@
                     }
                   });
 
-                  this.$emit("kafkaNewAdminAdded");
+                  this.$emit("kafka-new-admin-added");
                   
                   this.loading = false;
               }, () => {

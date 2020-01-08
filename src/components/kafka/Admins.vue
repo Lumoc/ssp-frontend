@@ -79,7 +79,7 @@
                     trapFocus: true,
                     props: modalProps,
                     events: {
-                        'kafkaNewAdminAdded': (value) => {
+                        'kafka-new-admin-added': (value) => {
                             this.fetchAdmins(this.app);
                         }
                     }
