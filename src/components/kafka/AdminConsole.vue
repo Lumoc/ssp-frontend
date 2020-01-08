@@ -29,10 +29,8 @@
         },
         data() {
             return {
-                data: [],
                 kafkaBackendUrl: '',
                 environments: [],
-                loading: false,
                 selectedEnvironmentId: ''
             };
         },

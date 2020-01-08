@@ -154,7 +154,10 @@
             this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
         },
         methods: {
-            userIsKafkaServiceOwner: function() {                
+            userIsKafkaServiceOwner: function() {
+                if (!this.$store.state.user.tokenParsed.resource_access.hasOwnProperty("apim-kafka_automation_api-prod-aws")) {
+                    return false;
+                }
                 return this.$store.state.user.tokenParsed.resource_access["apim-kafka_automation_api-prod-aws"].roles.includes("service-owner");
             }
         }

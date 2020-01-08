@@ -10,8 +10,8 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">Close</button>
-        <button class="button is-primary">Add New Admin</button>
+        <b-button class="button" type="button" @click="$parent.close()">Close</b-button>
+        <b-button type="is-primary" :loading="loading" native-type="submit">Add New Admin</b-button>
       </footer>
     </div>
   </form>
@@ -28,35 +28,34 @@
         },
         methods: {
             addNewAdmin: function() {
-              if (typeof this.email === 'undefined' || this.email === null) {
+              if (this.email == null) {
                 return;
               }
-
-              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/admin/apps/" + this.appName + "/users/" + this.email, null, {
-                  headers: {
-                      Accept: "*/*"
-                  }
-              }).then((res) => {
-                  this.$parent.close();
-
-                  this.$buefy.toast.open({
-                    duration: 5000,
-                    message: 'New admin with e-mail ' + this.email + ' added.',
-                    position: 'is-bottom',
-                    type: 'is-success'
+              this.loading = true;
+              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/admin/apps/" + this.appName + "/users/" + this.email, null).then((res) => {
+                  this.$parent.close();       
+                  
+                  this.$store.commit('setNotification', {
+                    notification: {
+                        type: 'success',
+                        message: 'New admin with e-mail ' + this.email + ' added.'
+                    }
                   });
 
-                  this.$parent.$parent.fetchUsers(this.appName);
-
+                  this.$emit("kafkaNewAdminAdded");
+                  
+                  this.loading = false;
               }, () => {
                   this.$parent.close();
 
-                  this.$buefy.toast.open({
-                    duration: 3000,
-                    message: 'Adding admin with email ' + this.email + ' failed. Please try again in a few minutes.',
-                    type: 'is-danger',
-                    position: 'is-bottom'
+                  this.$store.commit('setNotification', {
+                    notification: {
+                        type: 'danger',
+                        message: 'Adding admin with email ' + this.email + ' failed. Please try again in a few minutes.'
+                    }
                   });
+
+                  this.loading = false;
               });
             }
         }

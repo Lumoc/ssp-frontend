@@ -18,7 +18,7 @@
         </b-field>
         <br>
         <h2 class="subtitle">Topics</h2>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed default-sort="props.row.name">
+        <b-table :data="data" :loading="loading" detailed narrowed default-sort="props.row.name">
             <template slot-scope="props">
                 <b-table-column field="name" label="Topic Name" sortable>
                     {{ props.row.name }}
@@ -62,7 +62,7 @@
         },
         watch: {
             selectedEnvironmentId: function() {
-                if (this.kafkaBackendUrl.length > 0) {
+                if (this.kafkaBackendUrl.length) {
                     this.fetchTopics();
                 }
             }
@@ -87,11 +87,7 @@
 
             fetchTopics: function() {
                 this.loading = true;
-                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null, {
-                    headers: {
-                        Accept: "*/*"
-                    }
-                }).then((res) => {
+                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null).then((res) => {
                     this.data = res.data;
                     this.loading = false;
                 }, () => {
