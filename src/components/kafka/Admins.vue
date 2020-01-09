@@ -17,7 +17,7 @@
                 <b-table-column field="email" label="E-Mail" sortable>
                     {{ props.row.email }}
                 </b-table-column>
-                <b-table-column field="delete" label="Delete" sortable>
+                <b-table-column field="delete">
                     <b-button type="is-danger" @click="deleteAdmin(props.row.email)">Delete</b-button>
                 </b-table-column>
             </template>
@@ -70,7 +70,7 @@
                     kafkaBackendUrl: this.kafkaBackendUrl,
                     environmentId: this.selectedEnvironmentId,
                     appName: this.app
-                }
+                };
 
                 const newAdminModal = this.$buefy.modal.open({
                     parent: this,

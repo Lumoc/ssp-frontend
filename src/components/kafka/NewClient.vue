@@ -1,17 +1,17 @@
 <template>
-  <form v-on:submit.prevent="addNewAdmin()">
+  <form v-on:submit.prevent="addNewClient()">
     <div class="modal-card" style="width: auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">New Admin</p>
+        <p class="modal-card-title">New Client</p>
       </header>
       <section class="modal-card-body">
-        <b-field label="E-Mail">
-          <b-input type="email" v-model="email" :value="email" required></b-input>
+        <b-field label="Client ID">
+          <b-input type="text" v-model="clientId" :value="clientId" required></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
         <b-button class="button" type="button" @click="$parent.close()">Close</b-button>
-        <b-button type="is-primary" :loading="loading" native-type="submit">Add New Admin</b-button>
+        <b-button type="is-primary" :loading="loading" native-type="submit">Add New Client</b-button>
       </footer>
     </div>
   </form>
@@ -23,26 +23,26 @@
         data() {
             return {
                 loading: false,
-                email: ''   
+                clientId: ''   
             };
         },
         methods: {
-            addNewAdmin: function() {
-              if (this.email == null) {
+            addNewClient: function() {
+              if (this.clientId == null) {
                 return;
               }
               this.loading = true;
-              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/admin/apps/" + this.appName + "/users/" + this.email, null).then(() => {
+              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/admin/clients/" + this.clientId + "/" + this.appName, null).then(() => {
                   this.$parent.close();
                   
                   this.$store.commit('setNotification', {
                     notification: {
                         type: 'success',
-                        message: 'New admin with e-mail ' + this.email + ' added.'
+                        message: 'New client with ID ' + this.clientId + ' added.'
                     }
                   });
 
-                  this.$emit("kafka-new-admin-added");
+                  this.$emit("kafka-new-client-added");
                   
                   this.loading = false;
               }, () => {
@@ -51,7 +51,7 @@
                   this.$store.commit('setNotification', {
                     notification: {
                         type: 'danger',
-                        message: 'Adding admin with email ' + this.email + ' failed. Please try again in a few minutes.'
+                        message: 'Adding client with ID ' + this.clientId + ' failed. Please try again in a few minutes.'
                     }
                   });
 
