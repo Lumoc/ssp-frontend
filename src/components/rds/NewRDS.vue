@@ -24,12 +24,8 @@
             <b-field label="Instance Name">
                 <b-input type="text"
                          required
-                         v-model="extra_vars.otc_rds_instance_db_password">
+                         v-model="extra_vars.otc_rds_instance_name">
                 </b-input>
-            </b-field>
-
-            <b-field label="Version">
-                <b-select :loading="loading" v-model="version" required></b-select>
             </b-field>
 
             <b-field>
@@ -47,6 +43,12 @@
                 </b-select>
             </b-field>
 
+            <b-field label="Version">
+                <b-select :loading="loading" v-model="version" required>
+                    <option v-for="v in versions">{{ v }}</option>
+                </b-select>
+            </b-field>
+
             <b-field label="Flavor">
                 <b-select :loading="loading"
                           v-model="flavor"
@@ -54,8 +56,8 @@
                     <option
                             v-for="flavor in flavors"
                             :value="flavor"
-                            :key="flavor.name">
-                        {{ flavor.name + " (VCPUs: " + flavor.vcpus + ", RAM: " + flavor.ram/1024 + "GB)" }}
+                            :key="flavor.spec_code">
+                        {{ flavor.spec_code + " (VCPUs: " + flavor.vcpus + ", RAM: " + flavor.ram + "GB)" }}
                     </option>
                 </b-select>
             </b-field>
@@ -75,13 +77,49 @@
                             required
                             min="40"
                             max="4000"
-                            v-model.number="extra_vars.otc_rds_instance_volume_type">
+                            v-model.number="extra_vars.otc_rds_instance_volume_size">
                     </b-input>
                     <p class="control">
                         <span class="button is-static">GB</span>
                     </p>
                 </b-field>
             </b-field>
+
+            <b-field label="Keep Backup">
+                <b-field>
+                    <b-input type="number"
+                            required
+                            min="3"
+                            max="30"
+                            v-model.number="extra_vars.otc_rds_instance_backup_keep_days">
+                    </b-input>
+                    <p class="control">
+                        <span class="button is-static">days</span>
+                    </p>
+                </b-field>
+            </b-field>
+
+            <b-field>
+                <template slot="label">
+                    Backup Start Time
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="The backup will start sometime within this hour">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
+                <b-field>
+                    <b-input type="number"
+                            required
+                            min="0"
+                            max="23"
+                            v-model.number="backup_start_time">
+                    </b-input>
+                    <p class="control">
+                        <span class="button is-static">:00 - {{ backup_start_time + 1 }}:00</span>
+                    </p>
+                </b-field>
+            </b-field>
+
+            <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field label="Mega ID">
                 <b-input v-model="extra_vars.unifiedos_mega_id"
@@ -112,7 +150,7 @@
             <b-field>
                 <template slot="label">
                     Contact Email
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for alerts and notifications">
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for notifications">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
@@ -122,33 +160,8 @@
                 </b-input>
             </b-field>
 
-            <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
 
-            <b-field label="Keep Backup">
-                <b-field>
-                    <b-input type="number"
-                            required
-                            min="3"
-                            max="30"
-                            v-model.number="extra_vars.otc_rds_instance_volume_type">
-                    </b-input>
-                    <p class="control">
-                        <span class="button is-static">days</span>
-                    </p>
-                </b-field>
-            </b-field>
-
-            <b-field label="Backup Start Time">
-                <b-field>
-                    <b-timepicker
-                            icon="clock"
-                            required
-                            :default-minutes="default_minutes"
-                            v-model.number="backup_start_time">
-                    </b-timepicker>
-                </b-field>
-            </b-field>
 
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
@@ -172,9 +185,11 @@
               flavor: '',
               loading: false,
               job: '',
+              versions: [],
               version: '',
-              backup_start_time: undefined,
+              backup_start_time: Math.floor(Math.random() * 6),
               default_minutes: 0,
+              job_template: '19632',
               extra_vars: {
                   otc_rds_instance_name: '',
                   otc_rds_instance_volume_size: 20,
@@ -182,26 +197,48 @@
                   otc_rds_tag_sbb_contact: '',
                   otc_rds_tag_sbb_mega_id: '',
                   otc_rds_instance_availability_zones: 'eu-ch-0' + (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
+                  otc_rds_instance_backup_keep_days: 7,
 
                   otc_rds_instance_volume_type: 'COMMON',
                   otc_rds_tag_sbb_accounting_number: '',
               },
           };
       },
-      mounted: function () {
-          this.getFlavors();
+      watch: {
+        version: function(val) {
+            if (val) {
+                this.getFlavors(val)
+            }
+        }
       },
-      computed: {
-        job_template: function() {
-           return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
-        },
+      mounted: function () {
+          this.getVersions();
       },
       methods: {
-          getFlavors: function () {
+          getVersions: function () {
               this.loading = true;
-              this.$http.get(this.$store.state.backendURL + '/api/rds/flavors').then((res) => {
-                  let result = res.body.flavors;
-                  this.flavor = resp.body.flavors[0];
+              this.$http.get(this.$store.state.backendURL + '/api/otc/rds/versions').then((res) => {
+                  if (Array.isArray(res.body) && res.body.length) {
+                    // sort the numbers in descending order
+                    this.versions = res.body.sort((a, b) => b - a);
+                    // select the first one
+                    this.version = this.versions[0];
+                  } else {
+                    console.log("getVersions(): Response is invalid")
+                  }
+
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          getFlavors: function(version) {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/otc/rds/flavors', {
+                params: { version_name: version }
+              }).then((res) => {
+                  this.flavors = res.body.flavors;
+                  this.flavor = res.body.flavors[0];
 
                   this.loading = false;
               }, () => {
