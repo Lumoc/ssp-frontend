@@ -192,7 +192,7 @@
               job_template: '19632',
               extra_vars: {
                   otc_rds_instance_name: '',
-                  otc_rds_instance_volume_size: 20,
+                  otc_rds_instance_volume_size: 40,
                   otc_rds_tag_rds_group: '',
                   otc_rds_tag_sbb_contact: '',
                   otc_rds_tag_sbb_mega_id: '',
