@@ -369,12 +369,8 @@
             return this.isWindows(this.image)
         },
         filteredFlavors: function() {
-            if (!this.image) return this.flavors
-            if (!this.windows) return this.flavors
             return this.flavors.filter(function(flavor) {
-            //  Value not yet returned by the API
-            //  return this.image.minRAMMegabytes < flavor.ram
-                return flavor.ram >= 2000
+                return flavor.ram >= 2048 && flavor.ram <= (32*1024) && flavor.vcpus <= 8 && flavor.name.startsWith("s3")
             }, this);
         },
         filteredImages: function() {
@@ -407,7 +403,7 @@
                       }
                   });
 
-                  this.flavor = this.flavors[0];
+                  this.flavor = this.filteredFlavors[0];
 
                   this.loading = false;
               }, () => {
@@ -422,6 +418,12 @@
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
                   this.images = res.body.images;
 
+                  // Windows images have an incorrect minDiskGigabytes
+                  for (let i = 0; i < this.images.length; i++) {
+                      if (this.isWindows(this.images[i])) {
+                         this.images[i].minDiskGigabytes = 60
+                      }
+                  }
 
                   this.image = this.filteredImages[0];
 
