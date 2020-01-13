@@ -28,6 +28,15 @@
                 </b-input>
             </b-field>
 
+            <b-field label="Stage">
+                <b-select :loading="loading"
+                          v-model="stage"
+                          required>
+                    <option value="p">Production</option>
+                    <option value="t">Test</option>
+                </b-select>
+            </b-field>
+
             <b-field>
                 <template slot="label">
                     Availability Zone
@@ -56,8 +65,8 @@
                     <option
                             v-for="flavor in flavors"
                             :value="flavor"
-                            :key="flavor.spec_code">
-                        {{ flavor.spec_code + " (VCPUs: " + flavor.vcpus + ", RAM: " + flavor.ram + "GB)" }}
+                            :key="flavor.pretty">
+                        {{ genericFlavorName(flavor) + " (VCPUs: " + flavor.vcpus + ", RAM: " + flavor.ram + "GB)" }}
                     </option>
                 </b-select>
             </b-field>
@@ -122,7 +131,7 @@
             <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field label="Mega ID">
-                <b-input v-model="extra_vars.otc_rds_tag_mega_id"
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_mega_id"
                          required
                          pattern="[a-zA-Z0-9]{16}"
                          validation-message="Please enter a valid Mega ID"></b-input>
@@ -138,7 +147,7 @@
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
-                <b-input v-model="extra_vars.otc_rds_tag_accounting_number"
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_accounting_number"
                          required
                          pattern="[0-9.-]*"
                          validation-message="Please enter a valid accounting number"></b-input>
@@ -155,7 +164,7 @@
                     </b-tooltip>
                 </template>
                 <b-input type="email"
-                         v-model="extra_vars.otc_rds_tag_contact"
+                         v-model="extra_vars.otc_rds_tag_sbb_contact"
                          required>
                 </b-input>
             </b-field>
@@ -183,25 +192,25 @@
           return {
               loading: false,
               job: '',
+              stage: 'p',
               flavors: [],
               flavor: '',
               versions: [],
               version: '',
               backup_start_time: Math.floor(Math.random() * 6),
               default_minutes: 0,
-              job_template: '21071',
               extra_vars: {
                   otc_rds_instance_name: '',
                   otc_rds_instance_volume_size: 40,
                   otc_rds_tag_rds_group: '',
-                  otc_rds_tag_contact: '',
-                  otc_rds_tag_mega_id: '',
+                  otc_rds_tag_sbb_contact: '',
+                  otc_rds_tag_sbb_mega_id: '',
                   otc_rds_instance_availability_zones: 'eu-ch-0' + (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
                   otc_rds_instance_backup_keep_days: 7,
                   otc_rds_instance_db_type: 'PostgreSQL',
 
                   otc_rds_instance_volume_type: 'COMMON',
-                  otc_rds_tag_accounting_number: '',
+                  otc_rds_tag_sbb_accounting_number: '',
               },
           };
       },
@@ -212,10 +221,19 @@
             }
         }
       },
+      computed: {
+        job_template: function() {
+           return (this.stage == 'p') ? '21071' : '21071'
+        },
+      },
       mounted: function () {
           this.getVersions();
       },
       methods: {
+          genericFlavorName: function(flavor) {
+              if (!flavor.spec_code) return ''
+              return flavor.spec_code.replace("rds.pg.", "")
+          },
           getVersions: function () {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/rds/versions').then((res) => {
@@ -239,7 +257,10 @@
                 params: { version_name: version }
               }).then((res) => {
                   let result = res.body.flavors;
-                  this.flavors = result.sort((a,b) => {
+                  console.log(result)
+                  // Filter out all flavors ending with ha or rr
+                  const regex = RegExp('(ha|rr)$')
+                  this.flavors = result.filter(f => !regex.test(f.spec_code)).sort((a,b) => {
                       if (a.vcpus === b.vcpus) {
                           return (a.ram - b.ram)
                       } else {
@@ -247,7 +268,7 @@
                       }
                   });
 
-                  this.flavor = res.body.flavors[0];
+                  this.flavor = this.flavors[0];
 
                   this.loading = false;
               }, () => {
@@ -261,10 +282,11 @@
               this.loading = true;
 
               let ev = this.extra_vars
-
-              ev.otc_rds_instance_backup_start_time = this.backup_start_time + ':00-' + (this.backup_start_time+1) + ':00'
+              let padded_backup_start_time = String(this.backup_start_time).padStart(2, '0')
+              let padded_backup_end_time = String(this.backup_start_time+1).padStart(2, '0')
+              ev.otc_rds_instance_backup_start_time = padded_backup_start_time + ':00-' + padded_backup_end_time + ':00'
               ev.otc_rds_instance_db_version = this.version
-              ev.otc_rds_instance_flavor = this.flavor.spec_code
+              ev.otc_rds_instance_flavor = this.genericFlavorName(this.flavor)
               console.log(ev)
               this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
                     extra_vars: ev
