@@ -122,7 +122,7 @@
             <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field label="Mega ID">
-                <b-input v-model="extra_vars.otc_rds_tag_sbb_mega_id"
+                <b-input v-model="extra_vars.otc_rds_tag_mega_id"
                          required
                          pattern="[a-zA-Z0-9]{16}"
                          validation-message="Please enter a valid Mega ID"></b-input>
@@ -138,7 +138,7 @@
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
-                <b-input v-model="extra_vars.otc_rds_tag_sbb_accounting_number"
+                <b-input v-model="extra_vars.otc_rds_tag_accounting_number"
                          required
                          pattern="[0-9.-]*"
                          validation-message="Please enter a valid accounting number"></b-input>
@@ -155,7 +155,7 @@
                     </b-tooltip>
                 </template>
                 <b-input type="email"
-                         v-model="extra_vars.otc_rds_tag_sbb_contact"
+                         v-model="extra_vars.otc_rds_tag_contact"
                          required>
                 </b-input>
             </b-field>
@@ -189,18 +189,19 @@
               version: '',
               backup_start_time: Math.floor(Math.random() * 6),
               default_minutes: 0,
-              job_template: '19632',
+              job_template: '21071',
               extra_vars: {
                   otc_rds_instance_name: '',
                   otc_rds_instance_volume_size: 40,
                   otc_rds_tag_rds_group: '',
-                  otc_rds_tag_sbb_contact: '',
-                  otc_rds_tag_sbb_mega_id: '',
+                  otc_rds_tag_contact: '',
+                  otc_rds_tag_mega_id: '',
                   otc_rds_instance_availability_zones: 'eu-ch-0' + (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
                   otc_rds_instance_backup_keep_days: 7,
+                  otc_rds_instance_db_type: 'PostgreSQL',
 
                   otc_rds_instance_volume_type: 'COMMON',
-                  otc_rds_tag_sbb_accounting_number: '',
+                  otc_rds_tag_accounting_number: '',
               },
           };
       },
@@ -237,7 +238,15 @@
               this.$http.get(this.$store.state.backendURL + '/api/otc/rds/flavors', {
                 params: { version_name: version }
               }).then((res) => {
-                  this.flavors = res.body.flavors;
+                  let result = res.body.flavors;
+                  this.flavors = result.sort((a,b) => {
+                      if (a.vcpus === b.vcpus) {
+                          return (a.ram - b.ram)
+                      } else {
+                          return (a.vcpus - b.vcpus)
+                      }
+                  });
+
                   this.flavor = res.body.flavors[0];
 
                   this.loading = false;
