@@ -51,6 +51,7 @@ import SingleJob from './components/tower/SingleJob.vue';
 
 // Kafka Components
 import ListTopics from './components/kafka/ListTopics.vue'
+import AdminConsole from './components/kafka/AdminConsole.vue'
 
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
@@ -106,5 +107,6 @@ export const LocalComponents = {
     ADGroupUser,
     ListJobs,
     SingleJob,
-    ListTopics
+    ListTopics,
+    AdminConsole
 };
