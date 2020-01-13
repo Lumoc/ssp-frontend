@@ -108,6 +108,9 @@ const routes = [
     },
     {
         path: '/kafka/listtopics', component: LocalComponents.ListTopics
+    },
+    {
+        path: '/kafka/adminconsole', component: LocalComponents.AdminConsole
     }
 ];
 
@@ -144,8 +147,9 @@ function authenticate(to, from, next) {
             store.commit('setUser', {
                 user: {
                   name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
-                  firstname: keycloak.tokenParsed.given_name,
+                  firstName: keycloak.tokenParsed.given_name,
                   token: keycloak.token,
+                  tokenParsed: keycloak.tokenParsed,
                   exp: keycloak.tokenParsed.exp
                 }
               });
