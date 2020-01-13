@@ -122,7 +122,7 @@
             <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field label="Mega ID">
-                <b-input v-model="extra_vars.unifiedos_mega_id"
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_mega_id"
                          required
                          pattern="[a-zA-Z0-9]{16}"
                          validation-message="Please enter a valid Mega ID"></b-input>
@@ -138,7 +138,7 @@
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
-                <b-input v-model="extra_vars.unifiedos_accounting_number"
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_accounting_number"
                          required
                          pattern="[0-9.-]*"
                          validation-message="Please enter a valid accounting number"></b-input>
@@ -155,7 +155,7 @@
                     </b-tooltip>
                 </template>
                 <b-input type="email"
-                         v-model="extra_vars.unifiedos_owner_email"
+                         v-model="extra_vars.otc_rds_tag_sbb_contact"
                          required>
                 </b-input>
             </b-field>
@@ -181,10 +181,10 @@
       },
       data() {
           return {
-              flavors: [],
-              flavor: '',
               loading: false,
               job: '',
+              flavors: [],
+              flavor: '',
               versions: [],
               version: '',
               backup_start_time: Math.floor(Math.random() * 6),
@@ -253,11 +253,16 @@
 
               let ev = this.extra_vars
 
+              ev.otc_rds_instance_backup_start_time = this.backup_start_time + ':00-' + (this.backup_start_time+1) + ':00'
+              ev.otc_rds_instance_db_version = this.version
+              ev.otc_rds_instance_flavor = this.flavor.spec_code
+              console.log(ev)
               this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
                     extra_vars: ev
               }).then((resp) => {
                   let json = JSON.parse(resp.body)
                   this.job = json.job
+                  this.loading = false;
               }, () => {
                   this.loading = false;
               });
