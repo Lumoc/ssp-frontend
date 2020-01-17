@@ -30,7 +30,7 @@
                 <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
             </b-dropdown>
 
-            <b-button type="is-danger" @click="listECServers()" :loading="loading">Update</b-button>
+            <b-button type="is-danger" @click="listECServers()" :loading="loading">Refresh</b-button>
             <b-taginput
                 expanded
                 v-model="tags"
