@@ -24,6 +24,11 @@
             <b-field label="Instance Name">
                 <b-input type="text"
                          required
+                         pattern="^[a-z][a-z0-9_-]+$"
+                         validation-message="The name must be at least four characters long and only contain lowercase letters, numbers, dashes and underscores"
+                         maxlength=64
+                         minlength=4
+                         :has-counter="false"
                          v-model="extra_vars.otc_rds_instance_name">
                 </b-input>
             </b-field>
@@ -33,7 +38,7 @@
                           v-model="stage"
                           required>
                     <option value="p">Production</option>
-                    <option value="t">Test</option>
+                    <option value="t">Non-Production</option>
                 </b-select>
             </b-field>
 
