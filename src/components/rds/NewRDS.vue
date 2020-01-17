@@ -223,7 +223,7 @@
       },
       computed: {
         job_template: function() {
-           return (this.stage == 'p') ? '21071' : '21071'
+           return (this.stage == 'p') ? '21070' : '21080'
         },
       },
       mounted: function () {
