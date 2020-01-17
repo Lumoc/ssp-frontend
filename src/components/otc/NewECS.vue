@@ -23,8 +23,8 @@
         <form v-on:submit.prevent="newECS">
             <b-field label="Project/Product Name">
                 <b-input type="text"
-                         pattern="^[a-z0-9\-]+$"
-                         validation-message="Project must be two characters long and only contain lowercase letters, numbers and dashes"
+                         pattern="^[a-z][a-z0-9\-]+$"
+                         validation-message="Project must be two characters long, start with a letter and only contain lowercase letters, numbers and dashes"
                          maxlength=6
                          minlength=2
                          required
