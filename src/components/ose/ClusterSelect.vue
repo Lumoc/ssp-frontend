@@ -24,6 +24,10 @@
     <b-checkbox v-model="showPrivateClusters">
         Advanced: show private clusters
     </b-checkbox>
+    <b-message v-if="!cluster.optgroup && c.recommended && (c.id != cluster.id)" type="is-info" v-for="c in groupedClusters['']">
+        Based on resource capacity, we recommend the following cluster: {{ c.name }}
+    </b-message>
+
     <b-message v-if="cluster.optgroup" type="is-warning">
         This is a private cluster. Only select this cluster if you have permission to use it!
     </b-message>
