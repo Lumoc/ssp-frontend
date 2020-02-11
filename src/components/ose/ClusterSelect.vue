@@ -50,7 +50,6 @@
       },
       clusters(c) {
         this.setSelect();
-        this.getRecommendedCluster();
       },
       showPrivateClusters(b) {
         // if the checkbox is deactivated and a private cluster is selected,
@@ -119,42 +118,6 @@
           // Select first cluster that is not in a "group"
           this.cluster = this.groupedClusters[''][0]
         }
-      },
-      getRecommendedCluster: function() {
-        console.log(this.clusters)
-        let promises = [];
-        for (let cluster of this.clusters) {
-            promises.push(this.getClusterCapacity(cluster.id))
-        }
-        Promise.all(promises).then(function(allData) {
-            console.log(allData)
-        }).catch(function(err) {
-            console.log(err)
-        })
-      },
-      getClusterCapacity: function(clusterid) {
-        return new Promise((resolve, reject) => {
-            this.loading = true;
-            let capacity = 0;
-            this.$http.get(this.$store.state.backendURL + '/api/ose/prometheus/query', {
-                    params: {
-                        query: 'sum(kube_pod_container_resource_requests_cpu_cores) / sum(node:node_num_cpu:sum)',
-                        clusterid: clusterid,
-                    }
-            }).then((res) => {
-                try {
-                    let json = JSON.parse(res.body)
-                    capacity = json.data.result[0].value[1]
-                } catch(e) {}
-                this.loading = false;
-                resolve({ clusterid: clusterid, capacity: capacity})
-            }, () => {
-                this.loading = false;
-                console.log("An error has occured while calling /api/ose/prometheus/query for cluster: "+clusterid)
-                resolve(0)
-            });
-        });
-
       },
     }
   };
