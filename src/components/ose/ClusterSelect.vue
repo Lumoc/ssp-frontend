@@ -52,9 +52,6 @@
         localStorage.clusterid = c.id;
         this.$emit('input', c.id);
       },
-      clusters(c) {
-        this.setSelect();
-      },
       showPrivateClusters(b) {
         // if the checkbox is deactivated and a private cluster is selected,
         // then reset the select box
@@ -92,6 +89,7 @@
         this.$http.get(this.$store.state.backendURL + '/api/ose/clusters' + sArg, null).then((res) => {
           this.clusters = res.body;
           this.loading = false;
+          this.setSelect();
         }, () => {
           this.loading = false;
         });
@@ -122,7 +120,7 @@
           // Select first cluster that is not in a "group"
           this.cluster = this.groupedClusters[''][0]
         }
-      },
+      }
     }
   };
 </script>
