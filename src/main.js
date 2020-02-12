@@ -3,7 +3,6 @@ import VueRouter from 'vue-router';
 import Buefy from 'buefy';
 import VueResource from 'vue-resource';
 import VeeValidate, { Validator } from 'vee-validate';
-import VeeValidateGerman from 'vee-validate/dist/locale/de';
 import Moment from 'moment';
 import 'moment-timezone';
 
@@ -26,7 +25,6 @@ Moment.locale('en')
 Moment.tz.setDefault("Europe/Zurich")
 Vue.prototype.moment = Moment
 
-Validator.localize('en', VeeValidateGerman);
 Vue.use(VeeValidate);
 
 // Support endsWith on old browsers
@@ -57,6 +55,7 @@ if (urlSplit[1] && urlSplit[1].startsWith("/")) {
     history.replaceState(null, null, urlSplit[1])
 }
 
+
 // Http interceptors: Global response handler
 Vue.http.interceptors.push(function (request, next) {
     next(function (res) {
@@ -65,6 +64,13 @@ Vue.http.interceptors.push(function (request, next) {
                 notification: {
                     type: res.status === 200 ? 'success' : 'danger',
                     message: res.body.message
+                }
+            });
+        } else if (res.status === 401) {
+            this.$store.commit('setNotification', {
+                notification: {
+                    type: 'danger',
+                    message: "Der Token ist abgelaufen. Bitte laden Sie die Seite neu."
                 }
             });
         } else if (!res.ok) {
@@ -85,6 +91,57 @@ Vue.http.interceptors.push(function (request, next) {
     }
     next();
 });
+
+
+// https://pageclip.co/blog/2018-02-20-you-should-use-html5-form-validation.html
+const customMessages = {
+  valueMissing:    'Please fill out this field.',       // `required` attr
+  //emailMismatch:   'Custom email mismatch',  // Invalid email
+  //patternMismatch: 'Custom pattern mismatch',// `pattern` attr
+}
+
+const errorProps = [
+  'badInput',
+  'patternMismatch',
+  'rangeOverflow',
+  'rangeUnderflow',
+  'stepMismatch',
+  'tooLong',
+  'tooShort',
+  'typeMismatch',
+  'valueMissing',
+  'customError'
+]
+
+function getCustomMessage (input) {
+  const localErrorProps = [`${input.type}Mismatch`].concat(errorProps)
+  const validity = input.validity
+
+  for (let i = 0; i < localErrorProps.length; i++) {
+    const prop = localErrorProps[i]
+    if (validity[prop]) {
+      return input.getAttribute(`data-${prop.toLowerCase()}`) || customMessages[prop]
+    }
+  }
+}
+
+router.afterEach((to, from) => {
+    Vue.nextTick(function () {
+        var inputs = document.querySelectorAll('input, select, textarea')
+        inputs.forEach(function (input) {
+            // Each time the user types or submits, this will
+            // check validity, and set a custom message if invalid.
+            function checkValidity () {
+              const message = input.validity.valid
+                ? null
+                : getCustomMessage(input)
+              input.setCustomValidity(message || '')
+            }
+            input.addEventListener('input', checkValidity)
+            input.addEventListener('invalid', checkValidity)
+        })
+    })
+})
 
 new Vue({
     router,

@@ -86,9 +86,6 @@ const routes = [
         path: '/wzu/jenkinscredentials', component: LocalComponents.WZUJenkinsCredentials
     },
     {
-        path: '/wzu/alm', component: LocalComponents.WZUALM
-    },
-    {
         path: '/wzu/tasksuser', component: LocalComponents.TasksUser
     },
     {
@@ -104,7 +101,16 @@ const routes = [
         path: '/ActiveDirectory/UpdateUserGroup', component: LocalComponents.ADGroupUser
     },
     {
+        path: '/tower/jobs', component: LocalComponents.ListJobs
+    },
+    {
+        path: '/tower/jobs/:jobID', component: LocalComponents.SingleJob, props: true
+    },
+    {
         path: '/kafka/listtopics', component: LocalComponents.ListTopics
+    },
+    {
+        path: '/kafka/adminconsole', component: LocalComponents.AdminConsole
     }
 ];
 
@@ -141,8 +147,9 @@ function authenticate(to, from, next) {
             store.commit('setUser', {
                 user: {
                   name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
-                  firstname: keycloak.tokenParsed.given_name,
+                  firstName: keycloak.tokenParsed.given_name,
                   token: keycloak.token,
+                  tokenParsed: keycloak.tokenParsed,
                   exp: keycloak.tokenParsed.exp
                 }
               });

@@ -53,11 +53,11 @@
                 </div>
                 <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        OTC
+                        UOS
                     </a>
                     <div class="navbar-dropdown">
-                        <router-link to="/otc/listecs" class="navbar-item">Show Elastic Cloud Server</router-link>
-                        <router-link to="/otc/newecs" class="navbar-item">Create Elastic Cloud Server</router-link>
+                        <router-link to="/otc/listecs" class="navbar-item">Your UnifiedOS Servers</router-link>
+                        <router-link to="/otc/newecs" class="navbar-item">Create a UnifiedOS Server</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
@@ -74,6 +74,7 @@
                         </router-link>
                     </div>
                 </div>
+
 
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -98,7 +99,6 @@
                         <!--<router-link to="/ActiveDirectory/ADGroup" class="navbar-item">Create AD group</router-link>
                         <router-link to="/ActiveDirectory/Adminaddordelete" class="navbar-item">AD group admin</router-link>
                         <router-link to="/ActiveDirectory/UpdateUserGroup" class="navbar-item">AD group User</router-link>-->
-                        <router-link to="/wzu/alm" class="navbar-item">ALM User permissions</router-link>
                         <router-link to="/wzu/tasksuser" class="navbar-item">Tasks User permissions</router-link>
                     </div>
                 </div>
@@ -108,15 +108,17 @@
                         Kafka
                     </a>
                     <div class="navbar-dropdown">
+                        <router-link v-if="userIsKafkaServiceOwner()" to="/kafka/adminconsole" class="navbar-item">Admin Console</router-link>
                         <router-link to="/kafka/listtopics" class="navbar-item">Topic List</router-link>
                     </div>
                 </div>
             </div>
 
-            <div class="navbar-end">
-                <a v-if="user" class="navbar-item">
+            <div v-if="user" class="navbar-end">
+                <router-link v-if="features.otc.enabled" to="/tower/jobs" class="navbar-item">Jobs</router-link>
+                <a class="navbar-item">
                     <b-icon icon="face"></b-icon>
-                    &nbsp; Hello {{ user.firstname }}!
+                    &nbsp; Hello {{ user.firstName }}!
                 </a>
             </div>
         </div>
@@ -150,6 +152,14 @@
         },
         created: function () {
             this.$http.get(this.$store.state.backendURL + '/features').then(res => this.features = res.body)
+        },
+        methods: {
+            userIsKafkaServiceOwner: function() {
+                if (!this.$store.state.user.tokenParsed.resource_access.hasOwnProperty("apim-kafka_automation_api-prod-aws")) {
+                    return false;
+                }
+                return this.$store.state.user.tokenParsed.resource_access["apim-kafka_automation_api-prod-aws"].roles.includes("service-owner");
+            }
         }
     }
 

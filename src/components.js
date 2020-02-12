@@ -36,7 +36,6 @@ import WZUBitbucket from './components/wzu/BitbucketProjekt.vue';
 import WZUBitbucketRepo from './components/wzu/BitbucketRepository.vue';
 import WZUArtifactory from './components/wzu/Artifactory.vue';
 import WZUJenkinsCredentials from './components/wzu/JenkinsCredentials.vue';
-import WZUALM from './components/wzu/ALM.vue';
 import TasksUser from './components/wzu/TasksUser.vue';
 import WZUDevProxy from './components/wzu/DevProxy.vue';
 
@@ -45,8 +44,12 @@ import ADGroup from './components/ActiveDirectory/ADGroup.vue';
 import ADGroupAdmin from './components/ActiveDirectory/Adminaddordelete.vue';
 import ADGroupUser from './components/ActiveDirectory/UpdateUserGroup.vue';
 
+import ListJobs from './components/tower/ListJobs.vue';
+import SingleJob from './components/tower/SingleJob.vue';
+
 // Kafka Components
 import ListTopics from './components/kafka/ListTopics.vue'
+import AdminConsole from './components/kafka/AdminConsole.vue'
 
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
@@ -94,11 +97,13 @@ export const LocalComponents = {
     WZUBitbucketRepo,
     WZUArtifactory,
     WZUJenkinsCredentials,
-    WZUALM,
     TasksUser,
     WZUDevProxy,
     ADGroup,
     ADGroupAdmin,
     ADGroupUser,
-    ListTopics
+    ListJobs,
+    SingleJob,
+    ListTopics,
+    AdminConsole
 };

@@ -9,21 +9,21 @@
             </div>
         </div>
         <br>
-        <b-select v-model="selectedBackendUrl">
-            <option
-                v-for="option in backends"
-                :value="option.url"
-                :key="option.name">
-                Environment: {{ option.name }}
-            </option>
-        </b-select>
+        <h2 class="subtitle">Environments</h2>
+        <b-field>
+            <b-radio-button v-for="option in environments" v-bind:key="option.environmentId" v-model="selectedEnvironmentId"
+                :native-value="option.environmentId">
+                <span>{{ option.environmentFriendlyName }}</span>
+            </b-radio-button>
+        </b-field>
         <br>
-        <b-table :data="data" v-bind:class="{'is-loading': loading}" detailed narrowed>
+        <h2 class="subtitle">Topics</h2>
+        <b-table :data="data" :loading="loading" detailed narrowed default-sort="props.row.name">
             <template slot-scope="props">
-                <b-table-column field="name" label="Topic Name">
+                <b-table-column field="name" label="Topic Name" sortable>
                     {{ props.row.name }}
                 </b-table-column>
-                <b-table-column field="partitions" label="Partitions">
+                <b-table-column field="partitions" label="Partitions" sortable>
                     {{ props.row.partitions }}
                 </b-table-column>
             </template>
@@ -33,13 +33,13 @@
                         <table>
                             <div class="column">
                                 <table>
-                                    <tr v-for="(value, name) in props.row.configs">
+                                    <tr v-for="(value, name) in props.row.configs" v-bind:key="name">
                                         <td>{{ name }}:</td>
                                         <td>{{ value }}</td>
                                     </tr>
                                 </table>
                             </div>
-                         </table>
+                        </table>
                     </div>
                 </div>
             </template>
@@ -54,35 +54,40 @@
         data() {
             return {
                 data: [],
-                backends: [],
+                kafkaBackendUrl: '',
+                environments: [],
                 loading: false,
-                selectedBackendUrl: ''
+                selectedEnvironmentId: ''
             };
         },
         watch: {
-            selectedBackendUrl(url) {
-                if (url.length > 0) {
-                    this.listTopics();
+            selectedEnvironmentId: function() {
+                if (this.kafkaBackendUrl.length) {
+                    this.fetchTopics();
                 }
             }
         },
         mounted: function() {
-            this.getBackends();
+            this.fetchKafkaBackendUrl();
         },
         methods: {
-            getBackends: function() {
-                this.$http.get(this.$store.state.backendURL + "/api/kafka/backends").then((res) => {
-                    this.backends = res.body;
-                    this.selectedBackendUrl = this.backends[0].url;
+            fetchKafkaBackendUrl: function() {
+                this.$http.get(this.$store.state.backendURL + "/api/kafka/backend").then((res) => {
+                    this.kafkaBackendUrl = res.body.backend_url;
+                    this.fetchEnvironments();
                 });
             },
-            listTopics: function() {
+
+            fetchEnvironments: function() {
+                this.$http.get(this.kafkaBackendUrl + "/api/environments/").then((res) => {
+                    this.environments = res.body;
+                    this.selectedEnvironmentId = this.environments[0].environmentId;
+                });
+            },
+
+            fetchTopics: function() {
                 this.loading = true;
-                this.$http.get(this.selectedBackendUrl + "api/topics/", null, {
-                    headers: {
-                        Accept: "*/*"
-                    }
-                }).then((res) => {
+                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/topics/", null).then((res) => {
                     this.data = res.data;
                     this.loading = false;
                 }, () => {

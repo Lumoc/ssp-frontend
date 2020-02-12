@@ -9,7 +9,7 @@
         ref="autofocus"
         placeholder="project-name"
         required
-        title="Please enter a valid project name"
+        data-patternMismatch="The project name may only include lower case letters, numbers and dashes"
         pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$">
         <template slot="empty">No projects found </template>
     </b-autocomplete>
