@@ -15,7 +15,7 @@
             <b-field label="OpenShift Project">
                 <b-field>
                     <b-input v-model.trim="project"
-                            required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
+                            required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])(?<!-prod)$"
                             data-patternMismatch="The project name can only contain lower case letters, numbers and -"
                             ref="autofocus"
                             placeholder="projekt-name">
