@@ -80,7 +80,7 @@
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
           clusterid: this.cluster.id,
-          project: this.project + this.cluster.production ? '-prod' : '',
+          project: this.project + (this.cluster.production ? '-prod' : ''),
           billing: this.billing,
           megaId: this.megaId
         }).then(() => {
