@@ -11,19 +11,25 @@
         </div>
         <br>
         <form v-on:submit.prevent="newProject">
-            <cluster-select v-model="clusterid" feature="newprojects"></cluster-select>
+            <cluster-select v-model="cluster" feature="newprojects" recommend></cluster-select>
             <b-field label="OpenShift Project">
-                <b-input v-model.trim="project"
-                         required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
-                         ref="autofocus"
-                         placeholder="projekt-name">
-                </b-input>
+                <b-field>
+                    <b-input v-model.trim="project"
+                            required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])$"
+                            data-patternMismatch="The project name can only contain lower case letters, numbers and -"
+                            ref="autofocus"
+                            placeholder="projekt-name">
+                    </b-input>
+                    <p class="control">
+                        <span v-if="cluster.production" class="button is-static">-prod</span>
+                    </p>
+                </b-field>
             </b-field>
-            <b-message type="is-info">
-                The project name can only contain lower case letters, numbers and "-"</br>
-                Production projects:</br>
-                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
-                - No productive projects on Test04</br>
+            <b-message v-if="cluster.production" type="is-info">
+                Only production projects are allowed on this cluster! Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
+            </b-message>
+            <b-message v-if="!cluster.production" :type="project.endsWith('prod') ? 'is-danger':'is-info'">
+                No production projects are allowed on this cluster!
             </b-message>
 
             <b-field label="Accounting Number">
@@ -61,7 +67,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         megaId: '',
         billing: '',
         project: '',
@@ -73,8 +79,8 @@
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
-          clusterid: this.clusterid,
-          project: this.project,
+          clusterid: this.cluster.id,
+          project: this.project + this.cluster.production ? '-prod' : '',
           billing: this.billing,
           megaId: this.megaId
         }).then(() => {

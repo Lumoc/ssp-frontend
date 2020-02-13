@@ -12,8 +12,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="getAdminList">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
             <button v-bind:class="{'is-loading': loading}" class="button is-primary">
                 Show list of admins
@@ -54,7 +54,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         project: '',
         data: [],
         loading: false
@@ -65,7 +65,7 @@
           this.loading = true;
           this.$http.get(this.$store.state.backendURL + '/api/ose/project/admins', {
               params: {
-                clusterid: this.clusterid,
+                clusterid: this.cluster.id,
                 project: this.project
               }
           }).then((res) => {

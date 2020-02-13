@@ -11,8 +11,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="createServiceAccount">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
             <b-field label="Service-Account Name">
                 <b-input v-model.trim="serviceAccount"
@@ -53,7 +53,7 @@
     },
     data() {
         return {
-            clusterid: '',
+            cluster: {},
             serviceAccount: '',
             project: '',
             loading: false,
@@ -66,7 +66,7 @@
              this.loading = true;
 
              this.$http.post(this.$store.state.backendURL + '/api/ose/serviceaccount', {
-                 clusterid: this.clusterid,
+                 clusterid: this.cluster.id,
                  project: this.project,
                  organizationKey: this.createJenkinsCredential ? this.organizationKey : '',
                  serviceAccount: this.serviceAccount

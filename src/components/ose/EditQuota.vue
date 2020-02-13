@@ -11,8 +11,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="editQuotas">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
             <b-field label="New CPU Quota [cores]">
                 <b-input type="number"
@@ -47,7 +47,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         cpu: 2,
         memory: 4,
         project: '',
@@ -59,7 +59,7 @@
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/quotas', {
-          clusterid: this.clusterid,
+          clusterid: this.cluster.id,
           project: this.project,
           cpu: this.cpu,
           memory: this.memory

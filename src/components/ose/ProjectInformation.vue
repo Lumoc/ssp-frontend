@@ -12,8 +12,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="updateInformation">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project" v-on:selected="getExistingInformation"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project" v-on:selected="getExistingInformation"></project-select>
 
             <b-message type="is-info">
                 The details will appear below once a project is selected.
@@ -48,7 +48,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         billing: '',
         megaid: '',
         project: '',
@@ -60,7 +60,7 @@
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/project/info', {
-          clusterid: this.clusterid,
+          clusterid: this.cluster.id,
           project: this.project,
           billing: this.billing,
           megaid: this.megaid,
@@ -73,7 +73,7 @@
       getExistingInformation: function(project) {
         this.$http.get(this.$store.state.backendURL + '/api/ose/project/info', {
             params: {
-                clusterid: this.clusterid,
+                clusterid: this.cluster.id,
                 project: project
             }
         }).then((res) => {

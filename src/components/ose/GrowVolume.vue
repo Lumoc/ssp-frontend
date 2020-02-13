@@ -15,7 +15,7 @@
         </b-message>
 
         <form v-on:submit.prevent="growVolume">
-            <cluster-select v-model="clusterid"></cluster-select>
+            <cluster-select v-model="cluster"></cluster-select>
             <b-field label="Persistent Volume Name">
                 <b-input v-model.trim="pvName"
                          required>
@@ -50,7 +50,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         project: '',
         pvName: '',
         newSize: '',
@@ -62,7 +62,7 @@
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/volume/grow', {
-          clusterid: this.clusterid,
+          clusterid: this.cluster.id,
           project: this.project,
           newSize: this.newSize,
           pvName: this.pvName

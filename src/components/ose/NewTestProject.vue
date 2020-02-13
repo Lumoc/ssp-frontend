@@ -20,7 +20,7 @@
             </div>
         </article>
         <form v-on:submit.prevent="newTestProject">
-            <cluster-select v-model="clusterid" feature="testprojects"></cluster-select>
+            <cluster-select v-model="cluster" feature="testprojects"></cluster-select>
             <b-field label="Trial Project Name">
                 <b-field>
                     <p class="control">
@@ -59,7 +59,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         testprojectname: '',
         loading: false
       };
@@ -69,7 +69,7 @@
         this.loading = true;
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/testproject', {
-          clusterid: this.clusterid,
+          clusterid: this.cluster.id,
           project: this.testprojectname
         }).then(() => {
           this.loading = false;

@@ -6,33 +6,36 @@
 <template>
 <div class="root">
     <b-field label="Cluster">
-        <b-select v-model="cluster" required>
+        <b-select v-model="selectedCluster" :loading="loading" required>
             <template v-if="showPrivateClusters">
-            <optgroup v-if="showPrivateClusters" :label="v?v:'SBB (for everyone)'" v-for="(clustergroup, v) in groupedClusters">
-                <option v-for="cluster in clustergroup"
-                        :value="cluster"
-                        :key="cluster.id">
-                    {{ cluster.name }}
-                </option>
-            </optgroup>
+                <optgroup v-if="showPrivateClusters" :label="optgroup?optgroup:'SBB (for everyone)'" v-for="(clustergroup, optgroup) in groupedClusters">
+                    <option v-for="c in clustergroup" :value="c"
+                            :key="c.id">
+                        {{ c.name }} ({{ c.id }})
+                    </option>
+                </optgroup>
             </template>
             <template v-else>
-            <option v-for="cluster in groupedClusters['']"
-                    :value="cluster"
-                    :key="cluster.id">
-                {{ cluster.name }}
-            </option>
+                <option v-for="c in groupedClusters['']" :value="c" :key="c.id">
+                    {{ c.name }} ({{ c.id }})
+                </option>
             </template>
         </b-select>
     </b-field>
     <b-checkbox v-model="showPrivateClusters">
         Advanced: show private clusters
     </b-checkbox>
-    <b-message v-if="!cluster.optgroup && c.recommended && (c.id != cluster.id)" type="is-info" v-for="c in groupedClusters['']">
-        Based on resource capacity, we recommend the following cluster: {{ c.name }}
+    <b-message v-if="recommend && !selectedCluster.optgroup && haveRecommendations" type="is-info" >
+        Based on available resource capacity, we recommend the following clusters:<br>
+            <template v-if="c.recommended && c.production" v-for="c in groupedClusters['']">
+                Prod: <a v-on:click="setSelect(c)">{{ c.name }}</a><br>
+            </template>
+            <template v-if="c.recommended && !c.production" v-for="c in groupedClusters['']">
+                Non-Prod: <a v-on:click="setSelect(c)">{{ c.name }}</a><br>
+            </template>
     </b-message>
 
-    <b-message v-if="cluster.optgroup" type="is-warning">
+    <b-message v-if="selectedCluster.optgroup" type="is-warning">
         This is a private cluster. Only select this cluster if you have permission to use it!
     </b-message>
 </div>
@@ -41,26 +44,30 @@
 <script>
   export default {
     name: 'cluster-select',
-    props: ["clusterid","feature"],
+    props: {
+        cluster: Object,
+        feature: String,
+        recommend: Boolean,
+    },
     data() {
       return {
         clusters: [],
-        cluster: {},
+        selectedCluster: {},
         loading: false,
         showPrivateClusters: false,
       };
     },
     watch: {
-      cluster(c) {
+      selectedCluster(c) {
         if (!c) return
         localStorage.clusterid = c.id;
-        this.$emit('input', c.id);
+        this.$emit('input', c);
       },
       showPrivateClusters(b) {
         // if the checkbox is deactivated and a private cluster is selected,
         // then reset the select box
-        if (!b && this.cluster.optgroup) {
-            this.cluster = this.groupedClusters[''][0]
+        if (!b && this.selectedCluster.optgroup) {
+            this.selectedCluster = this.groupedClusters[''][0]
         }
         // save the value in localstorage
         localStorage.showprivateclusters = b
@@ -76,6 +83,12 @@
         }, {});
         // sort by group (if no group is set then the empty string is sorted to the beginning)
         return Object.keys(grouped).sort().reduce((r, k) => (r[k] = grouped[k], r), {});
+      },
+      haveRecommendations: function() {
+          for (let c of this.clusters) {
+             if (c.recommended) return true
+          }
+          return false
       }
     },
     mounted: function () {
@@ -85,15 +98,14 @@
     },
     methods: {
       getClusters: function() {
-        var sArg = "";
-        if( typeof this._props.feature !== 'undefined' ) {
-          sArg = "?feature="+this._props.feature;
-        }
         this.loading = true;
-        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters' + sArg, null).then((res) => {
+        this.$http.get(this.$store.state.backendURL + '/api/ose/clusters', { params: {
+            feature: this.feature,
+            recommend: this.recommend,
+        }}).then((res) => {
           this.clusters = res.body;
-          this.loading = false;
           this.setSelect();
+          this.loading = false;
         }, () => {
           this.loading = false;
         });
@@ -105,24 +117,20 @@
             this.showPrivateClusters = (localStorage.showprivateclusters == 'true')
         }
       },
-      setSelect: function() {
-        if (localStorage.clusterid) {
+      setSelect: function(c) {
+        if (c) {
+            this.selectedCluster = c
+        } else if (localStorage.clusterid) {
           // search for cluster with this id
           for (let c of this.clusters) {
              if (c.id == localStorage.clusterid) {
-                // if an optgroup is set (private cluster) and showPrivateClusters is false,
-                // then reset the select
-                if (c.optgroup && !this.showPrivateClusters) {
-                    this.cluster = this.groupedClusters[''][0]
-                } else {
-                    this.cluster = c
-                }
+                this.selectedCluster = c
                 break
              }
           }
-        } else if (this.clusters.length > 0) {
+        } else {
           // Select first cluster that is not in a "group"
-          this.cluster = this.groupedClusters[''][0]
+          this.selectedCluster = this.groupedClusters[''][0]
         }
       }
     }

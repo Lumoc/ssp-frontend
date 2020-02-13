@@ -11,8 +11,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="createVolume">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
             <template v-if="technology == 'nfs'">
                 <b-field label="Size">
@@ -96,7 +96,7 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         project: '',
         pvcName: '',
         size: '',
@@ -111,10 +111,10 @@
       };
     },
     watch: {
-        clusterid: function(val) {
+        cluster: function(c) {
             this.$http.get(this.$store.state.backendURL + '/features', {
                 params: {
-                    clusterid: val
+                    clusterid: c.id
                 }
             }).then(res => {
                 this.features = res.body.openshift
@@ -131,7 +131,7 @@
       createVolume: function() {
         this.loading = true;
         this.$http.post(this.$store.state.backendURL + '/api/ose/volume', {
-          clusterid: this.clusterid,
+          clusterid: this.cluster.id,
           project: this.project,
           size: this.size,
           pvcName: this.pvcName,
@@ -139,7 +139,7 @@
           technology: this.technology
         }).then((res) => {
           if (res.body.data.JobId) {
-            this.pollJob(this.clusterid, res.body.data.JobId)
+            this.pollJob(this.cluster.id, res.body.data.JobId)
           } else {
             this.loading = false;
           }

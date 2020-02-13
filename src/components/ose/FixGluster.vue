@@ -11,9 +11,9 @@
         </div>
         <br>
         <form v-on:submit.prevent="fixGlusterObjects">
-            <cluster-select v-model="clusterid"></cluster-select>
+            <cluster-select v-model="cluster"></cluster-select>
             <div v-if="gluster">
-                <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+                <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
                 <button v-bind:class="{'is-loading': loading}"
                         class="button is-primary">Create GlusterFS object
@@ -34,17 +34,17 @@
     },
     data() {
       return {
-        clusterid: '',
+        cluster: {},
         project: '',
         loading: false,
         gluster: false
       };
     },
     watch: {
-        clusterid: function(val) {
+        cluster: function(c) {
             this.$http.get(this.$store.state.backendURL + '/features', {
                 params: {
-                    clusterid: val
+                    clusterid: c.id
                 }
             }).then(res => {
                 this.features = res.body.openshift
@@ -58,7 +58,7 @@
           this.loading = true;
 
           this.$http.post(this.$store.state.backendURL + '/api/ose/volume/gluster/fix', {
-            clusterid: this.clusterid,
+            clusterid: this.cluster.id,
             project: this.project
           }).then(() => {
             this.loading = false;

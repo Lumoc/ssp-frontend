@@ -11,8 +11,8 @@
         </div>
         <br>
         <form v-on:submit.prevent="createPullSecret">
-            <cluster-select v-model="clusterid"></cluster-select>
-            <project-select v-bind:clusterid="clusterid" v-bind:project.sync="project"></project-select>
+            <cluster-select v-model="cluster"></cluster-select>
+            <project-select v-bind:clusterid="cluster.id" v-bind:project.sync="project"></project-select>
 
             <b-field label="Username">
                 <b-input v-model.trim="username" required></b-input>
@@ -42,7 +42,7 @@
     },
     data() {
         return {
-            clusterid: '',
+            cluster: {},
             project: '',
             username: '',
             password: '',
@@ -54,7 +54,7 @@
             this.loading = true;
 
             this.$http.post(this.$store.state.backendURL + '/api/ose/secret/pull', {
-                clusterid: this.clusterid,
+                clusterid: this.cluster.id,
                 project: this.project,
                 username: this.username,
                 password: this.password
