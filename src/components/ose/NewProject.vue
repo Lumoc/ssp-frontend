@@ -22,7 +22,7 @@
             <b-message type="is-info">
                 The project name can only contain lower case letters, numbers and "-"</br>
                 Production projects:</br>
-                - Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
+                - Please note the <a target="_blank" href="https://confluence.sbb.ch/x/tIHPUw">guidelines for production environments</a></br>
                 - No productive projects on Test04</br>
             </b-message>
 
