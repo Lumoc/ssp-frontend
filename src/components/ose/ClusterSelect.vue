@@ -7,6 +7,7 @@
 <div class="root">
     <b-field label="Cluster">
         <b-select v-model="cluster" required>
+            <template v-if="showPrivateClusters">
             <optgroup v-if="showPrivateClusters" :label="v?v:'SBB (for everyone)'" v-for="(clustergroup, v) in groupedClusters">
                 <option v-for="cluster in clustergroup"
                         :value="cluster"
@@ -14,11 +15,14 @@
                     {{ cluster.name }}
                 </option>
             </optgroup>
-            <option v-if="!showPrivateClusters" v-for="cluster in groupedClusters['']"
+            </template>
+            <template v-else>
+            <option v-for="cluster in groupedClusters['']"
                     :value="cluster"
                     :key="cluster.id">
                 {{ cluster.name }}
             </option>
+            </template>
         </b-select>
     </b-field>
     <b-checkbox v-model="showPrivateClusters">
