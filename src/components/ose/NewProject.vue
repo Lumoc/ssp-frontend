@@ -26,7 +26,7 @@
                 </b-field>
             </b-field>
             <b-message v-if="cluster.production" type="is-info">
-                Only production projects are allowed on this cluster! Please note the following information: <a target="_blank" href="https://confluence.sbb.ch/x/XWUOMg">Production criteria</a></br>
+                Only production projects are allowed on this cluster! Please read the <a target="_blank" href="https://confluence.sbb.ch/x/tIHPUw">production guidelines</a></br>
             </b-message>
             <b-message v-if="!cluster.production" :type="project.endsWith('prod') ? 'is-danger':'is-info'">
                 No production projects are allowed on this cluster!
