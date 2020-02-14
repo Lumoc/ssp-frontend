@@ -25,14 +25,8 @@
     <b-checkbox v-model="showPrivateClusters">
         Advanced: show private clusters
     </b-checkbox>
-    <b-message v-if="recommend && !selectedCluster.optgroup && haveRecommendations" type="is-info" >
-        Based on available resource capacity, we recommend the following clusters:<br>
-            <template v-if="c.recommended && c.production" v-for="c in groupedClusters['']">
-                Prod: <a v-on:click="setSelect(c)">{{ c.name }}</a><br>
-            </template>
-            <template v-if="c.recommended && !c.production" v-for="c in groupedClusters['']">
-                Non-Prod: <a v-on:click="setSelect(c)">{{ c.name }}</a><br>
-            </template>
+    <b-message type="is-info" v-if="stage && recommended && (selectedCluster.id != recommended.id) && !selectedCluster.optgroup">
+        Recommended cluster: <a v-on:click="setSelect(recommended)">{{ recommended.name }}</a> (based on available resource capacity)
     </b-message>
 
     <b-message v-if="selectedCluster.optgroup" type="is-warning">
@@ -46,8 +40,8 @@
     name: 'cluster-select',
     props: {
         cluster: Object,
-        feature: String,
-        recommend: Boolean,
+        stage: String,
+        stages: Array,
     },
     data() {
       return {
@@ -58,6 +52,10 @@
       };
     },
     watch: {
+      stage(s) {
+        localStorage.stage = this.stage;
+        this.getClusters();
+      },
       selectedCluster(c) {
         if (!c) return
         localStorage.clusterid = c.id;
@@ -66,9 +64,7 @@
       showPrivateClusters(b) {
         // if the checkbox is deactivated and a private cluster is selected,
         // then reset the select box
-        if (!b && this.selectedCluster.optgroup) {
-            this.selectedCluster = this.groupedClusters[''][0]
-        }
+        if (!b && this.selectedCluster.optgroup) this.setSelect()
         // save the value in localstorage
         localStorage.showprivateclusters = b
       }
@@ -84,24 +80,28 @@
         // sort by group (if no group is set then the empty string is sorted to the beginning)
         return Object.keys(grouped).sort().reduce((r, k) => (r[k] = grouped[k], r), {});
       },
-      haveRecommendations: function() {
+      recommended: function() {
           for (let c of this.clusters) {
-             if (c.recommended) return true
+             if (c.recommended) return c
           }
-          return false
+          return null
       }
     },
     mounted: function () {
         // load the checkbox from localStorage
         this.setShowPrivateClusters();
-        this.getClusters();
+        if (localStorage.stage && this.stage != localStorage.stage) {
+            // set the value from localStorage
+            this.$emit('update:stage', localStorage.stage)
+        } else {
+            this.getClusters();
+        }
     },
     methods: {
       getClusters: function() {
         this.loading = true;
         this.$http.get(this.$store.state.backendURL + '/api/ose/clusters', { params: {
-            feature: this.feature,
-            recommend: this.recommend,
+            stage: this.stage,
         }}).then((res) => {
           this.clusters = res.body;
           this.setSelect();
@@ -120,18 +120,45 @@
       setSelect: function(c) {
         if (c) {
             this.selectedCluster = c
-        } else if (localStorage.clusterid) {
+            return
+        }
+
+        // Only restore localstorage on page load (check if selectedCluster is empty)
+        if (localStorage.clusterid && !this.selectedCluster.id) {
           // search for cluster with this id
           for (let c of this.clusters) {
              if (c.id == localStorage.clusterid) {
+                console.log("restored cluster from localstorage")
                 this.selectedCluster = c
-                break
+                return
              }
           }
-        } else {
-          // Select first cluster that is not in a "group"
-          this.selectedCluster = this.groupedClusters[''][0]
         }
+
+        // if selectedCluster is already set it means the stage changed
+        if (this.selectedCluster.id) {
+          for (let c of this.clusters) {
+             if (c.id == this.selectedCluster.id) {
+                // set the new cluster, because variables could have changed (recommended etc)
+                console.log("Updated cluster because stage changed")
+                this.selectedCluster = c
+                return
+             }
+          }
+        }
+
+        // Set the recommended cluster
+        for (let c of this.clusters) {
+            if (c.recommended) {
+                console.log("Set first recommended cluster")
+                this.selectedCluster = c
+                return
+            }
+        }
+
+        // Fallback if the cluster still isn't set
+        console.log("Set first cluster")
+        this.selectedCluster = this.groupedClusters[''][0]
       }
     }
   };

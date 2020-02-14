@@ -11,26 +11,27 @@
         </div>
         <br>
         <form v-on:submit.prevent="newProject">
-            <cluster-select v-model="cluster" feature="newprojects" recommend></cluster-select>
             <b-field label="OpenShift Project">
                 <b-field>
                     <b-input v-model.trim="project"
-                            required pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])(?<!-prod)$"
+                            required pattern="^[a-z0-9][-a-z0-9]*[a-z0-9]$"
                             data-patternMismatch="The project name can only contain lower case letters, numbers and -"
                             ref="autofocus"
                             placeholder="projekt-name">
                     </b-input>
                     <p class="control">
-                        <span v-if="cluster.production" class="button is-static">-prod</span>
+                        <b-select v-model="stage">
+                            <option v-for="s in stages" :value="s">-{{s}}</option>
+                        </b-select>
                     </p>
                 </b-field>
             </b-field>
-            <b-message v-if="cluster.production" type="is-info">
-                Only production projects are allowed on this cluster! Please read the <a target="_blank" href="https://confluence.sbb.ch/x/tIHPUw">production guidelines</a></br>
+            <b-message v-if="stage == 'int' || stage == 'prod'" type="is-info">
+                Only production/integration projects are allowed on this cluster! Please read the <a target="_blank" href="https://confluence.sbb.ch/x/tIHPUw">production guidelines</a></br>
             </b-message>
-            <b-message v-if="!cluster.production" :type="project.endsWith('prod') ? 'is-danger':'is-info'">
-                No production projects are allowed on this cluster!
-            </b-message>
+
+            <!-- stage must be synced! -->
+            <cluster-select v-model="cluster" v-bind:stage.sync="stage"></cluster-select>
 
             <b-field label="Accounting Number">
                 <b-input v-model.trim="billing"
@@ -71,7 +72,9 @@
         megaId: '',
         billing: '',
         project: '',
-        loading: false
+        loading: false,
+        stage: 'dev',
+        stages: ["dev","test","int","prod"]
       };
     },
     methods: {
@@ -80,7 +83,7 @@
 
         this.$http.post(this.$store.state.backendURL + '/api/ose/project', {
           clusterid: this.cluster.id,
-          project: this.project + (this.cluster.production ? '-prod' : ''),
+          project: this.project + "-" + this.stage,
           billing: this.billing,
           megaId: this.megaId
         }).then(() => {

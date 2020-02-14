@@ -20,7 +20,7 @@
             </div>
         </article>
         <form v-on:submit.prevent="newTestProject">
-            <cluster-select v-model="cluster" feature="testprojects"></cluster-select>
+            <cluster-select v-model="cluster" v-bind:stage.sync="stage"></cluster-select>
             <b-field label="Trial Project Name">
                 <b-field>
                     <p class="control">
@@ -61,7 +61,8 @@
       return {
         cluster: {},
         testprojectname: '',
-        loading: false
+        loading: false,
+        stage: 'dev',
       };
     },
     methods: {
