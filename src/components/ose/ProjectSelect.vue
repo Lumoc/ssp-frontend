@@ -30,7 +30,6 @@
     },
     watch: {
       projectData(val) {
-        localStorage.openshiftproject = val;
         this.$emit('update:project', val);
       },
       clusterid(val) {
@@ -59,11 +58,6 @@
         }, () => {
           this.loading = false;
         });
-      },
-      setProject: function() {
-        if (localStorage.openshiftproject) {
-          this.project = localStorage.openshiftproject;
-        }
       },
     },
     computed: {

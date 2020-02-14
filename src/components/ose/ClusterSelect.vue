@@ -53,20 +53,16 @@
     },
     watch: {
       stage(s) {
-        localStorage.stage = this.stage;
         this.getClusters();
       },
       selectedCluster(c) {
         if (!c) return
-        localStorage.clusterid = c.id;
         this.$emit('input', c);
       },
       showPrivateClusters(b) {
         // if the checkbox is deactivated and a private cluster is selected,
         // then reset the select box
         if (!b && this.selectedCluster.optgroup) this.setSelect()
-        // save the value in localstorage
-        localStorage.showprivateclusters = b
       }
     },
     computed: {
@@ -88,14 +84,7 @@
       }
     },
     mounted: function () {
-        // load the checkbox from localStorage
-        this.setShowPrivateClusters();
-        if (localStorage.stage && this.stage != localStorage.stage) {
-            // set the value from localStorage
-            this.$emit('update:stage', localStorage.stage)
-        } else {
-            this.getClusters();
-        }
+        this.getClusters();
     },
     methods: {
       getClusters: function() {
@@ -110,29 +99,10 @@
           this.loading = false;
         });
       },
-      setShowPrivateClusters: function() {
-        if (localStorage.showprivateclusters) {
-            // set the value from localStorage
-            // convert from string to boolean
-            this.showPrivateClusters = (localStorage.showprivateclusters == 'true')
-        }
-      },
       setSelect: function(c) {
         if (c) {
             this.selectedCluster = c
             return
-        }
-
-        // Only restore localstorage on page load (check if selectedCluster is empty)
-        if (localStorage.clusterid && !this.selectedCluster.id) {
-          // search for cluster with this id
-          for (let c of this.clusters) {
-             if (c.id == localStorage.clusterid) {
-                console.log("restored cluster from localstorage")
-                this.selectedCluster = c
-                return
-             }
-          }
         }
 
         // if selectedCluster is already set it means the stage changed
