@@ -144,9 +144,13 @@ router.beforeEach((to, from, next) => {
 function authenticate(to, from, next) {
     keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
         if (authenticated) {
+            // In case we need to debug some weird issue
+            console.log(keycloak.tokenParsed)
             store.commit('setUser', {
                 user: {
-                  name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
+                  // This doesn't work in rare cases. I haven't figured out why
+                  //name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
+                  name: keycloak.tokenParsed.sbbuid_ad,
                   firstName: keycloak.tokenParsed.given_name,
                   token: keycloak.token,
                   tokenParsed: keycloak.tokenParsed,
