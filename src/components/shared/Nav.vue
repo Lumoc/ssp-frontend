@@ -66,6 +66,7 @@
                     </a>
                     <div class="navbar-dropdown">
                         <router-link to="/rds/new" class="navbar-item">Create Database</router-link>
+                        <router-link to="/rds/list" class="navbar-item">List Databases</router-link>
                     </div>
                 </div>
                 <div v-if="user" class="navbar-item has-dropdown is-hoverable">
