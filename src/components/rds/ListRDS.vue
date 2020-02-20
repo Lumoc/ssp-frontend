@@ -21,7 +21,7 @@
         <b-field grouped>
             <b-button type="is-danger" @click="listRDS()" :loading="loading">Refresh</b-button>
         </b-field>
-        <b-table :data="data" :loading="loading" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
+        <b-table :data="data" :loading="loading" :narrowed="false" default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
