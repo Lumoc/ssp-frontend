@@ -39,6 +39,42 @@
                             </td><td>
                                 {{ moment(props.row.created).format('LLL') }}
                             </td></tr>
+                            <tr><td>
+                                IP:
+                            </td><td>
+                                {{ props.row.private_ips[0] }}
+                            </td></tr>
+                            <tr><td>
+                                Port:
+                            </td><td>
+                                {{ props.row.port }}
+                            </td></tr>
+                            <tr><td>
+                                Type:
+                            </td><td>
+                                {{ props.row.type }}
+                            </td></tr>
+                            <tr><td>
+                                Database:
+                            </td><td>
+                                {{ props.row.datastore.type }} {{ props.row.datastore.version }}
+                            </td></tr>
+                            <tr><td>
+                                Flavor:
+                            </td><td>
+                                {{ props.row.flavor_ref }}
+                            </td></tr>
+                            <tr><td>
+                                Volume:
+                            </td><td>
+                                {{ props.row.volume.size }}GB
+                            </td></tr>
+                            <tr><td>
+                                Backup:
+                            </td><td>
+                                {{ props.row.backup_strategy.start_time }} keep {{ props.row.backup_strategy.keep_days }} days
+                            </td></tr>
+
                         </table>
 
                     </div>
