@@ -21,7 +21,7 @@
         <b-field grouped>
             <b-button type="is-danger" @click="listRDS()" :loading="loading">Refresh</b-button>
         </b-field>
-        <b-table :data="filteredData" :loading="loading" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
+        <b-table :data="data" :loading="loading" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
@@ -33,9 +33,22 @@
             <template slot="detail" slot-scope="props">
                 <div class="columns">
                     <div class="column">
+                        <table>
+                            <tr><td>
+                                Created:
+                            </td><td>
+                                {{ moment(props.row.created).format('LLL') }}
+                            </td></tr>
+                        </table>
 
                     </div>
                     <div class="column">
+                        <table>
+                            <tr v-for="(value, key) in props.row.Tags">
+                                <td>{{ key }}:</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                        </table>
 
                     </div>
                 </div>
@@ -104,7 +117,7 @@
                 this.tags = [];
                 this.$http.get(this.$store.state.backendURL + '/api/otc/rds/instances').then((res) => {
                     console.log(res)
-                    this.data = res.body.databases;
+                    this.data = res.body;
                     this.loading = false;
                 }, () => {
                     this.loading = false;
