@@ -47,11 +47,6 @@
       'cluster-select': ClusterSelect,
       'project-select': ProjectSelect
     },
-    computed: {
-      username() {
-        return this.$store.state.user.name;
-      }
-    },
     data() {
       return {
         cluster: {},
