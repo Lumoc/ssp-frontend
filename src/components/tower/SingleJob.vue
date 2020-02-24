@@ -61,11 +61,6 @@
     components: {
         'job-stdout': JobStdout
     },
-    computed: {
-      username() {
-        return this.$store.state.user.name;
-      }
-    },
     props: ['jobID'],
     data() {
       return {
