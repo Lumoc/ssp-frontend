@@ -44,6 +44,7 @@
                 @typing="getFilteredMetadata"
                 @input="getFilteredData">
             </b-taginput>
+            <b-checkbox :disabled="loading" v-if="isAdmin" v-model="showall">Show all</b-checkbox>
         </b-field>
         <b-table :data="filteredData"
                  :loading="loading"
@@ -52,7 +53,7 @@
                  checkable
                  default-sort="name"
                  :paginated="true"
-                 :per-page="10"
+                 :per-page="20"
                  detailed
                  detail-key="id"
                  @details-open="getMoreDetails">
@@ -114,6 +115,7 @@
                 filteredData: [],
                 checkedRows: [],
                 loading: false,
+                showall: false,
                 groups: '',
                 tags: [],
                 filteredMetadata: [],
@@ -128,6 +130,11 @@
             replaceUnderscores: function (value) {
                 if (!value) return ''
                 return value.replace("_", " ")
+            }
+        },
+        watch: {
+            showall: function(val) {
+                this.listServers();
             }
         },
         methods: {
@@ -192,7 +199,10 @@
             listServers: function() {
                 this.loading = true;
                 this.tags = [];
-                this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
+                this.$http.get(this.$store.state.backendURL + '/api/otc/ecs', {
+                                    params: {
+                                        showall: this.showall
+                                    }}).then((res) => {
                     this.data = res.body.servers;
                     // filteredData is not computed and only updated when a tag is added or removed
                     this.filteredData = this.data;
@@ -313,6 +323,12 @@
                     // error
                 });
             }
+        },
+        computed: {
+            isAdmin() {
+                if (this.groups.indexOf("DG_RBT_UOS_ADMINS") > -1) return true
+                return false
+            },
         }
     };
 </script>
