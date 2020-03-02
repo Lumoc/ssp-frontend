@@ -188,7 +188,7 @@
                 - Storage: CHF {{ computedCosts.volume }}
             </b-message>
 
-            <ldap-groups v-model="extra_vars.unifiedos_owner_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
+            <ldap-groups v-model="extra_vars.unifiedos_owner_group" admingroup="DG_RBT_UOS_ADMINS" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
 
             <b-field>
                 <template slot="label">
@@ -236,9 +236,7 @@
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
-                <b-input type="textarea"
-                         v-model.number="extra_vars.defender_exclude_path"
-                         required>
+                <b-input type="textarea" v-model.number="extra_vars.defender_exclude_path">
                 </b-input>
             </b-field>
             <b-field>
