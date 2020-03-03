@@ -24,13 +24,13 @@
                     Actions
                 </b-button>
 
-                <b-dropdown-item @click="stopECServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
-                <b-dropdown-item @click="startECServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
-                <b-dropdown-item @click="rebootECServers()">Reboot</b-dropdown-item>
-                <!--<b-dropdown-item @click="deleteECServers()">Delete</b-dropdown-item>-->
+                <b-dropdown-item @click="stopServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
+                <b-dropdown-item @click="startServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
+                <b-dropdown-item @click="rebootServers()">Reboot</b-dropdown-item>
+                <!--<b-dropdown-item @click="deleteServers()">Delete</b-dropdown-item>-->
             </b-dropdown>
 
-            <b-button type="is-danger" @click="listECServers()" :loading="loading">Refresh</b-button>
+            <b-button type="is-danger" @click="listServers()" :loading="loading">Refresh</b-button>
             <b-taginput
                 expanded
                 v-model="tags"
@@ -44,8 +44,19 @@
                 @typing="getFilteredMetadata"
                 @input="getFilteredData">
             </b-taginput>
+            <b-checkbox :disabled="loading" v-if="isAdmin" v-model="showall">Show all</b-checkbox>
         </b-field>
-        <b-table :data="filteredData" :loading="loading" :checked-rows.sync="checkedRows" :narrowed="false" checkable default-sort="name" :paginated="true" :per-page="10" detailed detail-key="id">
+        <b-table :data="filteredData"
+                 :loading="loading"
+                 :checked-rows.sync="checkedRows"
+                 :narrowed="false"
+                 checkable
+                 default-sort="name"
+                 :paginated="true"
+                 :per-page="20"
+                 detailed
+                 detail-key="id"
+                 @details-open="getMoreDetails">
             <template slot-scope="props">
                 <b-table-column field="name" label="Name" sortable>
                     {{ props.row.name }}
@@ -59,26 +70,16 @@
                     <div class="column">
                         <table>
                             <tr><td>
-                                RAM:
+                                Flavor:
                             </td><td>
-                                {{ props.row.ram/1024 }}GB
-                            </td></tr>
-                            <tr><td>
-                                vCPUs:
-                            </td><td>
-                                {{ props.row.vcpus }}
-                            </td></tr>
-                            <tr><td>
-                                Image:
-                            </td><td>
-                                {{ props.row.imageName }}
+                                {{ props.row.flavor.id }}
                             </td></tr>
                             <tr><td>
                                 IP address:
                             </td><td>
                                 <ul id="ips">
-                                    <li v-for="ip in props.row.ipv4" v-bind:key="ip">
-                                        {{ ip }}
+                                    <li v-for="address in props.row.addresses">
+                                        {{ address[0].addr }}
                                     </li>
                                 </ul>
                             </td></tr>
@@ -91,8 +92,8 @@
                     </div>
                     <div class="column">
                         <table>
-                            <tr v-for="(value, key) in props.row.metadata">
-                                <td>{{ key | replaceUnderscores }}:</td>
+                            <tr v-for="(value, key) in filterLegacy(props.row.metadata)">
+                                <td>{{ key }}:</td>
                                 <td>{{ value }}</td>
                             </tr>
                         </table>
@@ -114,6 +115,7 @@
                 filteredData: [],
                 checkedRows: [],
                 loading: false,
+                showall: false,
                 groups: '',
                 tags: [],
                 filteredMetadata: [],
@@ -121,13 +123,18 @@
             };
         },
         mounted: function() {
-            this.listECServers();
+            this.listServers();
             this.getADGroups();
         },
         filters: {
             replaceUnderscores: function (value) {
                 if (!value) return ''
                 return value.replace("_", " ")
+            }
+        },
+        watch: {
+            showall: function(val) {
+                this.listServers();
             }
         },
         methods: {
@@ -152,6 +159,13 @@
                     }
                 })
                 return [...result].sort()
+            },
+            filterLegacy: function(metadata) {
+                let legacy = ["Accounting_Number","Contact","Creator","Group","Mega_ID","OS","Owner","Project","SLA","Stage"]
+                for (let m of legacy) {
+                    delete metadata[m]
+                }
+                return metadata
             },
             getFilteredMetadata: function(text) {
                 this.filteredMetadata = this.metadata.filter((option) => {
@@ -182,11 +196,14 @@
                 });
                 return device;
             },
-            listECServers: function() {
+            listServers: function() {
                 this.loading = true;
                 this.tags = [];
-                this.$http.get(this.$store.state.backendURL + '/api/otc/ecs').then((res) => {
-                    this.data = res.body.ecServers;
+                this.$http.get(this.$store.state.backendURL + '/api/otc/ecs', {
+                                    params: {
+                                        showall: this.showall
+                                    }}).then((res) => {
+                    this.data = res.body.servers;
                     // filteredData is not computed and only updated when a tag is added or removed
                     this.filteredData = this.data;
                     this.metadata = this.getMetadata();
@@ -197,7 +214,8 @@
                 }, () => {
                     this.loading = false;
                 });
-            }, stopECServers: function() {
+            },
+            stopServers: function() {
                 let message = "Do you really want to stop the following servers?<br><br>"
                 message += this.getCheckedServerNames().join('<br>')
                 this.$buefy.dialog.confirm({
@@ -208,7 +226,7 @@
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/stopecs', { "ecServers" : this.checkedRows }
+                        this.$http.post(this.$store.state.backendURL + '/api/otc/stopecs', { "servers" : this.checkedRows }
                         ).then((res) => {
                             this.loading = false;
                         }, () => {
@@ -216,7 +234,8 @@
                         });
                     }
                 })
-            }, startECServers: function() {
+            },
+            startServers: function() {
                 let message = 'Do you really want to start the following servers?'
                 message += this.getCheckedServerNames().join('<br>')
                 this.$buefy.dialog.confirm({
@@ -227,7 +246,7 @@
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/startecs', { "ecServers" : this.checkedRows }
+                        this.$http.post(this.$store.state.backendURL + '/api/otc/startecs', { "servers" : this.checkedRows }
                         ).then((res) => {
                             this.loading = false;
                         }, () => {
@@ -235,7 +254,8 @@
                         });
                     }
                 })
-            }, rebootECServers: function() {
+            },
+            rebootServers: function() {
                 let message = 'Do you really want to reboot the following servers?'
                 message += this.getCheckedServerNames().join('<br>')
                 this.$buefy.dialog.confirm({
@@ -246,7 +266,7 @@
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/rebootecs', { "ecServers" : this.checkedRows }
+                        this.$http.post(this.$store.state.backendURL + '/api/otc/rebootecs', { "servers" : this.checkedRows }
                         ).then((res) => {
                             this.loading = false;
                         }, () => {
@@ -254,7 +274,8 @@
                         });
                     }
                 })
-            }, deleteECServers: function() {
+            },
+            deleteServers: function() {
                 let message = 'Do you really want to delete the following servers?'
                 message += this.getCheckedServerNames().join('<br>')
                 this.$buefy.dialog.confirm({
@@ -265,7 +286,7 @@
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/deleteecs', { "ecServers" : this.checkedRows }
+                        this.$http.post(this.$store.state.backendURL + '/api/otc/deleteecs', { "servers" : this.checkedRows }
                         ).then((res) => {
                             this.loading = false;
                         }, () => {
@@ -273,7 +294,8 @@
                         });
                     }
                 })
-            }, areAllServersStarted: function() {
+            },
+            areAllServersStarted: function() {
                 var started = true;
                 this.checkedRows.forEach(function(item) {
                     if (item.status !== 'ACTIVE') {
@@ -281,7 +303,8 @@
                     }
                 });
                 return started
-            }, areAllServersStopped: function() {
+            },
+            areAllServersStopped: function() {
                 var stopped = true;
                 this.checkedRows.forEach(function(item) {
                     if (item.status !== 'SHUTOFF') {
@@ -289,13 +312,23 @@
                     }
                 });
                 return stopped
-            }, getADGroups: function() {
+            },
+            getMoreDetails: function(row, index) {
+                console.log(row)
+            },
+            getADGroups: function() {
                 this.$http.get(this.$store.state.backendURL + '/api/ldap/groups', null).then((res) => {
                     this.groups = res.body.sort().join(", ");
                 }, () => {
                     // error
                 });
             }
+        },
+        computed: {
+            isAdmin() {
+                if (this.groups.indexOf("DG_RBT_UOS_ADMINS") > -1) return true
+                return false
+            },
         }
     };
 </script>
