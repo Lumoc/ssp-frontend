@@ -23,7 +23,7 @@
         data() {
             return {
                 loading: false,
-                email: ''   
+                email: ''
             };
         },
         methods: {

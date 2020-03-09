@@ -111,6 +111,9 @@ const routes = [
     },
     {
         path: '/kafka/adminconsole', component: LocalComponents.AdminConsole
+    },
+    {
+        path: '/kafka/costforecast', component: LocalComponents.CostForecast
     }
 ];
 

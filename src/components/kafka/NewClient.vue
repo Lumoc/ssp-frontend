@@ -23,7 +23,7 @@
         data() {
             return {
                 loading: false,
-                clientId: ''   
+                clientId: ''
             };
         },
         methods: {

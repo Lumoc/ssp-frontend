@@ -110,6 +110,7 @@
                     <div class="navbar-dropdown">
                         <router-link v-if="userIsKafkaServiceOwner()" to="/kafka/adminconsole" class="navbar-item">Admin Console</router-link>
                         <router-link to="/kafka/listtopics" class="navbar-item">Topic List</router-link>
+                        <router-link to="/kafka/costforecast" class="navbar-item">Cost Forecast</router-link>
                     </div>
                 </div>
             </div>
