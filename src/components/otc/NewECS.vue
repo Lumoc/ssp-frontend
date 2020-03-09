@@ -361,7 +361,7 @@
             return { maxlength: this.extra_vars.unifiedos_project.length == 6 }
         },
         job_template: function() {
-           return (this.stage == 'p') ? '19632' : '19632' // '19306' : '19296'
+           return (this.stage == 'p') ? '21541' : '21543' // '21541' : '21542'
         },
         windows: function() {
             return this.isWindows(this.image)
