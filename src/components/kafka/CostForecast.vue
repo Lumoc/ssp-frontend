@@ -26,12 +26,12 @@
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Incoming data in GB">
+                    <b-field label="Incoming Data in GB">
                         <b-numberinput v-model="dataInGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Outgoing data in GB">
+                    <b-field label="Outgoing Data in GB">
                         <b-numberinput v-model="dataOutGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
