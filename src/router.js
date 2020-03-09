@@ -59,6 +59,9 @@ const routes = [
         path: '/rds/new', component: LocalComponents.NewRDS
     },
     {
+        path: '/rds/list', component: LocalComponents.ListRDS
+    },
+    {
         path: '/sematext/newapp', component: LocalComponents.SematextNewApp
     },
     {
