@@ -5,6 +5,8 @@ import VueResource from 'vue-resource';
 import VeeValidate, { Validator } from 'vee-validate';
 import Moment from 'moment';
 import 'moment-timezone';
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
 
 // Styles
 import 'buefy/dist/buefy.css';
@@ -20,6 +22,7 @@ import router from './router';
 Vue.use(VueRouter);
 Vue.use(Buefy);
 Vue.use(VueResource);
+Vue.use(VueLodash, { lodash: lodash })
 
 Moment.locale('en')
 Moment.tz.setDefault("Europe/Zurich")

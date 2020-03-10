@@ -26,6 +26,9 @@
                 <b-table-column field="partitions" label="Partitions" sortable>
                     {{ props.row.partitions }}
                 </b-table-column>
+                <b-table-column field="replicas" label="Replicas" sortable>
+                    {{ props.row.replicas }}
+                </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
                 <div class="columns">
