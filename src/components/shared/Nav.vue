@@ -51,7 +51,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div v-if="user && features.otc.enabled" class="navbar-item has-dropdown is-hoverable">
+                <div v-if="user && features.otc.uos" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         UOS
                     </a>
@@ -115,7 +115,7 @@
             </div>
 
             <div v-if="user" class="navbar-end">
-                <router-link v-if="features.otc.enabled" to="/tower/jobs" class="navbar-item">Jobs</router-link>
+                <router-link v-if="features.otc.uos || features.otc.rds" to="/tower/jobs" class="navbar-item">Jobs</router-link>
                 <a class="navbar-item">
                     <b-icon icon="face"></b-icon>
                     &nbsp; Hello {{ user.firstName }}!
@@ -142,7 +142,8 @@
             return {
                 features: {
                     otc: {
-                        enabled: false
+                        uos: false,
+                        rds: false,
                     },
                     kafka: {
                         enabled: false
