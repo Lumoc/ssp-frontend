@@ -10,7 +10,7 @@
                 </b-table-column>
                 <b-table-column field="lastName" label="Last Name" sortable>
                     {{ props.row.lastName }}
-                </b-table-column>                
+                </b-table-column>
                 <b-table-column field="username" label="Username" sortable>
                     {{ props.row.username }}
                 </b-table-column>
