@@ -220,10 +220,11 @@
           };
       },
       watch: {
+        stage: function(val) {
+            if (val) this.getVersions();
+        },
         version: function(val) {
-            if (val) {
-                this.getFlavors(val)
-            }
+            if (val) this.getFlavors(val)
         }
       },
       computed: {
@@ -241,7 +242,9 @@
           },
           getVersions: function () {
               this.loading = true;
-              this.$http.get(this.$store.state.backendURL + '/api/otc/rds/versions').then((res) => {
+              this.$http.get(this.$store.state.backendURL + '/api/otc/rds/versions', {
+		params: { stage: this.stage }
+              }).then((res) => {
                   if (Array.isArray(res.body) && res.body.length) {
                     // sort the numbers in descending order
                     this.versions = res.body.sort((a, b) => b - a);
@@ -259,7 +262,10 @@
           getFlavors: function(version) {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/rds/flavors', {
-                params: { version_name: version }
+                params: {
+                     version_name: version,
+                     stage: this.stage,
+                }
               }).then((res) => {
                   let result = res.body.flavors;
                   console.log(result)
