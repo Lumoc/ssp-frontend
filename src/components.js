@@ -24,6 +24,9 @@ import ListEC2Instances from './components/aws/ListEC2Instances.vue';
 // OTC Components
 import ListECS from './components/otc/ListECS.vue';
 import NewECS from './components/otc/NewECS.vue';
+// RDS Components
+import ListRDS from './components/rds/ListRDS.vue';
+import NewRDS from './components/rds/NewRDS.vue';
 // Sematext Components
 import SematextAppList from './components/sematext/AppList.vue';
 import SematextNewApp from './components/sematext/NewApp.vue';
@@ -88,6 +91,8 @@ export const LocalComponents = {
     NewS3User,
     NewECS,
     ListECS,
+    NewRDS,
+    ListRDS,
     SematextAppList,
     SematextNewApp,
     SematextChangeBilling,

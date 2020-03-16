@@ -56,6 +56,12 @@ const routes = [
         path: '/otc/newecs', component: LocalComponents.NewECS
     },
     {
+        path: '/rds/new', component: LocalComponents.NewRDS
+    },
+    {
+        path: '/rds/list', component: LocalComponents.ListRDS
+    },
+    {
         path: '/sematext/newapp', component: LocalComponents.SematextNewApp
     },
     {
