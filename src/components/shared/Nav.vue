@@ -60,7 +60,7 @@
                         <router-link to="/otc/newecs" class="navbar-item">Create a UnifiedOS Server</router-link>
                     </div>
                 </div>
-                <div v-if="user" class="navbar-item has-dropdown is-hoverable">
+                <div v-if="user && features.otc.rds" class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         RDS
                     </a>
