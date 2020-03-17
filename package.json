@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "@dsb-norge/vue-keycloak-js": "^1.1.2",
     "buefy": "^0.8.9",
     "keycloak-js": "3.4.3",
     "lodash": "^4.17.15",

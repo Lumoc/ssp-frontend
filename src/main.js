@@ -5,8 +5,9 @@ import VueResource from 'vue-resource';
 import VeeValidate, { Validator } from 'vee-validate';
 import Moment from 'moment';
 import 'moment-timezone';
-import VueLodash from 'vue-lodash'
-import lodash from 'lodash'
+import VueLodash from 'vue-lodash';
+import lodash from 'lodash';
+import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
 
 // Styles
 import 'buefy/dist/buefy.css';
@@ -22,7 +23,7 @@ import router from './router';
 Vue.use(VueRouter);
 Vue.use(Buefy);
 Vue.use(VueResource);
-Vue.use(VueLodash, { lodash: lodash })
+Vue.use(VueLodash, { lodash: lodash });
 
 Moment.locale('en')
 Moment.tz.setDefault("Europe/Zurich")
@@ -73,7 +74,7 @@ Vue.http.interceptors.push(function (request, next) {
             this.$store.commit('setNotification', {
                 notification: {
                     type: 'danger',
-                    message: "Der Token ist abgelaufen. Bitte laden Sie die Seite neu."
+                    message: "The token has expired. Please reload the page."
                 }
             });
         } else if (!res.ok) {
@@ -90,7 +91,7 @@ Vue.http.interceptors.push(function (request, next) {
 // Http interceptors: Add Auth-Header if token present
 Vue.http.interceptors.push(function (request, next) {
     if (store.state.user) {
-        request.headers.set('Authorization', `Bearer ${store.state.user.token}`);
+        request.headers.set('Authorization', `Bearer ${Vue.prototype.$keycloak.token}`);
     }
     next();
 });
@@ -146,11 +147,24 @@ router.afterEach((to, from) => {
     })
 })
 
-new Vue({
-    router,
-    store,
-    components: LocalComponents,
-    el: '#app',
-    render: h => h(GlobalComponents.App)
+Vue.use(VueKeyCloak, {
+    init: {
+        onLoad: 'login-required',
+        checkLoginIframe: false
+    },
+    config: {
+        realm: 'SBB_Public',
+        url: 'https://sso-dev.sbb.ch/auth',
+        clientId: 'ea8e101c'
+    },
+    onReady: () => {
+        new Vue({
+            router,
+            store,
+            components: LocalComponents,
+            el: '#app',
+            render: h => h(GlobalComponents.App)
+        })
+  }
 });
 

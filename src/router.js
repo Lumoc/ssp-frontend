@@ -123,61 +123,20 @@ const routes = [
     }
 ];
 
-let config = {
-    realm: store.state.ssoRealmName,
-    url: store.state.ssoRealmURL,
-    clientId: store.state.ssoClientID
-}
-
-let keycloak = Keycloak(config);
-
 // mode history is needed with keycloak js, see https://github.com/dsb-norge/vue-keycloak-js/issues/1
 const router = new VueRouter({routes, mode: 'history'});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
     store.commit('setNotification', {notification: {}});
-    if (!store.state.user) {
-        console.log('Not yet logged in, authenticating.');
-        authenticate(to, from, next);
-    } else if (store.state.user && store.state.user.exp < (Date.now() / 1000) + 300) {
-        console.log('Token is no longer valid, authenticating.');
-        store.commit('setUser', {user: null});
-        authenticate(to, from, next);
-    } else {
-        // Everything fine, go to page
-        next();
-    }
-});
-
-function authenticate(to, from, next) {
-    keycloak.init({ onLoad: 'check-sso', flow: 'implicit' }).success((authenticated) => {
-        if (authenticated) {
-            // In case we need to debug some weird issue
-            console.log(keycloak.tokenParsed)
-            store.commit('setUser', {
-                user: {
-                  // This doesn't work in rare cases. I haven't figured out why
-                  //name: keycloak.tokenParsed.preferred_username.match(/^.*\\(.*)$/)[1],
-                  name: keycloak.tokenParsed.sbbuid_ad,
-                  firstName: keycloak.tokenParsed.given_name,
-                  token: keycloak.token,
-                  tokenParsed: keycloak.tokenParsed,
-                  exp: keycloak.tokenParsed.exp
-                }
-              });
-            next();
-            // Remove hash stuff
-            history.replaceState("", document.title, window.location.pathname);
-        } else {
-            keycloak.login({
-                idpHint: store.state.ssoIdpHint,
-                redirectUri: location.origin + to.path
-            })
+    store.commit('setUser', {
+        user: {
+            name: router.app.$keycloak.tokenParsed.sbbuid_ad,
+            firstName: router.app.$keycloak.tokenParsed.given_name,
+            tokenParsed: router.app.$keycloak.tokenParsed
         }
-    }).error(() =>{
-      console.log("SSO authentication error.")
     });
-}
+    next();
+});
 
 export default router;

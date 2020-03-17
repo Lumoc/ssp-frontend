@@ -7,36 +7,37 @@
                 </div>
                 <h2 class="subtitle">See how affordable Kafka really is.</h2>
             </div>
-        </div>
-        
-        <section class="section">
-            <b-table :data="data" :columns="columns" :loading="loading"></b-table>
-        </section>
+        </div>        
 
         <section class="section">
             <div class="tile is-ancestor">
                 <div class="tile">
-                    <b-field label="Partition Count">
+                    <b-field label="Partitions/Day">
                         <b-numberinput v-model="partitionCount" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Storage in GB">
+                    <b-field label="Storage in GB/Day">
                         <b-numberinput v-model="storageGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Incoming Data in GB">
+                    <b-field label="Data In in GB/Day">
                         <b-numberinput v-model="dataInGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Outgoing Data in GB">
+                    <b-field label="Data Out in GB/Day">
                         <b-numberinput v-model="dataOutGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
             </div>
         </section>
+
+        <section class="section">
+            <b-table :data="data" :columns="columns" :loading="loading"></b-table>
+        </section>
+
     </div>
 </template>
 <script>
