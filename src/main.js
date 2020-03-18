@@ -7,7 +7,6 @@ import Moment from 'moment';
 import 'moment-timezone';
 import VueLodash from 'vue-lodash';
 import lodash from 'lodash';
-import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
 
 // Styles
 import 'buefy/dist/buefy.css';
@@ -18,6 +17,9 @@ import store from './store';
 import {GlobalComponents, LocalComponents} from './components';
 // Router
 import router from './router';
+
+// Keycloak
+import Keycloak from './keycloak/keycloak.js'
 
 // Mixins
 Vue.use(VueRouter);
@@ -91,7 +93,7 @@ Vue.http.interceptors.push(function (request, next) {
 // Http interceptors: Add Auth-Header if token present
 Vue.http.interceptors.push(function (request, next) {
     if (store.state.user) {
-        request.headers.set('Authorization', `Bearer ${Vue.prototype.$keycloak.token}`);
+        request.headers.set('Authorization', `Bearer ${store.state.user.token}`);
     }
     next();
 });
@@ -147,16 +149,7 @@ router.afterEach((to, from) => {
     })
 })
 
-Vue.use(VueKeyCloak, {
-    init: {
-        onLoad: 'login-required',
-        checkLoginIframe: false
-    },
-    config: {
-        realm: 'SBB_Public',
-        url: 'https://sso-dev.sbb.ch/auth',
-        clientId: 'ea8e101c'
-    },
+Vue.use(Keycloak, { 
     onReady: () => {
         new Vue({
             router,
@@ -164,7 +157,15 @@ Vue.use(VueKeyCloak, {
             components: LocalComponents,
             el: '#app',
             render: h => h(GlobalComponents.App)
-        })
-  }
+        });
+    }, onTokenUpdated: (keycloak) => {
+        store.commit('setUser', {
+            user: {
+                uid: keycloak.tokenParsed.sbbuid_ad,
+                firstName: keycloak.tokenParsed.given_name,
+                tokenParsed: keycloak.tokenParsed,
+                token: keycloak.token
+            }
+        });
+    }
 });
-
