@@ -35,7 +35,7 @@ export default {
           options.onReady();
       } else {
           keycloak.login({
-              idpHint: 'adfs_sbb_prod'
+              idpHint: options.idpHint
           })
       }
     }).error(() => {
