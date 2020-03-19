@@ -380,7 +380,7 @@
             let cache = []
             // sort the array and only keep the first instance
             filtered = filtered.sort((a, b) => b.name.localeCompare(a.name)).filter(function(image) {
-                if (cache.includes(image.pretty)) return false
+                if (cache.indexOf(image.pretty) > -1) return false
                 cache.push(image.pretty)
                 return true
             })
