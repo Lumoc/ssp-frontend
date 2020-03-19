@@ -127,7 +127,15 @@ const router = new VueRouter({routes, mode: 'history'});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
-    store.commit('setNotification', {notification: {}});    
+    store.commit('setNotification', {notification: {}});
+    if (window.document.documentMode) {
+        store.commit('setNotification', {
+            notification: {
+                type: 'warning',
+                message: 'Internet Explorer is not supported. Please use Chrome, Firefox or Edge.'
+            }
+        });
+    }
     next();
 });
 
