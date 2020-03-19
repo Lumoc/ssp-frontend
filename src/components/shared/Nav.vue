@@ -166,10 +166,18 @@
         },
         methods: {
             userIsKafkaServiceOwner: function() {
-                if (!this.$store.state.user.tokenParsed.resource_access.hasOwnProperty("apim-kafka_automation_api-prod-aws")) {
-                    return false;
+                const dev = 'apim-kafka_automation_api-dev-aws';
+                const prod = 'apim-kafka_automation_api-prod-aws';
+
+                if (this.$store.state.user.tokenParsed.resource_access.hasOwnProperty(dev)) {
+                    return this.$store.state.user.tokenParsed.resource_access[dev].roles.includes("service-owner");
                 }
-                return this.$store.state.user.tokenParsed.resource_access["apim-kafka_automation_api-prod-aws"].roles.includes("service-owner");
+
+                if (this.$store.state.user.tokenParsed.resource_access.hasOwnProperty(prod)) {
+                    return this.$store.state.user.tokenParsed.resource_access[prod].roles.includes("service-owner");
+                }
+                
+                return false;
             }
         }
     }

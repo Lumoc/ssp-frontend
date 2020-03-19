@@ -1,7 +1,6 @@
 import {GlobalComponents, LocalComponents} from './components';
 import VueRouter from 'vue-router';
 import store from './store/index';
-import * as Keycloak from 'keycloak-js';
 
 const routes = [
     {
@@ -128,14 +127,7 @@ const router = new VueRouter({routes, mode: 'history'});
 
 router.beforeEach((to, from, next) => {
     // Cleanup old notifications
-    store.commit('setNotification', {notification: {}});
-    store.commit('setUser', {
-        user: {
-            name: router.app.$keycloak.tokenParsed.sbbuid_ad,
-            firstName: router.app.$keycloak.tokenParsed.given_name,
-            tokenParsed: router.app.$keycloak.tokenParsed
-        }
-    });
+    store.commit('setNotification', {notification: {}});    
     next();
 });
 
