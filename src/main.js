@@ -55,12 +55,16 @@ if (!String.prototype.startsWith) {
     });
 }
 
+// Support forEach with NodeList on old browsers
+if (typeof NodeList.prototype.forEach !== 'function')  {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+}
+
 // Redirect old hash based urls to new history routes
 var urlSplit = document.URL.split("#");
 if (urlSplit[1] && urlSplit[1].startsWith("/")) {
     history.replaceState(null, null, urlSplit[1])
 }
-
 
 // Http interceptors: Global response handler
 Vue.http.interceptors.push(function (request, next) {
@@ -149,7 +153,7 @@ router.afterEach((to, from) => {
     })
 })
 
-Vue.use(Keycloak, { 
+Vue.use(Keycloak, {
     onReady: () => {
         new Vue({
             router,
