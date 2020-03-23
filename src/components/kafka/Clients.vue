@@ -66,7 +66,9 @@
             app: function() {
                 if (this.kafkaBackendUrl.length && this.app.length) {
                     this.fetchClients(this.app);
-                }
+                } else {
+                  this.clients = [];
+              }
             }
         },
         methods: {

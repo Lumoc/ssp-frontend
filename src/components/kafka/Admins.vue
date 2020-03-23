@@ -52,6 +52,8 @@
             app: function() {
               if (this.kafkaBackendUrl.length && this.app.length) {
                   this.fetchAdmins(this.app);
+              } else {
+                  this.admins = [];
               }
             }
         },
