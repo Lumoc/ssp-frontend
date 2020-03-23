@@ -6,17 +6,17 @@
       </header>
       <section class="modal-card-body">
         <b-field label="App Name">
-          <b-input v-model="appName" :value="appName" required pattern="[a-z0-9-]*" validation-message="Only lower case letters, numbers and hyphens are allowed."></b-input>
+          <b-input v-model="appName" required pattern="[a-z0-9-]*" validation-message="Only lower case letters, numbers and hyphens are allowed."></b-input>
         </b-field>
         <b-field label="First Admin's E-Mail">
           <b-input type="email" v-model="email" required></b-input>
         </b-field>
         <b-field label="Internal Order">
-          <b-input v-model="internalOrder" :value="internalOrder">
+          <b-input v-model="internalOrder">
           </b-input>
         </b-field>
         <b-field label="PSP Number">
-          <b-input v-model="pspNumber" :value="pspNumber"></b-input>
+          <b-input v-model="pspNumber"></b-input>
         </b-field>
         <b-message title="Creating New App" :active.sync="infoIsActive">
             Please wait, app creation takes a while.
