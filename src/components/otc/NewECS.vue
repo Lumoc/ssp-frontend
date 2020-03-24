@@ -315,6 +315,9 @@
            if (!old_image || size == old_image.minDiskGigabytes || size < image.minDiskGigabytes) {
                 this.extra_vars.unifiedos_root_disk_size = image.minDiskGigabytes
            }
+        },
+        stage: function(s) {
+            this.getFlavors();
         }
       },
       mounted: function () {
@@ -391,7 +394,11 @@
       methods: {
           getFlavors: function () {
               this.loading = true;
-              this.$http.get(this.$store.state.backendURL + '/api/otc/flavors').then((res) => {
+              this.$http.get(this.$store.state.backendURL + '/api/otc/flavors', {
+                    params: {
+                        stage: this.stage
+                    }
+              }).then((res) => {
                   let result = res.body.flavors;
                   this.flavors = result.sort((a,b) => {
                       if (a.vcpus === b.vcpus) {
