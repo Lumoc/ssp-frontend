@@ -35,7 +35,7 @@
         components: {
           NewAdmin
         },
-        props: ["kafkaBackendUrl", "selectedEnvironmentId", "app"],
+        props: ["kafkaBackendUrl", "selectedEnvironmentId", "app", "isInAdminConsole"],
         data() {
             return {
                 admins: [],
@@ -58,7 +58,17 @@
             }
         },
         methods: {
-          fetchAdmins: function(appName) {
+            refreshToken: function(fetchApps) {
+                // this magic number is one hour which forces the token to refresh
+                this.$keycloak.updateToken(3600).success(() => {
+                    if (fetchApps) {
+                        this.$root.$emit("fetch-apps");
+                    }
+                }).error(() => {
+                    keycloak.clearToken()
+                });
+            },
+            fetchAdmins: function(appName) {
                 this.loading = true;
                 this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + appName + "/users", null).then((res) => {
                     this.admins = res.data;
@@ -82,6 +92,7 @@
                     props: modalProps,
                     events: {
                         'kafka-new-admin-added': (value) => {
+                            this.refreshToken(false);
                             this.fetchAdmins(this.app);
                         }
                     }
@@ -91,10 +102,10 @@
                 this.$buefy.dialog.confirm({
                     title: 'Warning: Deleting Admin',
                     message: 'Are you sure you want to delete admin with e-mail ' + email + '?',
-                    cancelText: 'No, stop right now!',
-                    confirmText: 'Yes, delete this admin!',
+                    cancelText: 'Cancel',
+                    confirmText: 'Confirm',
                     onConfirm: () => {
-                        this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + this.app + "/users/" + email, null).then((res) => {
+                        this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/apps/" + this.app + "/users/" + email, null).then((res) => {
 
                             this.$store.commit('setNotification', {
                                 notification: {
@@ -103,7 +114,13 @@
                                 }
                             });
 
-                            this.fetchAdmins(this.app);
+                            if (email === this.$keycloak.tokenParsed.email && !this.isInAdminConsole) {
+                                // user removes himself from admin role
+                                this.refreshToken(true);
+                            } else {
+                                this.refreshToken(false);
+                                this.fetchAdmins(this.app);
+                            }
                         });
                     }
                 });
