@@ -32,7 +32,7 @@
                 return;
               }
               this.loading = true;
-              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/admin/apps/" + this.appName + "/users/" + this.email, null).then(() => {
+              this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/apps/" + this.appName + "/users/" + this.email, null).then(() => {
                   this.$parent.close();
                   
                   this.$store.commit('setNotification', {

@@ -3,9 +3,9 @@
         <div class="hero is-light">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title"><i class="material-icons">all_inclusive</i> Admin Console</h1>
+                    <h1 class="title"><i class="material-icons">all_inclusive</i> App Management</h1>
                 </div>
-                <h2 class="subtitle">Select environment and app to see users, clients and their scopes.</h2>
+                <h2 class="subtitle">Manage your Kafka applications here.</h2>
             </div>
         </div>
         <br>
@@ -17,15 +17,15 @@
             </b-radio-button>
         </b-field>
         <br>
-        <Apps :kafkaBackendUrl="kafkaBackendUrl" :selectedEnvironmentId="selectedEnvironmentId" :mailFromToken="false" />
+        <UserApps :kafkaBackendUrl="kafkaBackendUrl" :selectedEnvironmentId="selectedEnvironmentId" :mailFromToken="true" />
     </div>
 </template>
 <script>
-    import Apps from './Apps.vue'
+    import UserApps from './UserApps.vue'
 
     export default {
         components: {
-            Apps
+            UserApps
         },
         data() {
             return {

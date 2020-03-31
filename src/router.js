@@ -112,10 +112,13 @@ const routes = [
         path: '/tower/jobs/:jobID', component: LocalComponents.SingleJob, props: true
     },
     {
-        path: '/kafka/listtopics', component: LocalComponents.ListTopics
+        path: '/kafka/adminconsole', component: LocalComponents.AdminConsole
     },
     {
-        path: '/kafka/adminconsole', component: LocalComponents.AdminConsole
+        path: '/kafka/listtopics', component: LocalComponents.ListTopics
+    }, 
+    {
+        path: '/kafka/appmanagement', component: LocalComponents.AppManagement
     },
     {
         path: '/kafka/costforecast', component: LocalComponents.CostForecast

@@ -51,8 +51,9 @@ import ListJobs from './components/tower/ListJobs.vue';
 import SingleJob from './components/tower/SingleJob.vue';
 
 // Kafka Components
-import ListTopics from './components/kafka/ListTopics.vue'
 import AdminConsole from './components/kafka/AdminConsole.vue'
+import ListTopics from './components/kafka/ListTopics.vue'
+import AppManagement from './components/kafka/AppManagement.vue'
 import CostForecast from './components/kafka/CostForecast.vue'
 
 Vue.component('navbar', Nav);
@@ -110,7 +111,8 @@ export const LocalComponents = {
     ADGroupUser,
     ListJobs,
     SingleJob,
-    ListTopics,
     AdminConsole,
+    ListTopics,
+    AppManagement,
     CostForecast
 };

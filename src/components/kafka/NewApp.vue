@@ -1,14 +1,17 @@
 <template>
   <form v-on:submit.prevent="addNewApp()">
-    <div class="modal-card" style="width: 400px">
+    <div class="modal-card" style="width: 520px">
       <header class="modal-card-head">
         <p class="modal-card-title">New App</p>
       </header>
       <section class="modal-card-body">
+        <b-message>
+            Please be responsible, create new apps only if really needed.
+        </b-message>
         <b-field label="App Name">
           <b-input v-model="appName" required pattern="[a-z0-9-]*" validation-message="Only lower case letters, numbers and hyphens are allowed."></b-input>
         </b-field>
-        <b-field label="First Admin's E-Mail">
+        <b-field label="First Admin's E-Mail" v-if="!mailFromToken">
           <b-input type="email" v-model="email" required></b-input>
         </b-field>
         <b-field label="Internal Order">
@@ -32,7 +35,7 @@
 
 <script>
     export default {
-        props: ["kafkaBackendUrl", "environmentId"],
+        props: ["kafkaBackendUrl", "environmentId", "mailFromToken"],
         data() {
             return {
                 loading: false,
@@ -50,7 +53,8 @@
               this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/apps", {
                 "appName": this.appName,
                 "userMails": [
-                    this.email
+                    // for non-service owners e-mail is automatically set from token
+                    this.mailFromToken ? this.$store.state.user.tokenParsed.email : this.email
                   ],
                 "clients": [],
                 "billingInformation": {

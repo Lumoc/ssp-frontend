@@ -11,24 +11,18 @@
             </b-radio-button>
         </b-field>
         <br>
-        <b-button type="is-danger" v-if="app.length" @click="deleteApp(app)">Delete {{ app }}</b-button>
-        <br><br>
-        <admins :kafkaBackendUrl="kafkaBackendUrl" :selectedEnvironmentId="selectedEnvironmentId" :app="app" :isInAdminConsole="true" v-show="app.length" />
-        <br>
-        <clients :kafkaBackendUrl="kafkaBackendUrl" :selectedEnvironmentId="selectedEnvironmentId" :app="app"  v-show="app.length" />
+        <admins :kafkaBackendUrl="kafkaBackendUrl" :selectedEnvironmentId="selectedEnvironmentId" :app="app" :isInAdminConsole="false" v-show="app.length" />
 
     </div>
 </template>
 
 <script>
     import Admins from './Admins.vue';
-    import Clients from './Clients.vue';
     import NewApp from './NewApp.vue';
 
     export default {
         components: {
-            Admins,
-            Clients
+            Admins
         },
         props: ["kafkaBackendUrl", "selectedEnvironmentId", "mailFromToken"],
         data() {
@@ -37,6 +31,17 @@
                 app: '',
                 loading: false
             };
+        },
+        created() {
+            var self = this;
+            this.$root.$once("fetch-apps", function () {
+                self.app = '';
+                self.apps = [];
+                self.fetchApps();
+            });
+        },
+        destroyed() {
+            this.$root.$off("fetch-apps");
         },
         watch: {
             selectedEnvironmentId: function() {
@@ -56,17 +61,15 @@
                 this.$keycloak.updateToken(3600).success(() => {
 
                     this.fetchApps();
-
-                    if (appName !== undefined) {
-                        this.app = appName;
-                    }
+                    this.app = appName;
+                    
                 }).error(() => {
                     keycloak.clearToken()
                 });
             },
             fetchApps: function() {
                 this.loading = true;
-                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/", null).then((res) => {
+                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/apps/", null).then((res) => {
                     this.apps = res.data;
                     this.loading = false;
                 }, () => {
@@ -74,7 +77,6 @@
                 });
             },
             openNewAppModal: function() {
-
                 let modalProps = {
                     kafkaBackendUrl: this.kafkaBackendUrl,
                     environmentId: this.selectedEnvironmentId,
@@ -91,31 +93,6 @@
                         'kafka-new-app-created': (appName) => {
                             this.refreshToken(appName);
                         }
-                    }
-                });
-            }, deleteApp: function(app) {
-                this.$buefy.dialog.confirm({
-                    title: 'Warning: Deleting App',
-                    message: 'Are you sure you want to delete app ' + app + '?',
-                    cancelText: 'No',
-                    confirmText: 'Yes',
-                    type: 'is-danger',
-                    hasIcon: true,
-                    onConfirm: () => {
-                        this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + this.app, null).then((res) => {
-
-                            this.app = '';
-                            this.apps = [];
-
-                            this.$store.commit('setNotification', {
-                                notification: {
-                                    type: 'success',
-                                    message: 'App ' + app + ' deleted.'
-                                }
-                            });
-
-                             this.refreshToken();
-                        });
                     }
                 });
             }

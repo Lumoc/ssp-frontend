@@ -17,6 +17,8 @@ export default {
     const options = {...optionsDefaults, ...opts};
     const keycloak = Keycloak(options.config);
 
+    Vue.prototype.$keycloak = keycloak;
+
     keycloak.onAuthRefreshSuccess = function() {
       options.onTokenUpdated(keycloak);
     }
