@@ -53,6 +53,7 @@
               this.$http.post(this.kafkaBackendUrl + "/api/" + this.environmentId + "/apps", {
                 "appName": this.appName,
                 "userMails": [
+                    // for non-service owners e-mail is automatically set from token
                     this.mailFromToken ? this.$store.state.user.tokenParsed.email : this.email
                   ],
                 "clients": [],

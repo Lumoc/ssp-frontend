@@ -51,7 +51,8 @@
         },
         methods: {
             refreshToken: function(appName) {
-                // force token refresh
+                // this magic number is one hour which forces the token to refresh
+                // the token expires after 30 minutes so 1 hour should be safe
                 this.$keycloak.updateToken(3600).success(() => {
 
                     this.fetchApps();
@@ -96,8 +97,10 @@
                 this.$buefy.dialog.confirm({
                     title: 'Warning: Deleting App',
                     message: 'Are you sure you want to delete app ' + app + '?',
-                    cancelText: 'Cancel',
-                    confirmText: 'Confirm',
+                    cancelText: 'No',
+                    confirmText: 'Yes',
+                    type: 'is-danger',
+                    hasIcon: true,
                     onConfirm: () => {
                         this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + this.app, null).then((res) => {
 

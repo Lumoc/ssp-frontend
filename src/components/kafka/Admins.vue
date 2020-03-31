@@ -60,6 +60,7 @@
         methods: {
             refreshToken: function(fetchApps) {
                 // this magic number is one hour which forces the token to refresh
+                // the token expires after 30 minutes so 1 hour should be safe
                 this.$keycloak.updateToken(3600).success(() => {
                     if (fetchApps) {
                         this.$root.$emit("fetch-apps");
@@ -101,9 +102,12 @@
             deleteAdmin: function(email) {
                 this.$buefy.dialog.confirm({
                     title: 'Warning: Deleting Admin',
-                    message: 'Are you sure you want to delete admin with e-mail ' + email + '?',
-                    cancelText: 'Cancel',
-                    confirmText: 'Confirm',
+                    message: email === this.$keycloak.tokenParsed.email ? 
+                    'Sure you want to delete yourself as admin? You won\'t be able to manage the app anymore.' : 'Are you sure you want to delete admin with e-mail ' + email + '?',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    cancelText: 'No',
+                    confirmText: 'Yes',
                     onConfirm: () => {
                         this.$http.delete(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/apps/" + this.app + "/users/" + email, null).then((res) => {
 
