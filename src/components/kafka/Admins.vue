@@ -71,7 +71,7 @@
             },
             fetchAdmins: function(appName) {
                 this.loading = true;
-                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/admin/apps/" + appName + "/users", null).then((res) => {
+                this.$http.get(this.kafkaBackendUrl + "/api/" + this.selectedEnvironmentId + "/apps/" + appName + "/adminusers", null).then((res) => {
                     this.admins = res.data;
                     this.loading = false;
                 }, () => {
