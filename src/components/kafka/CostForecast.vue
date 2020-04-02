@@ -12,12 +12,12 @@
         <section class="section">
             <div class="tile is-ancestor">
                 <div class="tile">
-                    <b-field label="Partitions/Day">
+                    <b-field label="Partitions">
                         <b-numberinput v-model="partitionCount" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
                 <div class="tile">
-                    <b-field label="Storage in GB/Day">
+                    <b-field label="Storage in GB">
                         <b-numberinput v-model="storageGB" :loading="loading" min="1"></b-numberinput>
                     </b-field>
                 </div>
@@ -38,6 +38,7 @@
             <b-table :data="data" :columns="columns" :loading="loading"></b-table>
         </section>
 
+        Take a look at our <a href="https://confluence.sbb.ch/display/KAFKA/Verrechnungsmodell" target="_blank">accounting model</a>.
     </div>
 </template>
 <script>
@@ -107,7 +108,7 @@
         methods: {
             debounceFetching: _.debounce(function() {
               this.fetchForecast() 
-              }, 1000),
+              }, 500),
             fetchKafkaBillingUrl: function() {
                 this.$http.get(this.$store.state.backendURL + "/api/kafka/backend").then((res) => {
                     this.kafkaBillingUrl = res.body.billing_url;
