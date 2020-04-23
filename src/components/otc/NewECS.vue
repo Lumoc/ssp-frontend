@@ -181,7 +181,7 @@
             </b-message>
 
             <b-message type="is-info">
-                Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | times30 | round }}/month)<br>
+                Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | monthly | round }}/month)<br>
                 - SLA: CHF {{ computedCosts.sla | round }}<br>
                 - CPU: CHF {{ computedCosts.cpu }}<br>
                 - RAM: CHF {{ computedCosts.ram }}<br>
@@ -262,6 +262,7 @@
           'ldap-groups': LDAPGroups,
       },
       data() {
+          let daysInMonth = 365/12
           return {
               flavors: [],
               flavor: '',
@@ -288,14 +289,14 @@
               costs: {
                   sla: {
                     windows: {
-                      best_effort: 30/30,
-                      '1b': 50/30,
-                      '2a': 160/30,
+                      best_effort: 30 / daysInMonth,
+                      '1b': 50 / daysInMonth,
+                      '2a': 160 / daysInMonth,
                     },
                     linux: {
-                      best_effort: 20/30,
-                      '1b': 30/30,
-                      '2a': 100/30,
+                      best_effort: 20 / daysInMonth,
+                      '1b': 40 / daysInMonth,
+                      '2a': 130 / daysInMonth,
                     }
                   },
                   cpu: 1.2,
@@ -331,8 +332,8 @@
         round: function(input) {
             return Math.round(input * 100) / 100
         },
-        times30: function(input) {
-            return input * 30
+        monthly: function(input) {
+            return input * (365 / 12)
         },
         sumObject: function(input) {
             console.log(input)
