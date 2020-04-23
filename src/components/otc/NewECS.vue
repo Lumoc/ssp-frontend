@@ -371,7 +371,7 @@
         },
         filteredFlavors: function() {
             return this.flavors.filter(function(flavor) {
-                return flavor.ram >= 2048 && flavor.ram <= (32*1024) && flavor.vcpus <= 8 && flavor.name.startsWith("s3")
+                return flavor.ram >= (4*1024) && flavor.ram <= (32*1024) && flavor.vcpus >= 2 && flavor.vcpus <= 8 && flavor.name.startsWith("s3")
             }, this);
         },
         filteredImages: function() {
