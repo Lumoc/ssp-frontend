@@ -371,7 +371,8 @@
         },
         filteredFlavors: function() {
             return this.flavors.filter(function(flavor) {
-                return flavor.ram >= (4*1024) && flavor.ram <= (32*1024) && flavor.vcpus >= 2 && flavor.vcpus <= 8 && flavor.name.startsWith("s3")
+                var flavor_type = (this.extra_vars.unifiedos_availability_zone == '1') ? 's2' : 's3';
+                return flavor.ram >= (4*1024) && flavor.ram <= (32*1024) && flavor.vcpus >= 2 && flavor.vcpus <= 8 && flavor.name.startsWith(flavor_type)
             }, this);
         },
         filteredImages: function() {
