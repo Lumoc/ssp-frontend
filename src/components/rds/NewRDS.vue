@@ -33,6 +33,47 @@
                 </b-input>
             </b-field>
 
+            <b-field label="Mega ID">
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_mega_id"
+                         required
+                         pattern="[a-zA-Z0-9]{16}"
+                         validation-message="Please enter a valid Mega ID"></b-input>
+            </b-field>
+            <b-message type="is-info">
+                Useful links for Mega ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
+            </b-message>
+
+            <b-field>
+                <template slot="label">
+                    Accounting Number
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
+                <b-input v-model="extra_vars.otc_rds_tag_sbb_accounting_number"
+                         required
+                         pattern="[0-9.-]*"
+                         validation-message="Please enter a valid accounting number"></b-input>
+            </b-field>
+            <b-message type="is-info">
+                Please only fill in correct information.
+            </b-message>
+
+            <b-field>
+                <template slot="label">
+                    Contact Email
+                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for notifications">
+                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                    </b-tooltip>
+                </template>
+                <b-input type="email"
+                         v-model="extra_vars.otc_rds_tag_sbb_contact"
+                         required>
+                </b-input>
+            </b-field>
+
+            <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
+
             <b-field label="Stage">
                 <b-select :loading="loading"
                           v-model="stage"
@@ -41,21 +82,28 @@
                     <option value="t">Non-Production</option>
                 </b-select>
             </b-field>
+            <v-template v-if="stage == 't'">
+                <b-field>
+                    <template slot="label">
+                        Availability Zone
+                        <b-tooltip type="is-dark" multilined animated position="is-right" label="This is where the VM will be started. It is recommended to distribute your VMs across different data centers.">
+                            <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                        </b-tooltip>
+                    </template>
+                    <b-select :loading="loading"
+                              v-model="extra_vars.otc_rds_instance_availability_zones"
+                              required>
+                        <option value="eu-ch-01">Zollikofen</option>
+                        <option value="eu-ch-02">Bern</option>
+                    </b-select>
+                </b-field>
 
-            <b-field>
-                <template slot="label">
-                    Availability Zone
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="This is where the VM will be started. It is recommended to distribute your VMs across different data centers.">
-                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
-                    </b-tooltip>
-                </template>
-                <b-select :loading="loading"
-                          v-model="extra_vars.otc_rds_instance_availability_zones"
-                          required>
-                    <option value="eu-ch-01">Zollikofen</option>
-                    <option value="eu-ch-02">Bern</option>
-                </b-select>
-            </b-field>
+                <b-field>
+                    <b-checkbox v-model="ha_replication">
+                        High availability (primary/standby)
+                    </b-checkbox>
+                </b-field>
+            </v-template>
 
             <b-field label="Version">
                 <b-select :loading="loading" v-model="version" required>
@@ -133,46 +181,6 @@
                 </b-field>
             </b-field>
 
-            <ldap-groups v-model="extra_vars.otc_rds_tag_rds_group" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
-
-            <b-field label="Mega ID">
-                <b-input v-model="extra_vars.otc_rds_tag_sbb_mega_id"
-                         required
-                         pattern="[a-zA-Z0-9]{16}"
-                         validation-message="Please enter a valid Mega ID"></b-input>
-            </b-field>
-            <b-message type="is-info">
-                Useful links for Mega ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
-            </b-message>
-
-            <b-field>
-                <template slot="label">
-                    Accounting Number
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)">
-                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
-                    </b-tooltip>
-                </template>
-                <b-input v-model="extra_vars.otc_rds_tag_sbb_accounting_number"
-                         required
-                         pattern="[0-9.-]*"
-                         validation-message="Please enter a valid accounting number"></b-input>
-            </b-field>
-            <b-message type="is-info">
-                Please only fill in correct information.
-            </b-message>
-
-            <b-field>
-                <template slot="label">
-                    Contact Email
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Group mail for notifications">
-                        <b-icon size="is-small" icon="help-circle-outline"></b-icon>
-                    </b-tooltip>
-                </template>
-                <b-input type="email"
-                         v-model="extra_vars.otc_rds_tag_sbb_contact"
-                         required>
-                </b-input>
-            </b-field>
 
 
 
@@ -204,6 +212,7 @@
               version: '',
               backup_start_time: Math.floor(Math.random() * 6),
               default_minutes: 0,
+              ha_replication: false,
               extra_vars: {
                   otc_rds_instance_name: '',
                   otc_rds_instance_volume_size: 40,
@@ -298,6 +307,9 @@
               ev.otc_rds_instance_backup_start_time = padded_backup_start_time + ':00-' + padded_backup_end_time + ':00'
               ev.otc_rds_instance_db_version = this.version
               ev.otc_rds_instance_flavor = this.genericFlavorName(this.flavor)
+              if (this.ha_replication || this.stage == 'p') {
+                ev.otc_rds_instance_ha_replication_mode = 'sync'
+              }
               console.log(ev)
               this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
                     extra_vars: ev
