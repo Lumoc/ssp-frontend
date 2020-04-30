@@ -166,10 +166,6 @@
                         </p>
                     </b-field>
                 </b-field>
-
-                <b-message type="is-danger" v-if="image !== null && image.minDiskGigabytes > extra_vars.unifiedos_root_disk_size">
-                    The choosen image needs a minimum size of {{ image.minDiskGigabytes }}GB for the Root Disc.
-                </b-message>
             </template>
 
 
@@ -277,7 +273,7 @@
                   unifiedos_service_level: 'best_effort',
                   unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
 
-                  unifiedos_root_disk_size: 10,
+                  unifiedos_root_disk_size: 40,
                   provision_otc_default_volume_type: 'SATA',
                   unifiedos_accounting_number: '',
                   defender_exclude_path: '',
@@ -306,12 +302,7 @@
       },
       watch: {
         image: function(image, old_image) {
-            console.log(image)
-           let size = this.extra_vars.unifiedos_root_disk_size
-           // Set the minimum if the user hasn't changed the value or if the value is below minimum
-           if (!old_image || size == old_image.minDiskGigabytes || size < image.minDiskGigabytes) {
-                this.extra_vars.unifiedos_root_disk_size = image.minDiskGigabytes
-           }
+            this.extra_vars.unifiedos_root_disk_size = this.minDiskGigabytes
         },
         stage: function(s) {
             this.getFlavors();
