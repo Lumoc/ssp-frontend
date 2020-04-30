@@ -87,10 +87,10 @@
                 <b-select :loading="loading"
                         v-model="image"
                         required>
-                    <option v-for="m in filteredImages"
-                            :value="m"
-                            :key="m.name">
-                        {{ m.pretty }}
+                    <option v-for="m in images"
+                            :value="m.value"
+                            :key="m.value">
+                        {{ m.label }}
                     </option>
                 </b-select>
             </b-field>
@@ -116,9 +116,6 @@
                     </option>
                 </b-select>
             </b-field>
-            <b-message type="is-danger" v-if="image !== null && image.minRAMMegabytes > flavor.ram">
-                The chossen image needs a minimum of {{ image.minRAMMegabytes/1024 }}GB RAM.
-            </b-message>
 
             <b-field label="Disk Volume Storage Type">
                 <b-select :loading="loading"
@@ -161,7 +158,7 @@
                     <b-field>
                         <b-input type="number"
                                  required
-                                 :min="image.minDiskGigabytes"
+                                 :min="minDiskGigabytes"
                                  v-model.number="extra_vars.unifiedos_root_disk_size">
                         </b-input>
                         <p class="control">
@@ -375,22 +372,10 @@
                 return flavor.ram >= (4*1024) && flavor.ram <= (64*1024) && flavor.vcpus >= 2 && flavor.vcpus <= 8 && flavor.name.startsWith(flavor_type)
             }, this);
         },
-        filteredImages: function() {
-            // Add pretty name to object
-            let filtered = this.images.map(function(image) {
-                image.pretty = image.name.match("(?:.*)_(.*?)_(?:.*)")[1].replace("-", " ")
-                return image
-            })
-            let cache = []
-            // sort the array and only keep the first instance
-            filtered = filtered.sort((a, b) => b.name.localeCompare(a.name)).filter(function(image) {
-                if (cache.indexOf(image.pretty) > -1) return false
-                cache.push(image.pretty)
-                return true
-            })
-            // Sort Linux before Windows
-            return filtered.reverse()
-        }
+        minDiskGigabytes: function() {
+            if (this.isWindows(this.image)) return 60
+            return 40
+        },
       },
       methods: {
           getFlavors: function () {
@@ -417,21 +402,13 @@
               });
           },
           isWindows: function(image) {
-            return (image && image.name.toLowerCase().indexOf("windows") !== -1)
+            return (image && image.toLowerCase().indexOf("windows") !== -1)
           },
           getImages: function () {
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
-                  this.images = res.body.images;
-
-                  // Windows images have an incorrect minDiskGigabytes
-                  for (let i = 0; i < this.images.length; i++) {
-                      if (this.isWindows(this.images[i])) {
-                         this.images[i].minDiskGigabytes = 60
-                      }
-                  }
-
-                  this.image = this.filteredImages[0];
+                  this.images = res.body;
+                  this.image = this.images[0].value;
 
                   this.loading = false;
               }, () => {
@@ -442,20 +419,12 @@
               this.loading = false;
           },
           newECS: function() {
-              if (this.flavor.ram < this.image.minRAMMegabytes) {
-                  return;
-              }
-
-              if (this.extra_vars.unifiedos_root_disk_size < this.image.minDiskGigabytes) {
-                  return;
-              }
-
               this.$validator.validateAll().then((result) => {
                   if (result) {
                       this.loading = true;
 
                       let ev = this.extra_vars
-                      ev.unifiedos_image = this.image.name
+                      ev.unifiedos_image = this.image
                       ev.provision_otc_instance_type = this.flavor.name,
 
                       this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch', {
