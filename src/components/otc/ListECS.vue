@@ -27,7 +27,7 @@
                 <b-dropdown-item @click="stopServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
                 <b-dropdown-item @click="startServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
                 <b-dropdown-item @click="rebootServers()">Reboot</b-dropdown-item>
-                <!--<b-dropdown-item @click="deleteServers()">Delete</b-dropdown-item>-->
+                <b-dropdown-item @click="deleteServers()">Delete</b-dropdown-item>
             </b-dropdown>
 
             <b-button type="is-danger" @click="listServers()" :loading="loading">Refresh</b-button>
@@ -276,19 +276,26 @@
                 })
             },
             deleteServers: function() {
-                let message = 'Do you really want to delete the following servers?'
-                message += this.getCheckedServerNames().join('<br>')
+                let job_template = "19299"
+                let servers = this.getCheckedServerNames()
+                let message = 'Do you really want to delete the following server?'
+                message += servers.join('<br>')
                 this.$buefy.dialog.confirm({
-                    title: 'Delete Servers',
+                    title: 'Delete Server',
                     message: message,
                     confirmText: 'Delete',
                     type: 'is-danger',
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        this.$http.post(this.$store.state.backendURL + '/api/otc/deleteecs', { "servers" : this.checkedRows }
-                        ).then((res) => {
-                            this.loading = false;
+                        console.log(this.checkedRows)
+                        this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + job_template + '/launch', {
+                              extra_vars: {
+                                unifiedos_hostname: servers[0]
+                              }
+                        }).then((resp) => {
+                            let json = JSON.parse(resp.body)
+                            this.job = json.job
                         }, () => {
                             this.loading = false;
                         });
