@@ -43,7 +43,7 @@
                 </b-input>
             </b-field>
             <b-message type="is-info">
-                Useful links for Mega-ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
+                Useful links for Mega-ID: <a target="_blank" href="https://sbb.sharepoint.com/teams/mega-publikationen/EADB/pages/85c6a9c748db00d1.aspx">All applications</a>, <a target="_blank" href="https://sbb.sharepoint.com/teams/mega-publikationen/EADB/pages/a261aa7848d00c63.aspx">Overview (e.g application creation form)</a>
             </b-message>
 
             <button v-bind:class="{'is-loading': loading}"
