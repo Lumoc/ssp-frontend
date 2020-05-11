@@ -318,7 +318,6 @@
                     hasIcon: true,
                     onConfirm: () => {
                         this.loading = true;
-                        console.log(this.checkedRows)
                         this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + job_template + '/launch', {
                               extra_vars: {
                                 unifiedos_hostname: server.name
