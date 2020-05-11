@@ -329,7 +329,7 @@
                             this.$store.commit('setNotification', {
                               notification: {
                                   type: 'success',
-                                  message: 'The server ' + server.name + ' is being deleted. Check the progress <a hrf="/tower/jobs/' + json.job + '">here</a>',
+                                  message: 'The server ' + server.name + ' is being deleted. Check the progress <a href="/tower/jobs/' + json.job + '">here</a>',
                               }
                             });
                         }, () => {
