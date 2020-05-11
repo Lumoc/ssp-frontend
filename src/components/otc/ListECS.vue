@@ -27,7 +27,7 @@
                 <b-dropdown-item @click="stopServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
                 <b-dropdown-item @click="startServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
                 <b-dropdown-item @click="rebootServers()">Reboot</b-dropdown-item>
-                <b-dropdown-item @click="deleteServers()">Delete</b-dropdown-item>
+                <b-dropdown-item @click="deleteServers()" :disabled="checkedRows.length != 1">Delete</b-dropdown-item>
             </b-dropdown>
 
             <b-button type="is-danger" @click="listServers()" :loading="loading">Refresh</b-button>
@@ -276,10 +276,40 @@
                 })
             },
             deleteServers: function() {
-                let job_template = "19299"
-                let servers = this.getCheckedServerNames()
+                let job_template = ""
+                let server = ""
+                let servers = this.checkedRows
+                if (servers.length == 1) {
+                    server = servers[0]
+                }
+                if (server == "") {
+                    // This should never happen, because the delete button is disabled when more
+                    // than one server is selected
+                    this.$store.commit('setNotification', {
+                      notification: {
+                          type: 'danger',
+                          message: 'Something went wrong',
+                      }
+                    });
+                    return
+                }
+
+                // SBB_RZ_T_001
+                if (server.tenant_id == "40a69db965224733ae2075a9c9973ff2") {
+                    job_template = "19299"
+                }
+                if (job_template == "") {
+                    this.$store.commit('setNotification', {
+                      notification: {
+                          type: 'danger',
+                          message: 'This tenant does not support server deletion yet',
+                      }
+                    });
+                    console.log('Tenant ' +server.tenant_id+' does not support server deletion')
+                    return
+                }
                 let message = 'Do you really want to delete the following server?'
-                message += servers.join('<br>')
+                message += server.name
                 this.$buefy.dialog.confirm({
                     title: 'Delete Server',
                     message: message,
@@ -291,11 +321,17 @@
                         console.log(this.checkedRows)
                         this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + job_template + '/launch', {
                               extra_vars: {
-                                unifiedos_hostname: servers[0]
+                                unifiedos_hostname: server.name
                               }
                         }).then((resp) => {
                             let json = JSON.parse(resp.body)
-                            this.job = json.job
+                            this.loading = false;
+                            this.$store.commit('setNotification', {
+                              notification: {
+                                  type: 'success',
+                                  message: 'The server ' + server.name + ' is being deleted. Check the progress <a hrf="/tower/jobs/' + json.job + '">here</a>',
+                              }
+                            });
                         }, () => {
                             this.loading = false;
                         });
