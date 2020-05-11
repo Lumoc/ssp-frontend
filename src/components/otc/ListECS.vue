@@ -27,7 +27,7 @@
                 <b-dropdown-item @click="stopServers()" :disabled="!areAllServersStarted()">Stop</b-dropdown-item>
                 <b-dropdown-item @click="startServers()" :disabled="!areAllServersStopped()">Start</b-dropdown-item>
                 <b-dropdown-item @click="rebootServers()">Reboot</b-dropdown-item>
-                <b-dropdown-item @click="deleteServers()" :disabled="checkedRows.length != 1">Delete</b-dropdown-item>
+                <b-dropdown-item @click="deleteServer()" :disabled="checkedRows.length != 1">Delete</b-dropdown-item>
             </b-dropdown>
 
             <b-button type="is-danger" @click="listServers()" :loading="loading">Refresh</b-button>
@@ -275,7 +275,7 @@
                     }
                 })
             },
-            deleteServers: function() {
+            deleteServer: function() {
                 let job_template = ""
                 let server = ""
                 let servers = this.checkedRows
