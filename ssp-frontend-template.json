@@ -64,6 +64,22 @@
                                     {
                                         "name": "WZU_BACKEND_URL",
                                         "value": "${WZU_BACKEND_URL}"
+                                    },
+                                    {
+                                        "name": "SSO_REALM_NAME",
+                                        "value": "${SSO_REALM_NAME}"
+                                    },
+                                    {
+                                        "name": "SSO_REALM_URL",
+                                        "value": "${SSO_REALM_URL}"
+                                    },
+                                    {
+                                        "name": "SSO_CLIENT_ID",
+                                        "value": "${SSO_CLIENT_ID}"
+                                    },
+                                    {
+                                        "name": "SSO_IDP_HINT",
+                                        "value": "${SSO_IDP_HINT}"
                                     }
                                 ],
                                 "resources": {},
@@ -173,6 +189,22 @@
         {
             "name": "WZU_BACKEND_URL",
             "description": "The url of the tools backend"
+        },
+        {
+            "name": "SSO_REALM_NAME",
+            "description": "The name of the SSO realm"
+        },
+        {
+            "name": "SSO_REALM_URL",
+            "description": "The URL of the SSO realm, probably ending with /auth"
+        },
+        {
+            "name": "SSO_CLIENT_ID",
+            "description": "The id of the SSO client"
+        },
+        {
+            "name": "SSO_IDP_HINT",
+            "description": "The idp hint for SSO"
         }
     ]
 }

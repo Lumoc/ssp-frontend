@@ -174,7 +174,7 @@
             </b-message>
 
             <b-message type="is-info">
-                Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | times30 | round }}/month)<br>
+                Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | monthly | round }}/month)<br>
                 - SLA: CHF {{ computedCosts.sla | round }}<br>
                 - CPU: CHF {{ computedCosts.cpu }}<br>
                 - RAM: CHF {{ computedCosts.ram }}<br>
@@ -219,7 +219,7 @@
                          validation-message="Please enter a valid Mega ID"></b-input>
             </b-field>
             <b-message type="is-info">
-                Useful links for Mega ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
+                Useful links for Mega-ID: <a target="_blank" href="https://sbb.sharepoint.com/teams/mega-publikationen/EADB/pages/85c6a9c748db00d1.aspx">All applications</a>, <a target="_blank" href="https://sbb.sharepoint.com/teams/mega-publikationen/EADB/pages/a261aa7848d00c63.aspx">Overview (e.g application creation form)</a>
             </b-message>
 
             <b-field v-if="windows">
@@ -255,6 +255,7 @@
           'ldap-groups': LDAPGroups,
       },
       data() {
+          let daysInMonth = 365/12
           return {
               flavors: [],
               flavor: '',
@@ -281,14 +282,14 @@
               costs: {
                   sla: {
                     windows: {
-                      best_effort: 30/30,
-                      '1b': 50/30,
-                      '2a': 160/30,
+                      best_effort: 30 / daysInMonth,
+                      '1b': 50 / daysInMonth,
+                      '2a': 160 / daysInMonth,
                     },
                     linux: {
-                      best_effort: 20/30,
-                      '1b': 30/30,
-                      '2a': 100/30,
+                      best_effort: 20 / daysInMonth,
+                      '1b': 40 / daysInMonth,
+                      '2a': 130 / daysInMonth,
                     }
                   },
                   cpu: 1.2,
@@ -319,8 +320,8 @@
         round: function(input) {
             return Math.round(input * 100) / 100
         },
-        times30: function(input) {
-            return input * 30
+        monthly: function(input) {
+            return input * (365 / 12)
         },
         sumObject: function(input) {
             console.log(input)
@@ -352,7 +353,7 @@
             return { maxlength: this.extra_vars.unifiedos_project.length == 6 }
         },
         job_template: function() {
-           return (this.stage == 'p') ? '21541' : '21542'
+           return (this.stage == 'p') ? '473' : '475'
         },
         windows: function() {
             return this.isWindows(this.image)
