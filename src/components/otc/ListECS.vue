@@ -97,6 +97,7 @@
                                 <td>{{ value }}</td>
                             </tr>
                         </table>
+                        <a v-on:click="editMetadata(props.row)">Edit</a>
                     </div>
                 </div>
             </template>
@@ -105,6 +106,44 @@
             </div>
         </b-table>
         Servers are shown based on your Active Directory groups. You are in the following groups: <div class="groups">{{ groups }}</div>
+        <!-- use the modal component, pass in the prop -->
+        <b-modal :active.sync="showModal" @close="closeModal">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-header-title">{{ modalData.name }}</h1>
+                </div>
+                <div class="card-content">
+                    <b-field v-if="modalData.metadata">
+                        <template slot="label">
+                            Accounting Number
+                            <b-tooltip type="is-dark" multilined animated position="is-right" label="Accounting number (e.g 77606105), internal order (70029490) or PSP element including phase number (1157803.4-10.1)">
+                                <b-icon size="is-small" icon="help-circle-outline"></b-icon>
+                            </b-tooltip>
+                        </template>
+                        <b-input v-model="modalData.metadata.sbb_accounting_number"
+                                 required
+                                 pattern="[0-9.-]*"
+                                 validation-message="Please enter a valid accounting number"></b-input>
+                    </b-field>
+                    <b-message type="is-info">
+                        Please only fill in correct information.
+                    </b-message>
+
+                    <b-field label="Mega ID" v-if="modalData.metadata">
+                        <b-input v-model="modalData.metadata.sbb_mega_id"
+                                 required
+                                 pattern="[a-zA-Z0-9]{16}"
+                                 validation-message="Please enter a valid Mega ID"></b-input>
+                    </b-field>
+                    <b-message type="is-info">
+                        Useful links for Mega ID: <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/85c6a9c748db00d1.htm">All Applications</a>, <a target="_blank" href="http://filer.sbb.ch/it1/ea_publikation/mega4/pages/a261aa7848d00c63.htm">Overview (e.g application creation form)</a>
+                    </b-message>
+                </div>
+                <footer class="card-footer">
+                    <button class="button" @click="createSnapshot(modalData)">Update</button>
+                </footer>
+            </div>
+        </b-modal>
     </div>
 </template>
 <script>
@@ -120,6 +159,8 @@
                 tags: [],
                 filteredMetadata: [],
                 metadata: [],
+                showModal: false,
+                modalData: {},
             };
         },
         mounted: function() {
@@ -174,6 +215,14 @@
                         .toLowerCase()
                         .indexOf(text.toLowerCase()) >= 0
                 })
+            },
+            editMetadata: function(row) {
+              this.modalData = row
+              this.showModal = true
+            },
+            closeModal: function() {
+              this.showModal = false
+                console.log(this.modalData)
             },
             getFirstId: function() {
                 if (this.data.length > 0) {
