@@ -296,10 +296,11 @@
 
                 // SBB_RZ_T_001
                 if (server.tenant_id == "40a69db965224733ae2075a9c9973ff2") {
-                    job_template = "21911"
+                    job_template = "552"
                 }
+                // SBB_RZ_P_001
                 if (server.tenant_id == "7266b78d57064468bfeaa6c8443844e8") {
-                    job_template = "21910"
+                    job_template = "549"
                 }
                 if (job_template == "") {
                     this.$store.commit('setNotification', {
