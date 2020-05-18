@@ -45,7 +45,47 @@
             updateMetadata: function() {
                 console.log(this.server)
                 this.$parent.close();
-            },
+
+                let job_template = ""
+
+                // SBB_RZ_T_001
+                if (this.server.tenant_id == "40a69db965224733ae2075a9c9973ff2") {
+                    job_template = "568"
+                }
+                // SBB_RZ_P_001
+                if (this.server.tenant_id == "7266b78d57064468bfeaa6c8443844e8") {
+                    job_template = "567"
+                }
+                if (job_template == "") {
+                    this.$store.commit('setNotification', {
+                      notification: {
+                          type: 'danger',
+                          message: 'This tenant does not support server modification yet',
+                      }
+                    });
+                    console.log('Tenant ' +this.server.tenant_id+' does not support server modification')
+                    return
+                }
+                this.loading = true;
+                this.$http.post(this.$store.state.backendURL + '/api/tower/job_templates/' + job_template + '/launch', {
+                      extra_vars: {
+                        unifiedos_hostname: this.server.name,
+                        unifiedos_mega_id: this.server.metadata.sbb_mega_id,
+                        unifiedos_accounting_number: this.server.metadata.sbb_accounting_number
+                      }
+                }).then((resp) => {
+                    let json = JSON.parse(resp.body)
+                    this.loading = false;
+                    this.$store.commit('setNotification', {
+                      notification: {
+                          type: 'success',
+                          message: 'The server ' + this.server.name + ' has been updated. Check the progress <a href="/tower/jobs/' + json.job + '">here</a>',
+                      }
+                    });
+                }, () => {
+                    this.loading = false;
+                });
+            }
         }
     };
 </script>
