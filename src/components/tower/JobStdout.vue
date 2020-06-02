@@ -99,6 +99,7 @@
     props: ["job"],
     data() {
       return {
+        interval: {},
         job_data: {
             status: 'loading...'
         },
@@ -123,10 +124,13 @@
         return value.charAt(0).toUpperCase() + value.slice(1)
       }
     },
+    destroyed: function() {
+      clearInterval(this.interval)
+    },
     methods: {
-      finished: function(interval) {
+      finished: function() {
           this.loading = false
-          clearInterval(interval)
+          clearInterval(this.interval)
           this.$emit('finished')
       },
       openCollapse: function() {
@@ -138,12 +142,12 @@
       },
       getJobStdout: function(job_id) {
         var that = this
-        var interval = setInterval(function() {
+        this.interval = setInterval(function() {
             that.$http.get(that.$store.state.backendURL + '/api/tower/jobs/' + job_id).then((res) => {
                 that.job_data = JSON.parse(res.body)
-                if (that.job_data.finished) that.finished(interval)
+                if (that.job_data.finished) that.finished()
             }, () => {
-                that.finished(interval)
+                that.finished()
                 console.log("error")
             });
             if (that.job_data.status != "pending") {
@@ -166,7 +170,7 @@
                     }
                     that.loading = false
                 }, () => {
-                    that.finished(interval)
+                    that.finished()
                     console.log("error")
                 });
             }
