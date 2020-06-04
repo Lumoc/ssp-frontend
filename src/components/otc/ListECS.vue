@@ -97,6 +97,7 @@
                                 <td>{{ value }}</td>
                             </tr>
                         </table>
+                        <a v-on:click="editMetadata(props.row)">Edit</a>
                     </div>
                 </div>
             </template>
@@ -108,7 +109,11 @@
     </div>
 </template>
 <script>
+    import EditMetadataModal from './EditMetadataModal.vue';
     export default {
+        components: {
+            EditMetadataModal
+        },
         data() {
             return {
                 data: [],
@@ -174,6 +179,23 @@
                         .toLowerCase()
                         .indexOf(text.toLowerCase()) >= 0
                 })
+            },
+            editMetadata: function(row) {
+                let modalProps = {
+                    server: row
+                };
+                this.$buefy.modal.open({
+                    parent: this,
+                    component: EditMetadataModal,
+                    hasModalCard: true,
+                    trapFocus: true,
+                    props: modalProps,
+                    events: {
+                        'metadata-updated': (value) => {
+                            // refresh
+                        }
+                    }
+                });
             },
             getFirstId: function() {
                 if (this.data.length > 0) {
