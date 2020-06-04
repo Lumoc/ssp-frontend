@@ -79,7 +79,7 @@
                     this.$store.commit('setNotification', {
                       notification: {
                           type: 'success',
-                          message: 'The server ' + this.server.name + ' has been updated. Check the progress <a href="/tower/jobs/' + json.job + '">here</a>',
+                          message: 'The server ' + this.server.name + ' is being updated. Check the progress <a href="/tower/jobs/' + json.job + '">here</a>',
                       }
                     });
                 }, () => {
