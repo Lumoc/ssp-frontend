@@ -283,13 +283,17 @@
                   sla: {
                     windows: {
                       best_effort: 30 / daysInMonth,
+                      '1a': 130 / daysInMonth,
                       '1b': 50 / daysInMonth,
                       '2a': 160 / daysInMonth,
+                      '2b': 90 / daysInMonth,
                     },
                     linux: {
                       best_effort: 20 / daysInMonth,
+                      '1a': 110 / daysInMonth,
                       '1b': 40 / daysInMonth,
                       '2a': 130 / daysInMonth,
+                      '2b': 80 / daysInMonth,
                     }
                   },
                   cpu: 1.2,
