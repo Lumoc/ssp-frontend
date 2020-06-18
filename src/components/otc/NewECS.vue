@@ -121,7 +121,7 @@
                 <b-select :loading="loading"
                         v-model="extra_vars.provision_otc_default_volume_type"
                         required>
-                    <option value="SATA">SATA: regular speed, cheaper</option>
+                    <!--<option value="SATA">SATA: regular speed, cheaper</option>-->
                     <option value="SSD">SSD: high speed, more expensive</option>
                 </b-select>
             </b-field>
@@ -275,7 +275,7 @@
                   unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
 
                   unifiedos_root_disk_size: 40,
-                  provision_otc_default_volume_type: 'SATA',
+                  provision_otc_default_volume_type: 'SSD',
                   unifiedos_accounting_number: '',
                   defender_exclude_path: '',
               },
