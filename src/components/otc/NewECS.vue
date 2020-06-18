@@ -176,9 +176,9 @@
             <b-message type="is-info">
                 Your server will cost <b>CHF {{computedCosts | sumObject | round }}/day</b> (CHF {{computedCosts | sumObject | monthly | round }}/month)<br>
                 - SLA: CHF {{ computedCosts.sla | round }}<br>
-                - CPU: CHF {{ computedCosts.cpu }}<br>
-                - RAM: CHF {{ computedCosts.ram }}<br>
-                - Storage: CHF {{ computedCosts.volume }}
+                - CPU: CHF {{ computedCosts.cpu | round }}<br>
+                - RAM: CHF {{ computedCosts.ram | round }}<br>
+                - Storage: CHF {{ computedCosts.volume | round }}
             </b-message>
 
             <ldap-groups v-model="extra_vars.unifiedos_owner_group" admingroup="DG_RBT_UOS_ADMINS" help="The Active Directory group name is used for instance ownership (e.g. login, admin permissions)."></ldap-groups>
@@ -342,11 +342,17 @@
                 sla = this.costs.sla["linux"][this.extra_vars.unifiedos_service_level]
             }
 
+            let volume
+            // Data disk
+            volume = this.extra_vars.unifiedos_data_disk_size * this.costs.volume[this.extra_vars.provision_otc_default_volume_type]
+            // Root disk
+            volume += this.extra_vars.unifiedos_root_disk_size * this.costs.volume[this.extra_vars.provision_otc_default_volume_type]
+
             return {
                 sla: sla,
                 cpu: this.flavor.vcpus * this.costs.cpu,
                 ram: (this.flavor.ram/1024) * this.costs.ram,
-                volume: this.extra_vars.unifiedos_data_disk_size * this.costs.volume[this.extra_vars.provision_otc_default_volume_type],
+                volume: volume,
             }
         },
         projectMaxLength: function() {
