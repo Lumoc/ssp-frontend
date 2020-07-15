@@ -334,7 +334,7 @@
                     console.log('Tenant ' +server.tenant_id+' does not support server deletion')
                     return
                 }
-                let message = 'Do you really want to delete the following server?'
+                let message = 'Do you really want to delete the following server?<br/>'
                 message += server.name
                 this.$buefy.dialog.confirm({
                     title: 'Delete Server',
