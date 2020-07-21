@@ -24,6 +24,7 @@ import ListEC2Instances from './components/aws/ListEC2Instances.vue';
 // OTC Components
 import ListECS from './components/otc/ListECS.vue';
 import NewECS from './components/otc/NewECS.vue';
+import NewECSdetails from './components/otc/NewECSdetails.vue';
 // RDS Components
 import ListRDS from './components/rds/ListRDS.vue';
 import NewRDS from './components/rds/NewRDS.vue';
@@ -91,6 +92,7 @@ export const LocalComponents = {
     NewS3Bucket,
     NewS3User,
     NewECS,
+    NewECSdetails,
     ListECS,
     NewRDS,
     ListRDS,
