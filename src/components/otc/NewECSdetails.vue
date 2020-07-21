@@ -420,7 +420,7 @@
                       ev.provision_otc_instance_type = this.flavor.name,
                       ev.defender_exclude_path = ev.defender_exclude_path.trim()
 
-                      this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/launch').then((resp) => {
+                      this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/getDetails').then((resp) => {
                           let json = JSON.parse(resp.body)
                           this.job = json.job
                       }, () => {
