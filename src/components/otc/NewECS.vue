@@ -156,7 +156,7 @@
                 <b-field>
                     <template slot="label">
                         Root Disk Size
-                        <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system (Linux: min 10GB / Windows: min 60GB)">
+                        <b-tooltip type="is-dark" multilined animated position="is-right" :label="extra_vars.unifiedos_root_disk_description">
                             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                         </b-tooltip>
                     </template>
@@ -164,8 +164,17 @@
                         <b-input type="number"
                                  required
                                  :min="minDiskGigabytes"
-                                 v-model.number="extra_vars.unifiedos_root_disk_size">
+                                 :max="extra_vars.unifiedos_root_disk_max_size"
+                                 v-model.number="minDiskGigabytes">
                         </b-input>
+                        <!-- Commented because the values from SSP-frontend contradict the ones from Ansible
+                        <b-input type="number"
+                                 required
+                                 :min="extra_vars.unifiedos_root_disk_min_size"
+                                 :max="extra_vars.unifiedos_root_disk_max_size"
+                                 v-model.number="extra_vars.unifiedos_root_disk_default_size">
+                        </b-input>
+                        -->
                         <p class="control">
                             <span class="button is-static">GB</span>
                         </p>
@@ -416,6 +425,10 @@
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/getDetails').then((res) => {
                   let json = JSON.parse(res.body)
+                  this.extra_vars.unifiedos_root_disk_default_size = json.specsMap.unifiedos_root_disk_size.default;
+                  this.extra_vars.unifiedos_root_disk_description = json.specsMap.unifiedos_root_disk_size.question_description;
+                  this.extra_vars.unifiedos_root_disk_min_size = json.specsMap.unifiedos_root_disk_size.min;
+                  this.extra_vars.unifiedos_root_disk_max_size = json.specsMap.unifiedos_root_disk_size.max;
                   this.extra_vars.unifiedos_data_disk_default_size = json.specsMap.unifiedos_data_disk_size.default;
                   this.extra_vars.unifiedos_data_disk_description = json.specsMap.unifiedos_data_disk_size.question_description;
                   this.extra_vars.unifiedos_data_disk_min_size = json.specsMap.unifiedos_data_disk_size.min;
