@@ -129,12 +129,17 @@
             <b-field>
                 <template slot="label">
                     Persistent Data Size
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for persistent data (e.g. /var/data on Linux or D:\ on Windows)">
+                    <b-tooltip type="is-dark" multilined animated position="is-right" :label="extra_vars.unifiedos_data_disk_description">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
                 <b-field>
-                    <b-input type="number" required v-model.number="extra_vars.unifiedos_data_disk_size"></b-input>
+                    <b-input type="number"
+                             required
+                             :min="extra_vars.unifiedos_data_disk_min_size"
+                             :max="extra_vars.unifiedos_data_disk_max_size"
+                             v-model.number="extra_vars.unifiedos_data_disk_default_size">
+                    </b-input>
                     <p class="control">
                         <span class="button is-static">GB</span>
                     </p>
@@ -267,7 +272,6 @@
               image: '',
               extra_vars: {
                   unifiedos_project: '',
-                  unifiedos_data_disk_size: 20,
                   unifiedos_owner_group: '',
                   unifiedos_owner_email: '',
                   unifiedos_mega_id: '',
@@ -312,6 +316,7 @@
       mounted: function () {
           this.getFlavors();
           this.getImages();
+          this.getOtherDetails();
       },
       filters: {
         placeholder: function (input, property) {
@@ -401,6 +406,20 @@
               this.$http.get(this.$store.state.backendURL + '/api/otc/images').then((res) => {
                   this.images = res.body;
                   this.image = this.images[0].value;
+
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
+          getOtherDetails: function() {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/getDetails').then((res) => {
+                  let json = JSON.parse(res.body)
+                  this.extra_vars.unifiedos_data_disk_default_size = json.specsMap.unifiedos_data_disk_size.default;
+                  this.extra_vars.unifiedos_data_disk_description = json.specsMap.unifiedos_data_disk_size.question_description;
+                  this.extra_vars.unifiedos_data_disk_min_size = json.specsMap.unifiedos_data_disk_size.min;
+                  this.extra_vars.unifiedos_data_disk_max_size = json.specsMap.unifiedos_data_disk_size.max;
 
                   this.loading = false;
               }, () => {
