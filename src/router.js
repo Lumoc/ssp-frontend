@@ -55,9 +55,6 @@ const routes = [
         path: '/otc/newecs', component: LocalComponents.NewECS
     },
     {
-        path: '/otc/newecsdetails', component: LocalComponents.NewECSdetails
-    },
-    {
         path: '/rds/new', component: LocalComponents.NewRDS
     },
     {

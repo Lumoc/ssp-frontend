@@ -58,7 +58,6 @@
                     <div class="navbar-dropdown">
                         <router-link to="/otc/listecs" class="navbar-item">Your UnifiedOS Servers</router-link>
                         <router-link to="/otc/newecs" class="navbar-item">Create a UnifiedOS Server</router-link>
-                        <router-link to="/otc/newecsdetails" class="navbar-item">Get Ansible Template details</router-link>
                     </div>
                 </div>
                 <div v-if="user && features.otc.rds" class="navbar-item has-dropdown is-hoverable">
