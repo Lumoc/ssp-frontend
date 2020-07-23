@@ -163,18 +163,10 @@
                     <b-field>
                         <b-input type="number"
                                  required
-                                 :min="minDiskGigabytes"
-                                 :max="extra_vars.unifiedos_root_disk_max_size"
-                                 v-model.number="minDiskGigabytes">
-                        </b-input>
-                        <!-- Commented because the values from SSP-frontend contradict the ones from Ansible
-                        <b-input type="number"
-                                 required
                                  :min="extra_vars.unifiedos_root_disk_min_size"
                                  :max="extra_vars.unifiedos_root_disk_max_size"
                                  v-model.number="extra_vars.unifiedos_root_disk_default_size">
                         </b-input>
-                        -->
                         <p class="control">
                             <span class="button is-static">GB</span>
                         </p>
