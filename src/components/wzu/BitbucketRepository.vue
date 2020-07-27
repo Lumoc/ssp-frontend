@@ -29,6 +29,15 @@
                 </b-input>
             </b-field>
 
+            <b-field label="Repository Description (optional)"
+                     :type="errors.has('Repository Description') ? 'is-danger' : ''"
+                     :message="errors.first('Repository Description')">
+                <b-input v-model.trim="bitrepodescription"
+                         name="Repository Description"
+                         ref="autofocus">
+                </b-input>
+            </b-field>
+
             <b-field label="Projekt Key (project must exist)"
                      :type="errors.has('Projekt Key') ? 'is-danger' : ''"
                      :message="errors.first('Projekt Key')">
@@ -84,6 +93,7 @@
                 templateyesno: true,
                 bitreponame:  '',
                 bitprojectkey: '',
+                bitrepodescription: '',
                 bitrepoowner: '',
                 loading: false
             };
@@ -97,6 +107,7 @@
                         this.$http.post(this.$store.state.wzuURL + '/api/bitbucketrepo', {
                             templateyesno: this.templateyesno,
                             bitreponame: this.bitreponame,
+                            bitrepodescription: this.bitrepodescription,
                             bitprojectkey: this.bitprojectkey,
                             bitrepoowner: this.bitrepoowner
                         }).then(() => {
