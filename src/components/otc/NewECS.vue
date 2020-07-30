@@ -138,7 +138,7 @@
                              required
                              :min="extra_vars.unifiedos_data_disk_min_size"
                              :max="extra_vars.unifiedos_data_disk_max_size"
-                             v-model.number="extra_vars.unifiedos_data_disk_default_size">
+                             v-model.number="extra_vars.unifiedos_data_disk_size">
                     </b-input>
                     <p class="control">
                         <span class="button is-static">GB</span>
@@ -165,7 +165,7 @@
                                  required
                                  :min="extra_vars.unifiedos_root_disk_min_size"
                                  :max="extra_vars.unifiedos_root_disk_max_size"
-                                 v-model.number="extra_vars.unifiedos_root_disk_default_size">
+                                 v-model.number="extra_vars.unifiedos_root_disk_size">
                         </b-input>
                         <p class="control">
                             <span class="button is-static">GB</span>
@@ -278,8 +278,8 @@
                   unifiedos_mega_id: '',
                   unifiedos_service_level: 'best_effort',
                   unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
-
-                  unifiedos_root_disk_size: 40,
+                  unifiedos_root_disk_size: 0, // dynamically retrieved but still need to be declared
+                  unifiedos_data_disk_size: 0, // dynamically retrieved but still need to be declared
                   provision_otc_default_volume_type: 'SSD',
                   unifiedos_accounting_number: '',
                   defender_exclude_path: '',
@@ -417,11 +417,11 @@
               this.loading = true;
               this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/getDetails').then((res) => {
                   let json = JSON.parse(res.body)
-                  this.extra_vars.unifiedos_root_disk_default_size = json.specsMap.unifiedos_root_disk_size.default;
+                  this.extra_vars.unifiedos_root_disk_size = json.specsMap.unifiedos_root_disk_size.default;
                   this.extra_vars.unifiedos_root_disk_description = json.specsMap.unifiedos_root_disk_size.question_description;
                   this.extra_vars.unifiedos_root_disk_min_size = json.specsMap.unifiedos_root_disk_size.min;
                   this.extra_vars.unifiedos_root_disk_max_size = json.specsMap.unifiedos_root_disk_size.max;
-                  this.extra_vars.unifiedos_data_disk_default_size = json.specsMap.unifiedos_data_disk_size.default;
+                  this.extra_vars.unifiedos_data_disk_size = json.specsMap.unifiedos_data_disk_size.default;
                   this.extra_vars.unifiedos_data_disk_description = json.specsMap.unifiedos_data_disk_size.question_description;
                   this.extra_vars.unifiedos_data_disk_min_size = json.specsMap.unifiedos_data_disk_size.min;
                   this.extra_vars.unifiedos_data_disk_max_size = json.specsMap.unifiedos_data_disk_size.max;
@@ -449,6 +449,8 @@
                       }).then((resp) => {
                           let json = JSON.parse(resp.body)
                           this.job = json.job
+
+                          this.loading = false;
                       }, () => {
                           this.loading = false;
                       });
