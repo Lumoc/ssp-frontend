@@ -25,7 +25,7 @@
                 <b-input v-model.trim="bitreponame"
                          name="Repository Name"
                          ref="autofocus"
-                         v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9-\s]+$/}">
+                         v-validate.rules="{ required: true, regex: /^[a-zA-Z0-9-\s_]+$/}">
                 </b-input>
             </b-field>
 
@@ -34,7 +34,7 @@
                      :message="errors.first('Projekt Key')">
                 <b-input v-model.trim="bitprojectkey"
                          name="Projekt Key"
-                         v-validate.rukles="{ required: true, regex: /^((AMG|AML|AMN|AMP|ARD|AM|BP|EK|EN|ERP|FCON|FI|FT|HR|LOG|IT|INV|KD|KI|KIP|KIN|KS|MV|MVC|MVG|MVP|MVL|NM|NMD|OM|PN|PPG|PPP|PT|PV|PZ|RSW|SC|TA|TC|TP|TEST|TMS|USER|WP|ZF)_?.*)$/}">
+                         v-validate.rukles="{ required: true, regex: /^((amg|aml|amn|amp|ard|am|bp|ek|en|erp|fi|ft|hr|log|inv|kd|ki|kip|kin|ks|mv|mvc|mvg|mvp|mvl|nm|nmd|om|pn|ppg|ppp|pt|pv|pz|rsw|sc|ta|tc|tp|template|test|tms|user|wp|zf)\..*\.[a-z0-9-].*)|((AMG|AML|AMN|AMP|ARD|AM|BP|EK|EN|ERP|FCON|FI|FT|HR|LOG|INV|KD|KI|KIP|KIN|KS|MV|MVC|MVG|MVP|MVL|NM|NMD|OM|PN|PPG|PPP|PT|PV|PZ|RSW|SC|TA|TC|TP|TEST|TMS|USER|WP|ZF)_?.*)$/}">
                 </b-input>
             </b-field>
 
