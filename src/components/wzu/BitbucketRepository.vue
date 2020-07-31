@@ -84,6 +84,7 @@
                 templateyesno: true,
                 bitreponame:  '',
                 bitprojectkey: '',
+                bitrepodescription: '',
                 bitrepoowner: '',
                 loading: false
             };
@@ -97,6 +98,7 @@
                         this.$http.post(this.$store.state.wzuURL + '/api/bitbucketrepo', {
                             templateyesno: this.templateyesno,
                             bitreponame: this.bitreponame,
+                            bitrepodescription: this.bitrepodescription,
                             bitprojectkey: this.bitprojectkey,
                             bitrepoowner: this.bitrepoowner
                         }).then(() => {
