@@ -12,7 +12,7 @@
         </div>
         <br>
         <form v-on:submit.prevent="newArtifactoryRepository">
-            <b-field label="Repository Name (can only contain lower case letters and numbers)"
+            <b-field label="Repository Name (can only contain lower case letters and numbers). The repository type be will automatically appended on creation like .mvn or .go"
                      :type="errors.has('RepositoryName') ? 'is-danger' : ''"
                      :message="errors.first('RepositoryName')">
                 <b-input v-model.trim="repository"
@@ -49,6 +49,42 @@
                                 type="is-success">
                     <span>ios</span>
                 </b-radio-button>
+                <b-radio-button v-model="type"
+                                native-value="rpm"
+                                type="is-success">
+                    <span>RPM</span>
+                </b-radio-button>
+                <b-radio-button v-model="type"
+                                native-value="ivy"
+                                type="is-success">
+                    <span>Ivy</span>
+                </b-radio-button>
+                <b-radio-button v-model="type"
+                                native-value="helm"
+                                type="is-success">
+                    <span>Helm</span>
+                </b-radio-button>
+                <b-radio-button v-model="type"
+                                native-value="conan"
+                                type="is-success">
+                    <span>Conan</span>
+                </b-radio-button>
+                <b-radio-button v-model="type"
+                                native-value="pip"
+                                type="is-success">
+                    <span>Pip (Python)</span>
+                </b-radio-button>
+            </b-field>
+
+            <b-field v-if="type == 'helm'" label="Virtual Helm Repository Name (can only contain lower case letters and numbers). The repository type be will automatically appended on creation like .mvn or .go"
+                     :type="errors.has('VirtualRepositoryName') ? 'is-danger' : ''"
+                     :message="errors.first('VirtualRepositoryName')">
+                <b-input v-model.trim="virtualRepository"
+                         name="VirtualRepositoryName"
+                         ref="autofocus"
+                         :message="errors.first('VirtualRepositoryName')"
+                         v-validate.rules="{ required: true, regex: /^([0-9a-zA-Z]{1,}|[0-9a-zA-Z]{1,}-[0-9a-zA-Z]{1,})$/}">
+                </b-input>
             </b-field>
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
@@ -78,6 +114,7 @@
         data() {
             return {
                 repository: '',
+                virtualRepository: '',
                 type: '',
                 loading: false
             };
@@ -90,6 +127,7 @@
 
                         this.$http.post(this.$store.state.wzuURL + '/api/artifactory/createRepository', {
                             repositoryKey: this.repository,
+                            virtualRepository: this.virtualRepository,
                             repositoryType: this.type
                         }).then(() => {
                             this.loading = false;
