@@ -117,12 +117,16 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Disk Volume Storage Type">
+            <b-field :label=extra_vars.provision_otc_storage_types_description>
                 <b-select :loading="loading"
                         v-model="extra_vars.provision_otc_default_volume_type"
                         required>
-                    <!--<option value="SATA">SATA: regular speed, cheaper</option>-->
-                    <option value="SSD">SSD: high speed, more expensive</option>
+                    <option
+                            v-for="type in storage_types"
+                            :value="type"
+                            :key="type">
+                        {{ type }}
+                    </option>
                 </b-select>
             </b-field>
 
@@ -278,11 +282,13 @@
                   unifiedos_mega_id: '',
                   unifiedos_service_level: 'best_effort',
                   unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
-                  unifiedos_root_disk_size: 0, // dynamically retrieved but still need to be declared
-                  unifiedos_data_disk_size: 0, // dynamically retrieved but still need to be declared
-                  provision_otc_default_volume_type: 'SSD',
                   unifiedos_accounting_number: '',
                   defender_exclude_path: '',
+                  // the following values are dynamically retrieved from the Ansible Tower template, but still need to be declared
+                  unifiedos_root_disk_size: 0,
+                  unifiedos_data_disk_size: 0,
+                  provision_otc_default_volume_type: 'SSD',
+                  provision_otc_storage_types_description: 'Disk volume storage type',
               },
               costs: {
                   sla: {
@@ -304,6 +310,7 @@
                     SSD: 0.01,
                   }
               },
+              storage_types: []
           };
       },
       watch: {
@@ -425,6 +432,9 @@
                   this.extra_vars.unifiedos_data_disk_description = json.specsMap.unifiedos_data_disk_size.question_description;
                   this.extra_vars.unifiedos_data_disk_min_size = json.specsMap.unifiedos_data_disk_size.min;
                   this.extra_vars.unifiedos_data_disk_max_size = json.specsMap.unifiedos_data_disk_size.max;
+                  this.extra_vars.provision_otc_storage_types_description = json.specsMap.provision_otc_default_volume_type.question_description;
+                  // convert string into array
+                  this.storage_types = json.specsMap.provision_otc_default_volume_type.choices.split("\n");
 
                   this.loading = false;
               }, () => {
