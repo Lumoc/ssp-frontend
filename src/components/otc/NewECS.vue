@@ -117,24 +117,33 @@
                 </b-select>
             </b-field>
 
-            <b-field label="Disk Volume Storage Type">
+            <b-field :label=extra_vars.provision_otc_storage_types_description>
                 <b-select :loading="loading"
                         v-model="extra_vars.provision_otc_default_volume_type"
                         required>
-                    <!--<option value="SATA">SATA: regular speed, cheaper</option>-->
-                    <option value="SSD">SSD: high speed, more expensive</option>
+                    <option
+                            v-for="type in storage_types"
+                            :value="type"
+                            :key="type">
+                        {{ type }}
+                    </option>
                 </b-select>
             </b-field>
 
             <b-field>
                 <template slot="label">
                     Persistent Data Size
-                    <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for persistent data (e.g. /var/data on Linux or D:\ on Windows)">
+                    <b-tooltip type="is-dark" multilined animated position="is-right" :label="extra_vars.unifiedos_data_disk_description">
                         <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                     </b-tooltip>
                 </template>
                 <b-field>
-                    <b-input type="number" required v-model.number="extra_vars.unifiedos_data_disk_size"></b-input>
+                    <b-input type="number"
+                             required
+                             :min="extra_vars.unifiedos_data_disk_min_size"
+                             :max="extra_vars.unifiedos_data_disk_max_size"
+                             v-model.number="extra_vars.unifiedos_data_disk_size">
+                    </b-input>
                     <p class="control">
                         <span class="button is-static">GB</span>
                     </p>
@@ -151,14 +160,15 @@
                 <b-field>
                     <template slot="label">
                         Root Disk Size
-                        <b-tooltip type="is-dark" multilined animated position="is-right" label="Disk size for operating system (Linux: min 10GB / Windows: min 60GB)">
+                        <b-tooltip type="is-dark" multilined animated position="is-right" :label="extra_vars.unifiedos_root_disk_description">
                             <b-icon size="is-small" icon="help-circle-outline"></b-icon>
                         </b-tooltip>
                     </template>
                     <b-field>
                         <b-input type="number"
                                  required
-                                 :min="minDiskGigabytes"
+                                 :min="extra_vars.unifiedos_root_disk_min_size"
+                                 :max="extra_vars.unifiedos_root_disk_max_size"
                                  v-model.number="extra_vars.unifiedos_root_disk_size">
                         </b-input>
                         <p class="control">
@@ -267,17 +277,18 @@
               image: '',
               extra_vars: {
                   unifiedos_project: '',
-                  unifiedos_data_disk_size: 20,
                   unifiedos_owner_group: '',
                   unifiedos_owner_email: '',
                   unifiedos_mega_id: '',
                   unifiedos_service_level: 'best_effort',
                   unifiedos_availability_zone: (Math.floor(Math.random() * 2) + 1).toString(), // returns a random integer from 1 to 2
-
-                  unifiedos_root_disk_size: 40,
-                  provision_otc_default_volume_type: 'SSD',
                   unifiedos_accounting_number: '',
                   defender_exclude_path: '',
+                  // the following values are dynamically retrieved from the Ansible Tower template, but still need to be declared
+                  unifiedos_root_disk_size: 0,
+                  unifiedos_data_disk_size: 0,
+                  provision_otc_default_volume_type: 'SSD',
+                  provision_otc_storage_types_description: 'Disk volume storage type',
               },
               costs: {
                   sla: {
@@ -299,6 +310,7 @@
                     SSD: 0.01,
                   }
               },
+              storage_types: []
           };
       },
       watch: {
@@ -312,6 +324,7 @@
       mounted: function () {
           this.getFlavors();
           this.getImages();
+          this.getOtherDetails();
       },
       filters: {
         placeholder: function (input, property) {
@@ -407,6 +420,27 @@
                   this.loading = false;
               });
           },
+          getOtherDetails: function() {
+              this.loading = true;
+              this.$http.get(this.$store.state.backendURL + '/api/tower/job_templates/' + this.job_template + '/getDetails').then((res) => {
+                  let json = JSON.parse(res.body)
+                  this.extra_vars.unifiedos_root_disk_size = json.specsMap.unifiedos_root_disk_size.default;
+                  this.extra_vars.unifiedos_root_disk_description = json.specsMap.unifiedos_root_disk_size.question_description;
+                  this.extra_vars.unifiedos_root_disk_min_size = json.specsMap.unifiedos_root_disk_size.min;
+                  this.extra_vars.unifiedos_root_disk_max_size = json.specsMap.unifiedos_root_disk_size.max;
+                  this.extra_vars.unifiedos_data_disk_size = json.specsMap.unifiedos_data_disk_size.default;
+                  this.extra_vars.unifiedos_data_disk_description = json.specsMap.unifiedos_data_disk_size.question_description;
+                  this.extra_vars.unifiedos_data_disk_min_size = json.specsMap.unifiedos_data_disk_size.min;
+                  this.extra_vars.unifiedos_data_disk_max_size = json.specsMap.unifiedos_data_disk_size.max;
+                  this.extra_vars.provision_otc_storage_types_description = json.specsMap.provision_otc_default_volume_type.question_description;
+                  // convert string into array
+                  this.storage_types = json.specsMap.provision_otc_default_volume_type.choices.split("\n");
+
+                  this.loading = false;
+              }, () => {
+                  this.loading = false;
+              });
+          },
           stopLoading: function() {
               this.loading = false;
           },
@@ -425,6 +459,8 @@
                       }).then((resp) => {
                           let json = JSON.parse(resp.body)
                           this.job = json.job
+
+                          this.loading = false;
                       }, () => {
                           this.loading = false;
                       });
