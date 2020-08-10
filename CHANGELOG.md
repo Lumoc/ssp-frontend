@@ -11,6 +11,10 @@ The current role maintainer is the SBB Cloud Platform Team.
 
 ### Changed
 
+## [3.9.0](https://github.com/SchweizerischeBundesbahnen/ssp-frontend/compare/v2.14.1...v2.15.0) - 10.08.2020
+
+### Changed
+
 - SLA options are read dynamically from the Ansible Tower templates, and not hardcoded
 - CHANGELOG added
 
