@@ -70,10 +70,15 @@
                         </a>
                     </b-tooltip>
                 </template>
-                <b-select v-model="extra_vars.unifiedos_service_level" required>
-                    <option value="best_effort">Best Effort</option>
-                    <option>1b</option>
-                    <option>2a</option>
+                <b-select :loading="loading"
+                          v-model="extra_vars.default_sla_option"
+                          required>
+                    <option
+                            v-for="sla_option in this.sla_options"
+                            :value="sla_option"
+                            :key="sla_option">
+                        {{ sla_option }}
+                    </option>
                 </b-select>
             </b-field>
 
@@ -289,6 +294,9 @@
                   unifiedos_data_disk_size: 0,
                   provision_otc_default_volume_type: 'SSD',
                   provision_otc_storage_types_description: 'Disk volume storage type',
+                  // TODO (JV): not sure if it is really necessary to declare this value as an empty
+                  // string, but doing it because looks "safer". Same with some other values above
+                  default_sla_option: '',
               },
               costs: {
                   sla: {
@@ -319,6 +327,7 @@
         },
         stage: function(s) {
             this.getFlavors();
+            this.getOtherDetails();
         }
       },
       mounted: function () {
@@ -435,6 +444,9 @@
                   this.extra_vars.provision_otc_storage_types_description = json.specsMap.provision_otc_default_volume_type.question_description;
                   // convert string into array
                   this.storage_types = json.specsMap.provision_otc_default_volume_type.choices.split("\n");
+                  this.sla_options = json.specsMap.unifiedos_service_level.choices.split("\n");
+                  // to display an initial value in the multiple choice box
+                  this.extra_vars.default_sla_option = this.sla_options[0];
 
                   this.loading = false;
               }, () => {
