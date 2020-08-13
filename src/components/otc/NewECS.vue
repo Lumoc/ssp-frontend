@@ -71,7 +71,7 @@
                     </b-tooltip>
                 </template>
                 <b-select :loading="loading"
-                          v-model="extra_vars.default_sla_option"
+                          v-model="extra_vars.unifiedos_service_level"
                           required>
                     <option
                             v-for="sla_option in this.sla_options"
@@ -296,7 +296,7 @@
                   provision_otc_storage_types_description: 'Disk volume storage type',
                   // TODO (JV): not sure if it is really necessary to declare this value as an empty
                   // string, but doing it because looks "safer". Same with some other values above
-                  default_sla_option: '',
+                  unifiedos_service_level: '',
               },
               costs: {
                   sla: {
@@ -446,7 +446,7 @@
                   this.storage_types = json.specsMap.provision_otc_default_volume_type.choices.split("\n");
                   this.sla_options = json.specsMap.unifiedos_service_level.choices.split("\n");
                   // to display an initial value in the multiple choice box
-                  this.extra_vars.default_sla_option = this.sla_options[0];
+                  this.extra_vars.unifiedos_service_level = this.sla_options[0];
 
                   this.loading = false;
               }, () => {
