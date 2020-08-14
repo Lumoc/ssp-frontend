@@ -76,16 +76,11 @@
                 </b-radio-button>
             </b-field>
 
-            <b-field v-if="type == 'helm'" label="Virtual Helm Repository Name (can only contain lower case letters and numbers). The repository type be will automatically appended on creation like .mvn or .go"
-                     :type="errors.has('VirtualRepositoryName') ? 'is-danger' : ''"
-                     :message="errors.first('VirtualRepositoryName')">
-                <b-input v-model.trim="virtualRepository"
-                         name="VirtualRepositoryName"
-                         ref="autofocus"
-                         :message="errors.first('VirtualRepositoryName')"
-                         v-validate.rules="{ required: true, regex: /^([0-9a-zA-Z]{1,}|[0-9a-zA-Z]{1,}-[0-9a-zA-Z]{1,})$/}">
-                </b-input>
-            </b-field>
+            <b-notification v-if="type == 'helm'" aria-close-label="Close notification">
+                When ordering a Helm repository, two repositories are created. The name you enter in the "Repository Name" field will be the name of the virtual repository pointing to a local Helm repository with the same name and the ending ".local".
+                The usage of a virtual repository is required by artifactory <a href="https://www.jfrog.com/confluence/display/JFROG/Helm+Chart+Repositories#HelmChartRepositories-ResolvingHelmCharts"> Artifactory Documentation</a>
+            </b-notification>
+
             <button :disabled="errors.any()"
                     v-bind:class="{'is-loading': loading}"
                     class="button is-primary">Create Repository
@@ -114,7 +109,6 @@
         data() {
             return {
                 repository: '',
-                virtualRepository: '',
                 type: '',
                 loading: false
             };
@@ -127,7 +121,6 @@
 
                         this.$http.post(this.$store.state.wzuURL + '/api/artifactory/createRepository', {
                             repositoryKey: this.repository,
-                            virtualRepository: this.virtualRepository,
                             repositoryType: this.type
                         }).then(() => {
                             this.loading = false;
