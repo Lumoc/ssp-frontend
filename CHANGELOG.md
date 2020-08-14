@@ -11,6 +11,13 @@ The current role maintainer is the SBB Cloud Platform Team.
 
 ### Changed
 
+## [2.16.0](https://github.com/SchweizerischeBundesbahnen/ssp-frontend/compare/v2.16.0...v2.15.1) - 14.08.2020
+
+### Changed
+
+- Added new options for Artifactory repository creation. New are rpm, ivy, helm, pip and conan repositories possible.
+- Bitbucket repositories can be created with a description
+
 ## [2.15.1](https://github.com/SchweizerischeBundesbahnen/ssp-frontend/compare/v2.15.1...v2.15.0) - 13.08.2020
 
 ### Changed
