@@ -17,6 +17,12 @@ fi
 if [ -n "$SSO_CLIENT_ID" ]; then
     sed -i "s#ea8e101c#$SSO_CLIENT_ID#g" /usr/share/nginx/html/main.*.js
 fi
+if [ -n "$SSP_FRONTEND_VERSION" ]; then
+    sed -i "s#SSP_FRONTEND_VERSION#$SSP_FRONTEND_VERSION#g" /usr/share/nginx/html/main.*.js
+fi
+if [ -n "$SSP_FRONTEND_GIT_COMMIT" ]; then
+    sed -i "s#SSP_FRONTEND_GIT_COMMIT#$SSP_FRONTEND_GIT_COMMIT#g" /usr/share/nginx/html/main.*.js
+fi
 
 # start webserver
 exec nginx

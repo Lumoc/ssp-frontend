@@ -56,6 +56,9 @@ import ListTopics from './components/kafka/ListTopics.vue'
 import AppManagement from './components/kafka/AppManagement.vue'
 import CostForecast from './components/kafka/CostForecast.vue'
 
+// About Page
+import About from './components/about/About.vue'
+
 Vue.component('navbar', Nav);
 Vue.component('notification', Notification);
 
@@ -114,5 +117,6 @@ export const LocalComponents = {
     AdminConsole,
     ListTopics,
     AppManagement,
-    CostForecast
+    CostForecast,
+    About
 };

@@ -4,7 +4,9 @@ export const state = {
   backendURL: 'http://localhost:8000',
   wzuURL: 'http://localhost:8001',
   user: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null'),
-  notification: {}
+  notification: {},
+  version: 'SSP_FRONTEND_VERSION',
+  gitCommit: 'SSP_FRONTEND_GIT_COMMIT'
 };
 
 export const mutations = {

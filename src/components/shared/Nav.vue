@@ -125,12 +125,13 @@
                 </div>
             </div>
 
-            <div v-if="user" class="navbar-end">
-                <router-link v-if="features.otc.uos || features.otc.rds" to="/tower/jobs" class="navbar-item">Jobs</router-link>
-                <a class="navbar-item">
+            <div class="navbar-end">
+                <router-link v-if="user && (features.otc.uos || features.otc.rds)" to="/tower/jobs" class="navbar-item">Jobs</router-link>
+                <a v-if="user" class="navbar-item">
                     <b-icon icon="face"></b-icon>
                     &nbsp; Hello {{ user.firstName }}!
                 </a>
+                <router-link to="/about" class="navbar-item">About</router-link>
             </div>
         </div>
     </nav>

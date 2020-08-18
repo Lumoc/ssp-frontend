@@ -122,6 +122,9 @@ const routes = [
     },
     {
         path: '/kafka/costforecast', component: LocalComponents.CostForecast
+    },
+    {
+        path: '/about', component: LocalComponents.About
     }
 ];
 
