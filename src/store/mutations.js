@@ -5,6 +5,7 @@ export const state = {
   wzuURL: 'http://localhost:8001',
   user: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null'),
   notification: {},
+  packageVersion: process.env.PACKAGE_VERSION || '0',
   version: 'SSP_FRONTEND_VERSION',
   gitCommit: 'SSP_FRONTEND_GIT_COMMIT'
 };

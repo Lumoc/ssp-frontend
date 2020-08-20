@@ -2,6 +2,10 @@ var path = require('path');
 var webpack = require('webpack');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 
+const fs = require('fs')
+const packageJson = fs.readFileSync('./package.json')
+const version = JSON.parse(packageJson).version || 0
+
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -56,6 +60,11 @@ module.exports = {
     plugins: [
         new htmlWebpackPlugin({
             template: 'index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                PACKAGE_VERSION: '"' + version + '"'
+            }
         })
     ]
 };
@@ -66,7 +75,8 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: '"production"'
+                NODE_ENV: '"production"',
+                PACKAGE_VERSION: '"' + version + '"'
             }
         }),
         new webpack.optimize.UglifyJsPlugin({

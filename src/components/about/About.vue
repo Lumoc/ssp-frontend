@@ -9,6 +9,7 @@
                 </div>
                 <div class="container">
                     <h2 class="subtitle">
+                        <p>ssp-frontend package version: {{ frontendPkgVersion }}</p>
                         <p>ssp-frontend version: {{ frontendVersion }}</p>
                         <p>ssp-backend version: {{ backendVersion }}</p>
                     </h2>
@@ -22,6 +23,7 @@
     export default {
         data() {
             return {
+                frontendPkgVersion: 'SSP_FRONTEND_PACKAGE_VERSION',
                 frontendVersion: 'SSP_FRONTEND_VERSION',
                 backendVersion: 'SSP_BACKEND_VERSION',
                 loading: false
@@ -37,6 +39,7 @@
                 if (this.frontendVersion == 'latest') {
                     this.frontendVersion = this.frontendVersion + ' (git-commit: ' + this.$store.state.gitCommit + ')';
                 }
+                this.frontendPkgVersion = this.$store.state.packageVersion;
                 this.$http.get(this.$store.state.backendURL + '/version').then((res) => {
                     this.backendVersion = res.body.version;
                     if (this.backendVersion == 'latest') {
